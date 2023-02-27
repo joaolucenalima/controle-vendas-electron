@@ -1,10 +1,10 @@
 {
   "name": "controle-estoque-react",
   "version": "1.0.0",
-  "description": "App para controle simples de estoque",
-  "main": "./dist/src/main/main.js",
+  "description": "App para controle de estoque",
+  "main": "./dist/main/main.js",
   "scripts": {
-    "start": "electron ./dist/src/main/main.js"
+    "start": "electron ."
   },
   "author": "João Vitor Lucena",
   "license": "ISC",

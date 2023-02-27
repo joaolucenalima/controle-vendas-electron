@@ -1,12 +1,21 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 import Header from "../components/Header";
-import { registerClient } from '../../../database/cliente'
+import { listClient, registerClient } from '../../database/cliente'
+
+type clientType = Awaited<ReturnType<typeof listClient>>
 
 export default function Clientes() {
 
   const [name, setName] = useState('');
-  console.log(name);
+  const [clientes, setClientes] = useState<clientType>([])
+
+
+  useEffect(() => {
+    listClient().then((clientes) => {
+      setClientes(clientes)
+    })
+  }, [])
 
   function handleSubmit(event: FormEvent) {
 
@@ -25,8 +34,9 @@ export default function Clientes() {
         <h2>Clientes cadastrados</h2>
         <div className="client-list">
           <ul>
-            <li>Cliente 1</li>
-            <li>Cliente 2</li>
+            {clientes?.length ? clientes.map((cliente, index) => {
+              return <li key={index}>{cliente.dataValues.name}</li>
+            }) : null}
           </ul>
         </div>
       </div>
@@ -42,8 +52,6 @@ export default function Clientes() {
         />
         <input type="submit" value="Cadastrar cliente" />
       </form>
-
-      {name ? <span>{name}</span> : null}
     </>
   )
 }

@@ -19,7 +19,7 @@ function CreateWindow() {
     }
   })
 
-  mainWindow.loadFile('../../../public/index.html')
+  mainWindow.loadFile(path.resolve(app.getAppPath(), './public/index.html'))
 }
 
 app.on('ready', CreateWindow)
