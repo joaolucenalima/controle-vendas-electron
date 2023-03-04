@@ -12,7 +12,7 @@ body {
 
 header {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   border-bottom: 3px solid gray;
 }
 
@@ -39,21 +39,4 @@ header {
   border: none;
 }
 
-.client-container {
-  margin-top: 1rem;
-}
-
-.client-container>h2 {
-  text-align: center;
-}
-
-.client-list {
-  background-color: rgb(99, 99, 99);
-  margin: 1rem;
-  padding: 0 1rem;
-}
-
-.client-list>ul>li {
-  margin: 1.5rem 0;
-  list-style: none;
-}
+.container {}

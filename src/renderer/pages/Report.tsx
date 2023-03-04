@@ -1,11 +1,11 @@
 import { FormEvent, useEffect, useState } from "react";
 
 import Header from "../components/Header";
-import { listClient, registerClient } from '../../database/cliente'
+import { listClient, registerClient } from '../../database/client'
 
 type clientType = Awaited<ReturnType<typeof listClient>>
 
-export default function Clientes() {
+export default function Report() {
 
   const [name, setName] = useState('');
   const [clientes, setClientes] = useState<clientType>([])
@@ -36,7 +36,7 @@ export default function Clientes() {
           <ul>
             {clientes?.length ? clientes.map((cliente, index) => {
               return <li key={index}>{cliente.dataValues.name}</li>
-            }) : null}
+            }) : <li>Nenhum cliente foi cadastrado</li>}
           </ul>
         </div>
       </div>

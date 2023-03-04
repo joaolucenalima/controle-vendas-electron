@@ -15,11 +15,6 @@ Client.init({
   timestamps: false
 });
 
-(async () => {
-  await Client.sync({ force: false });
-  await sequelize.authenticate()
-})();
-
 export async function registerClient(name: string) {
   try {
     await Client.create({

@@ -3,7 +3,7 @@ const path = require('path')
 
 function CreateWindow() {
 
-  const icon = nativeImage.createFromPath('./build/icon.png');
+  const icon = nativeImage.createFromPath('./build/icon.ico');
 
   if (app.dock) {
     app.dock.setIcon(icon);

@@ -1,10 +1,10 @@
 import Header from "../components/Header";
 
-export default function Vendas() {
+export default function Materials() {
   return (
     <>
       <Header />
-      <h1>Vendas</h1>
+      <h1>Materiais</h1>
     </>
   )
 }

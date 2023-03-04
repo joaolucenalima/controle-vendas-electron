@@ -4,19 +4,28 @@
   "description": "App para controle de estoque",
   "main": "./dist/main/main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "author": "João Vitor Lucena",
   "license": "ISC",
   "devDependencies": {
+    "@electron-forge/cli": "^6.0.5",
+    "@electron-forge/maker-deb": "^6.0.5",
+    "@electron-forge/maker-rpm": "^6.0.5",
+    "@electron-forge/maker-squirrel": "^6.0.5",
+    "@electron-forge/maker-zip": "^6.0.5",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
-    "electron": "^23.1.0",
+    "electron": "^19.0.0",
     "typescript": "^4.9.5"
   },
   "dependencies": {
+    "electron-squirrel-startup": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.43.4",
     "react-icons": "^4.7.1",
     "react-router-dom": "^6.8.1",
     "sequelize": "^6.29.0",
