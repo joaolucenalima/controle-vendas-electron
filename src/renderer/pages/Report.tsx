@@ -1,57 +1,42 @@
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import Header from "../components/Header";
-import { listClient, registerClient } from '../../database/client'
-
-type clientType = Awaited<ReturnType<typeof listClient>>
 
 export default function Report() {
 
-  const [name, setName] = useState('');
-  const [clientes, setClientes] = useState<clientType>([])
-
-
   useEffect(() => {
-    listClient().then((clientes) => {
-      setClientes(clientes)
-    })
+
   }, [])
-
-  function handleSubmit(event: FormEvent) {
-
-    event.preventDefault();
-
-    registerClient(name);
-
-    setName('')
-  }
 
   return (
     <>
       <Header />
 
-      <div className="client-container">
-        <h2>Clientes cadastrados</h2>
-        <div className="client-list">
-          <ul>
-            {clientes?.length ? clientes.map((cliente, index) => {
-              return <li key={index}>{cliente.dataValues.name}</li>
-            }) : <li>Nenhum cliente foi cadastrado</li>}
-          </ul>
+      <div className="flex-records">
+
+        <div className="first-line">
+          <div className="record">
+            <h1>Materiais:</h1>
+            <span>10 compras realizadas</span>
+            <strong>Gastos totais:</strong>
+            <span>R$ 10</span>
+          </div>
+
+          <div className="record">
+            <h1>Vendas Totais:</h1>
+            <span>10</span>
+            <strong>Lucros totais:</strong>
+            <span>R$ 10</span>
+          </div>
         </div>
+
+        <div className="second-line record">
+          <h1>Lucro final:</h1>
+          <span>R$ 10</span>
+        </div>
+
       </div>
 
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Nome do Cliente: </label>
-        <input
-          type="text"
-          name="name"
-          className="inputs"
-          onChange={event => setName(event.target.value)}
-          value={name}
-        />
-        <input type="submit" value="Cadastrar cliente" />
-      </form>
     </>
   )
 }

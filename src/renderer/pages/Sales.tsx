@@ -40,45 +40,51 @@ export default function Sales() {
 
         <form onSubmit={handleSubmit(handleRegister)} className="form-">
 
-          <label htmlFor="product">Produto:</label>
-          <input
-            {...register('product', {
-              required: true,
-            })}
-            type="text"
-            name="product"
-          />
+          <div className="form-field">
+            <label htmlFor="product">Produto:</label>
+            <input
+              {...register('product', {
+                required: true,
+              })}
+              type="text"
+              name="product"
+            />
 
-          {errors?.product?.type === "required" && (
-            <span className="error">Digite o nome do produto</span>
-          )}
+            {errors?.product?.type === "required" && (
+              <span className="error">Digite o nome do produto</span>
+            )}
+          </div>
 
-          <label htmlFor="quantity">Quantidade vendida:</label>
-          <input
-            {...register('quantity', {
-              required: true,
-            })}
-            type="number"
-            name="quantity"
-          />
+          <div className="form-field">
+            <label htmlFor="quantity">Quantidade vendida:</label>
+            <input
+              {...register('quantity', {
+                required: true,
+              })}
+              type="number"
+              name="quantity"
+              min={1}
+            />
 
-          {errors?.quantity?.type === "required" && (
-            <span className="error">Digite a quantidade vendida</span>
-          )}
+            {errors?.quantity?.type === "required" && (
+              <span className="error">Digite a quantidade vendida</span>
+            )}
+          </div>
 
+          <div className="form-field">
+            <label htmlFor="price">Preço unitário:</label>
+            <input
+              {...register('price', {
+                required: true,
+              })}
+              type="number"
+              name="price"
+            />
 
-          <label htmlFor="price">Preço unitário:</label>
-          <input
-            {...register('price', {
-              required: true,
-            })}
-            type="number"
-            name="price"
-          />
-
-          {errors?.price?.type === "required" && (
-            <span className="error">Digite o preço unitário de cada produto</span>
-          )}
+            {errors?.price?.type === "required" && (
+              <span className="error">Digite o preço unitário de cada produto</span>
+            )}
+          </div>
 
           <input type="submit" value="Cadastrar venda" />
 
