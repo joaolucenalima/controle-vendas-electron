@@ -7,7 +7,8 @@ import { listSales, registerSale } from '../../database/sales'
 type Inputs = {
   product: string,
   quantity: number,
-  price: number
+  price: number,
+  amount: number
 }
 
 export default function Sales() {
@@ -38,17 +39,19 @@ export default function Sales() {
 
         <h2>Vendas Registradas</h2>
 
-        <form onSubmit={handleSubmit(handleRegister)} className="form-">
+        <div className='table'>
+          <div className='table-headers'>
+
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit(handleRegister)}>
 
           <div className="form-field">
             <label htmlFor="product">Produto:</label>
-            <input
-              {...register('product', {
-                required: true,
-              })}
-              type="text"
-              name="product"
-            />
+            <select>
+              <option value=""></option>
+            </select>
 
             {errors?.product?.type === "required" && (
               <span className="error">Digite o nome do produto</span>

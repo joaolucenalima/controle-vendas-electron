@@ -5,8 +5,9 @@
 }
 
 *:focus {
-  outline: none;
-
+  outline-style: solid;
+  outline-width: 2px;
+  outline-color: whitesmoke;
 }
 
 body {
@@ -17,7 +18,7 @@ body {
 
 header {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   border-bottom: 3px solid gray;
 }
 
@@ -35,6 +36,7 @@ button {
   font-size: 1rem;
   font-weight: 600;
   background-color: burlywood;
+  color: #1d1d1d;
 }
 
 input[type="submit"]:hover {
@@ -44,7 +46,6 @@ input[type="submit"]:hover {
 input[type="text"],
 input[type="number"] {
   font-size: 0.9rem;
-  margin-left: 0.2rem;
   padding: 0.3rem 0 0.3rem 0.3rem;
   background-color: rgb(189, 189, 189);
   border: none;
@@ -82,7 +83,7 @@ input[type="number"] {
 
 /*SALES*/
 
-form {
+.form-sales {
   display: flex;
   flex-direction: column;
   row-gap: 0.7rem;
@@ -93,10 +94,7 @@ form {
 .form-field {
   display: flex;
   justify-content: space-between;
-}
-
-.form-field>input {
-  width: 60%;
+  align-items: center;
 }
 
 .error {
@@ -135,4 +133,18 @@ form {
 
 .record>span {
   display: block;
+}
+
+/*PRODUCTS*/
+
+.form-products {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.7rem;
+  width: 50%;
+  margin: 2rem auto;
+}
+
+.form-products>input[type="submit"] {
+  margin-top: 1.2rem;
 }

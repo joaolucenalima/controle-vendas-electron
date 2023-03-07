@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { MdAttachMoney, MdListAlt, MdOutlineLayers } from 'react-icons/md'
+import { MdAttachMoney, MdListAlt, MdOutlineLayers, MdOutlineAddBox } from 'react-icons/md'
 
 export default function Header() {
   return (
@@ -18,6 +18,11 @@ export default function Header() {
       <Link to={'/sales'} className="link">
         <span style={{ color: "#00CF66" }}><MdAttachMoney /></span>
         <span>Vendas</span>
+      </Link>
+
+      <Link to={'/products'} className="link">
+        <span style={{ color: "rgb(77, 77, 236)" }}><MdOutlineAddBox /></span>
+        <span>Produtos</span>
       </Link>
     </header>
   )
