@@ -8,11 +8,15 @@ interface salesProps {
 }
 
 interface productProps {
-  product: string,
+  name: string,
   price: number
 }
 
-class Products extends Model { }
+class Products extends Model {
+  declare id: string;
+  declare name: string;
+  declare price: number
+}
 
 Products.init({
   id: {
@@ -29,7 +33,7 @@ Products.init({
 export async function registerProduct(props: productProps) {
   try {
     await Products.create({
-      name: props.product,
+      name: props.name,
       price: props.price
     })
     return ("Produto cadastrado com sucesso!")
@@ -41,10 +45,26 @@ export async function registerProduct(props: productProps) {
 
 export async function listProducts() {
   try {
-    return await Products.findAll()
+    return await Products.findAll({
+      attributes: ['name', 'id']
+    })
   }
   catch (error) {
     console.log(error);
+  }
+}
+
+export async function recoverPrice(id: string) {
+  try {
+    return await Products.findOne({
+      attributes: ['name', 'price'],
+      where: {
+        id,
+      }
+    })
+  }
+  catch (error) {
+    console.log(error)
   }
 }
 
@@ -63,7 +83,7 @@ Sales.init({
   sequelize,
 });
 
-Sales.hasOne(Products);
+Products.hasOne(Sales);
 
 export async function listSales() {
   try {

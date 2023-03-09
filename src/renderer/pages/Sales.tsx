@@ -1,8 +1,8 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import Header from "../components/Header";
-import { listSales, registerSale } from '../../database/sales'
+import { listProducts, listSales, recoverPrice, registerSale } from '../../database/sales'
 
 type Inputs = {
   product: string,
@@ -11,17 +11,43 @@ type Inputs = {
   amount: number
 }
 
+type salesType = {
+  product: string,
+  price: number
+}
+
+type productsType = {
+  id: string,
+  name: string,
+}
+
 export default function Sales() {
+
+  const [products, setProducts] = useState<productsType[] | undefined>([])
+  const [sales, setSales] = useState<salesType[]>([])
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<Inputs>();
 
   useEffect(() => {
-    const response = listSales()
-    console.log(response)
+
+    listProducts().then((data) => {
+      setProducts(data)
+    })
+
+    listSales().then((sales) => {
+      //console.log(sales)
+    })
+
   }, [])
 
   const handleRegister: SubmitHandler<Inputs> = async data => {
     try {
+      await recoverPrice(data.product).then((response) => {
+
+        data.product = response!.name
+        data.price = response!.price
+        data.amount = data.price * data.quantity
+      })
       await registerSale(data)
       reset()
     } catch (err) {
@@ -29,7 +55,6 @@ export default function Sales() {
       alert("Não foi possível cadastrar a venda. Tente novamente mais tarde.")
     }
   }
-
 
   return (
     <>
@@ -45,17 +70,28 @@ export default function Sales() {
           </div>
         </div>
 
-        <form onSubmit={handleSubmit(handleRegister)}>
+        <form className="form-sales" onSubmit={handleSubmit(handleRegister)}>
 
           <div className="form-field">
             <label htmlFor="product">Produto:</label>
-            <select>
-              <option value=""></option>
-            </select>
 
-            {errors?.product?.type === "required" && (
-              <span className="error">Digite o nome do produto</span>
-            )}
+            {products?.length === 0 ? <span className='error'>Cadastre um produto para registrar a venda</span> :
+              (
+                <select
+                  {...register('product', {
+                    required: true,
+                  })}
+                  name="product"
+                  defaultValue=''
+                >
+                  <option value='' disabled>Selecione o produto</option>
+                  {products?.map((product) => {
+                    return (
+                      <option key={product.id} value={product.id}>{product.name}</option>
+                    )
+                  })}
+                </select>
+              )}
           </div>
 
           <div className="form-field">
@@ -71,21 +107,6 @@ export default function Sales() {
 
             {errors?.quantity?.type === "required" && (
               <span className="error">Digite a quantidade vendida</span>
-            )}
-          </div>
-
-          <div className="form-field">
-            <label htmlFor="price">Preço unitário:</label>
-            <input
-              {...register('price', {
-                required: true,
-              })}
-              type="number"
-              name="price"
-            />
-
-            {errors?.price?.type === "required" && (
-              <span className="error">Digite o preço unitário de cada produto</span>
             )}
           </div>
 

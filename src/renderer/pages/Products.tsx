@@ -1,23 +1,16 @@
-import { useState, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import Header from "../components/Header";
-import { listProducts, registerProduct } from '../../database/sales';
+import { registerProduct } from '../../database/sales';
 
 type Inputs = {
-  product: string,
+  name: string,
   price: number
 }
 
 export default function Products() {
 
-  const [products, setProducts] = useState([])
-
   const { register, handleSubmit, reset, formState: { errors } } = useForm<Inputs>();
-
-  useEffect(() => {
-    // listProducts().then((products) => setProducts(products))
-  }, [])
 
   const handleProduct: SubmitHandler<Inputs> = async data => {
     try {
@@ -39,16 +32,16 @@ export default function Products() {
 
         <form className="form-products" autoComplete="off" onSubmit={handleSubmit(handleProduct)}>
 
-          <label htmlFor="product">Nome do produto: </label>
+          <label htmlFor="name">Nome do produto: </label>
           <input
-            {...register('product', {
+            {...register('name', {
               required: true,
             })}
             type="text"
-            name="product"
+            name="name"
           />
 
-          {errors?.product?.type === "required" && (
+          {errors?.name?.type === "required" && (
             <span className="error">Digite o nome do produto</span>
           )}
 
@@ -57,9 +50,10 @@ export default function Products() {
             {...register('price', {
               required: true,
             })}
-            type="text"
+            type="number"
             name="price"
-            placeholder="00,00"
+            defaultValue="0.00"
+            step="0.50"
           />
 
           {errors?.price?.type === "required" && (
