@@ -2,7 +2,7 @@ import sequelize from "./connection";
 import { DataTypes, Model } from "sequelize";
 
 interface salesProps {
-  product: string,
+  productID: string,
   quantity: number,
   amount: number
 }
@@ -25,9 +25,10 @@ Products.init({
     primaryKey: true
   },
   name: DataTypes.STRING,
-  price: DataTypes.FLOAT,
+  price: DataTypes.FLOAT
 }, {
   sequelize,
+  timestamps: false
 });
 
 export async function registerProduct(props: productProps) {
@@ -54,21 +55,12 @@ export async function listProducts() {
   }
 }
 
-export async function recoverPrice(id: string) {
-  try {
-    return await Products.findOne({
-      attributes: ['name', 'price'],
-      where: {
-        id,
-      }
-    })
-  }
-  catch (error) {
-    console.log(error)
-  }
+class Sales extends Model {
+  declare id: number;
+  declare productID: string;
+  declare quantity: number;
+  declare amount: number
 }
-
-class Sales extends Model { }
 
 Sales.init({
   id: {
@@ -76,14 +68,19 @@ Sales.init({
     autoIncrement: true,
     primaryKey: true
   },
-  product: Products.name,
+  productID: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    references: {
+      model: 'Products',
+      key: 'id'
+    }
+  },
   quantity: DataTypes.INTEGER,
   amount: DataTypes.INTEGER
 }, {
   sequelize,
 });
-
-Products.hasOne(Sales);
 
 export async function listSales() {
   try {
@@ -98,13 +95,20 @@ export async function listSales() {
 export async function registerSale(props: salesProps) {
   try {
     await Sales.create({
-      product: props.product,
+      productID: props.productID,
       quantity: props.quantity,
-      amount: props.amount
     })
     return ("Venda adicionada com sucesso!")
   }
   catch (error) {
     console.log(error);
+  }
+}
+
+export async function countSales() {
+  try {
+    return await Sales.count()
+  } catch (error) {
+    console.log(error)
   }
 }

@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
+import { countSales } from "../../database/sales";
 
 import Header from "../components/Header";
 
 export default function Report() {
 
-  useEffect(() => {
+  const [sales, setSales] = useState<number | undefined>(0)
 
+  useEffect(() => {
+    countSales().then((data) => {
+      setSales(data)
+    })
   }, [])
 
   return (
@@ -17,22 +22,26 @@ export default function Report() {
         <div className="first-line">
           <div className="record">
             <h1>Materiais:</h1>
-            <span>10 compras realizadas</span>
+            <span style={{ fontSize: "1.3rem" }}>10 compras</span>
             <strong>Gastos totais:</strong>
-            <span>R$ 10</span>
+            <span style={{ color: "rgb(233, 113, 113)", fontSize: "1.3rem" }}>R$ 10</span>
           </div>
 
           <div className="record">
             <h1>Vendas Totais:</h1>
-            <span>10</span>
-            <strong>Lucros totais:</strong>
-            <span>R$ 10</span>
+            <span style={{ fontSize: "1.3rem" }}>{sales == undefined ? '0' : sales}</span>
+            <strong>Lucro total:</strong>
+            <span style={{ color: "#00CF66", fontSize: "1.3rem" }}>R$ 10</span>
           </div>
         </div>
 
         <div className="second-line record">
           <h1>Lucro final:</h1>
-          <span>R$ 10</span>
+          <span
+            style={{ fontSize: "1.7rem" }}
+          >
+            R$ 10
+          </span>
         </div>
 
       </div>

@@ -46,15 +46,20 @@ export default function Products() {
           )}
 
           <label htmlFor="price">Preço unitário: </label>
-          <input
-            {...register('price', {
-              required: true,
-            })}
-            type="number"
-            name="price"
-            defaultValue="0.00"
-            step="0.50"
-          />
+
+          <div style={{ position: "relative" }}>
+            <span className='money-span'>R$</span>
+            <input
+              {...register('price', {
+                required: true,
+              })}
+              type="number"
+              name="price"
+              placeholder="0,00"
+              step="0.50"
+              className='price-input'
+            />
+          </div>
 
           {errors?.price?.type === "required" && (
             <span className="error">O campo Preço é obrigatório</span>
@@ -64,7 +69,7 @@ export default function Products() {
 
         </form>
 
-      </div>
+      </div >
     </>
   )
 }
