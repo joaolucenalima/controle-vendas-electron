@@ -9,13 +9,13 @@ interface salesProps {
 
 interface productProps {
   name: string,
-  price: number
+  priceInCents: number
 }
 
 class Products extends Model {
   declare id: string;
   declare name: string;
-  declare price: number
+  declare priceInCents: number
 }
 
 Products.init({
@@ -25,7 +25,7 @@ Products.init({
     primaryKey: true
   },
   name: DataTypes.STRING,
-  price: DataTypes.FLOAT
+  priceInCents: DataTypes.INTEGER
 }, {
   sequelize,
   timestamps: false
@@ -35,7 +35,7 @@ export async function registerProduct(props: productProps) {
   try {
     await Products.create({
       name: props.name,
-      price: props.price
+      priceInCents: props.priceInCents
     })
     return ("Produto cadastrado com sucesso!")
   }
@@ -46,9 +46,7 @@ export async function registerProduct(props: productProps) {
 
 export async function listProducts() {
   try {
-    return await Products.findAll({
-      attributes: ['name', 'id']
-    })
+    return await Products.findAll()
   }
   catch (error) {
     console.log(error);
@@ -59,7 +57,12 @@ class Sales extends Model {
   declare id: number;
   declare productID: string;
   declare quantity: number;
-  declare amount: number
+  declare amount: number;
+  declare Product: {
+    id: string,
+    name: string,
+    priceInCents: number
+  };
 }
 
 Sales.init({
@@ -70,22 +73,28 @@ Sales.init({
   },
   productID: {
     type: DataTypes.STRING,
-    allowNull: false,
-    references: {
-      model: 'Products',
-      key: 'id'
-    }
+    allowNull: false
   },
   quantity: DataTypes.INTEGER,
-  amount: DataTypes.INTEGER
+  amount: DataTypes.INTEGER,
+  createdAt: DataTypes.DATE
 }, {
   sequelize,
+  timestamps: false
 });
+
+Sales.belongsTo(Products, {
+  foreignKey: 'productID'
+})
 
 export async function listSales() {
   try {
-    const sales = await Sales.findAll()
-    return sales;
+    return await Sales.findAll({
+      include: Products,
+      order: [
+        ['id', 'DESC'],
+      ]
+    })
   }
   catch (error) {
     console.log(error);

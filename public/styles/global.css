@@ -105,6 +105,32 @@ select {
 
 /*SALES*/
 
+.table-container {
+  width: 90%;
+  margin: 2rem auto;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+table {
+  width: 100%;
+}
+
+thead {
+  text-align: left;
+}
+
+tr {
+  background-color: #3a3a3a;
+  display: grid;
+  grid-template-columns: 1fr 3fr 2fr 2fr 2fr;
+  padding: 0.5rem;
+}
+
+tbody>tr:nth-child(odd) {
+  background-color: #5c5c5c;
+}
+
 .form-sales {
   display: flex;
   flex-direction: column;

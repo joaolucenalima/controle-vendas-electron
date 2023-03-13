@@ -5,7 +5,7 @@ import { registerProduct } from '../../database/sales';
 
 type Inputs = {
   name: string,
-  price: number
+  priceInCents: number
 }
 
 export default function Products() {
@@ -14,6 +14,7 @@ export default function Products() {
 
   const handleProduct: SubmitHandler<Inputs> = async data => {
     try {
+      data.priceInCents *= 100
       await registerProduct(data)
       reset()
     } catch (err) {
@@ -45,23 +46,23 @@ export default function Products() {
             <span className="error">Digite o nome do produto</span>
           )}
 
-          <label htmlFor="price">Preço unitário: </label>
+          <label htmlFor="priceInCents">Preço unitário: </label>
 
           <div style={{ position: "relative" }}>
             <span className='money-span'>R$</span>
             <input
-              {...register('price', {
+              {...register('priceInCents', {
                 required: true,
               })}
               type="number"
-              name="price"
+              name="priceInCents"
               placeholder="0,00"
               step="0.50"
               className='price-input'
             />
           </div>
 
-          {errors?.price?.type === "required" && (
+          {errors?.priceInCents?.type === "required" && (
             <span className="error">O campo Preço é obrigatório</span>
           )}
 

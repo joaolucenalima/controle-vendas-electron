@@ -4,7 +4,11 @@ export default function Materials() {
   return (
     <>
       <Header />
-      <h1>Materiais</h1>
+      <div className="container">
+
+        <h2>Materiais</h2>
+
+      </div>
     </>
   )
 }

@@ -4,10 +4,13 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import Header from "../components/Header";
 import { listProducts, listSales, registerSale } from '../../database/sales'
 
+type listSalesResponse = Awaited<ReturnType<typeof listSales>>
+
 type salesType = {
   productID: string,
   quantity: number,
-  amount: number
+  amount: number,
+  createdAt: Date
 }
 
 type productsType = {
@@ -18,7 +21,7 @@ type productsType = {
 export default function Sales() {
 
   const [products, setProducts] = useState<productsType[] | undefined>([])
-  const [sales, setSales] = useState<salesType[] | undefined>([])
+  const [sales, setSales] = useState<listSalesResponse>([])
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<salesType>();
 
@@ -36,6 +39,7 @@ export default function Sales() {
 
   const handleRegister: SubmitHandler<salesType> = async data => {
     try {
+      data.createdAt = new Date()
       await registerSale(data)
       reset()
     } catch (err) {
@@ -52,11 +56,35 @@ export default function Sales() {
 
         <h2>Vendas Registradas</h2>
 
-        <div className='table'>
-          <div className='table-headers'>
-
+        {sales?.length === 0 ? (
+          <p style={{ margin: "2rem auto", textAlign: "center", fontSize: "1.2rem" }}>Nenhuma venda registrada</p>
+        ) : (
+          <div className='table-container'>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Produto</th>
+                  <th>Quantidade</th>
+                  <th>Preço</th>
+                  <th>Data da venda</th>
+                </tr>
+              </thead>
+              <tbody>
+                {sales?.map((sale, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{sale.id}</td>
+                      <td>{sale.Product.name}</td>
+                      <td>{sale.quantity}</td>
+                      <td>{sale.amount}</td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
           </div>
-        </div>
+        )}
 
         <form className="form-sales" onSubmit={handleSubmit(handleRegister)}>
 
