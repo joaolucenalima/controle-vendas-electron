@@ -1,16 +1,23 @@
 import { useEffect, useState } from "react";
-import { countSales } from "../../database/sales";
+import { countSales, getSalesAmount } from "../../database/sales";
 
 import Header from "../components/Header";
 
 export default function Report() {
 
   const [sales, setSales] = useState<number | undefined>(0)
+  const [salesAmount, setSalesAmount] = useState<number | undefined>(0)
 
   useEffect(() => {
+
     countSales().then((data) => {
       setSales(data)
     })
+
+    getSalesAmount().then((amount) => {
+      setSalesAmount(amount)
+    })
+
   }, [])
 
   return (
@@ -31,7 +38,7 @@ export default function Report() {
             <h1>Vendas Totais:</h1>
             <span style={{ fontSize: "1.3rem" }}>{sales == undefined ? '0' : sales}</span>
             <strong>Lucro total:</strong>
-            <span style={{ color: "#00CF66", fontSize: "1.3rem" }}>R$ 10</span>
+            <span style={{ color: "#00CF66", fontSize: "1.3rem" }}>R$ {salesAmount == undefined ? '0' : salesAmount / 100}</span>
           </div>
         </div>
 

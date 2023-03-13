@@ -9,13 +9,14 @@ type listSalesResponse = Awaited<ReturnType<typeof listSales>>
 type salesType = {
   productID: string,
   quantity: number,
-  amount: number,
-  createdAt: Date
+  amountInCents: number,
+  createdAt: string
 }
 
 type productsType = {
   id: string,
-  name: string
+  name: string,
+  priceInCents: number
 }
 
 export default function Sales() {
@@ -38,8 +39,13 @@ export default function Sales() {
   }, [])
 
   const handleRegister: SubmitHandler<salesType> = async data => {
+
+    products?.map((product) => {
+      data.productID == product.id ? data.amountInCents = product.priceInCents * data.quantity : null
+    })
+
     try {
-      data.createdAt = new Date()
+      data.createdAt = (new Date()).toLocaleDateString()
       await registerSale(data)
       reset()
     } catch (err) {
@@ -77,7 +83,8 @@ export default function Sales() {
                       <td>{sale.id}</td>
                       <td>{sale.Product.name}</td>
                       <td>{sale.quantity}</td>
-                      <td>{sale.amount}</td>
+                      <td>R$ {sale.amountInCents / 100}</td>
+                      <td>{sale.createdAt}</td>
                     </tr>
                   )
                 })}
@@ -87,6 +94,8 @@ export default function Sales() {
         )}
 
         <form className="form-sales" onSubmit={handleSubmit(handleRegister)}>
+
+          <h2>Nova venda</h2>
 
           <div className="form-field">
             <label htmlFor="productID">Produto:</label>

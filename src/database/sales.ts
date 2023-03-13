@@ -4,7 +4,8 @@ import { DataTypes, Model } from "sequelize";
 interface salesProps {
   productID: string,
   quantity: number,
-  amount: number
+  amountInCents: number,
+  createdAt: string
 }
 
 interface productProps {
@@ -57,7 +58,8 @@ class Sales extends Model {
   declare id: number;
   declare productID: string;
   declare quantity: number;
-  declare amount: number;
+  declare amountInCents: number;
+  declare createdAt: string;
   declare Product: {
     id: string,
     name: string,
@@ -76,8 +78,8 @@ Sales.init({
     allowNull: false
   },
   quantity: DataTypes.INTEGER,
-  amount: DataTypes.INTEGER,
-  createdAt: DataTypes.DATE
+  amountInCents: DataTypes.INTEGER,
+  createdAt: DataTypes.TEXT
 }, {
   sequelize,
   timestamps: false
@@ -106,6 +108,8 @@ export async function registerSale(props: salesProps) {
     await Sales.create({
       productID: props.productID,
       quantity: props.quantity,
+      amountInCents: props.amountInCents,
+      createdAt: props.createdAt
     })
     return ("Venda adicionada com sucesso!")
   }
@@ -117,6 +121,14 @@ export async function registerSale(props: salesProps) {
 export async function countSales() {
   try {
     return await Sales.count()
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function getSalesAmount() {
+  try {
+    return await Sales.sum('amountInCents')
   } catch (error) {
     console.log(error)
   }

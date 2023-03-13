@@ -1,7 +1,11 @@
 import sequelize from "./connection";
 import { DataTypes, Model } from "sequelize";
 
-class Materials extends Model { }
+class Materials extends Model {
+  declare id: number;
+  declare description: string;
+  declare amountInCents: number;
+}
 
 Materials.init({
   id: {
@@ -9,9 +13,8 @@ Materials.init({
     autoIncrement: true,
     primaryKey: true
   },
-  name: DataTypes.STRING,
-  quantity: DataTypes.INTEGER,
-  price: DataTypes.FLOAT,
+  description: DataTypes.STRING,
+  amountInCents: DataTypes.INTEGER,
 }, {
   sequelize,
 });
