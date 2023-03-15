@@ -1,14 +1,17 @@
 module.exports = {
   packagerConfig: {
     icon: './build/icon',
+    ignore: [
+      "\\.git",
+    ]
   },
   rebuildConfig: {},
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
       config: {
-        setupIcon: "./build/icon.ico",
-        setupExe: "controle-de-estoque.exe"
+        "setupIcon": "./build/icon.ico",
+        "setupExe": "controle-de-estoque.exe",
       },
     },
     {
@@ -23,5 +26,18 @@ module.exports = {
       name: '@electron-forge/maker-rpm',
       config: {},
     },
+  ],
+  publishers: [
+    {
+      name: "@electron-forge/publisher-github",
+      config: {
+        repository: {
+          owner: "joaolucenalima",
+          name: "controle-estoque-electron"
+        },
+        prerelease: false,
+        draft: true
+      }
+    }
   ],
 };
