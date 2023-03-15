@@ -73,3 +73,7 @@ app.on('second-instance', () => {
   win.center()
   win.focus()
 })
+
+if (require('electron-squirrel-startup')) {
+  app.quit()
+}
