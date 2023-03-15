@@ -44,14 +44,14 @@ export default function Report() {
             <h1>Materiais:</h1>
             <span style={{ fontSize: "1.3rem" }}>{buys}</span>
             <strong>Gastos totais:</strong>
-            <span style={{ color: "rgb(233, 113, 113)", fontSize: "1.3rem" }}>R$ {buysAmount / 100}</span>
+            <span style={{ color: "#cf231d", fontSize: "1.3rem" }}>R$ {buysAmount / 100}</span>
           </div>
 
           <div className="record">
             <h1>Vendas Totais:</h1>
             <span style={{ fontSize: "1.3rem" }}>{sales}</span>
             <strong>Lucro total:</strong>
-            <span style={{ color: "#00CF66", fontSize: "1.3rem" }}>R$ {salesAmount / 100}</span>
+            <span style={{ color: "#00CF22", fontSize: "1.3rem" }}>R$ {salesAmount / 100}</span>
           </div>
         </div>
 

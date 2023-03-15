@@ -3,13 +3,15 @@ import { DataTypes, Model } from "sequelize";
 
 type setMaterialsProps = {
   description: string,
-  amount: number
+  amount: number,
+  createdAt: string
 }
 
 class Materials extends Model {
   declare id: number;
   declare description: string;
   declare amountInCents: number;
+  declare createdAt: string
 }
 
 Materials.init({
@@ -20,13 +22,19 @@ Materials.init({
   },
   description: DataTypes.STRING,
   amountInCents: DataTypes.INTEGER,
+  createdAt: DataTypes.STRING
 }, {
   sequelize,
+  timestamps: false,
 });
 
 export async function getMaterials() {
   try {
-    return await Materials.findAll()
+    return await Materials.findAll({
+      order: [
+        ['id', 'DESC'],
+      ]
+    })
   }
   catch (error) {
     console.log(error);
@@ -38,7 +46,8 @@ export async function setMaterials(data: setMaterialsProps) {
     data.amount *= 100
     await Materials.create({
       description: data.description,
-      amountInCents: data.amount
+      amountInCents: data.amount,
+      createdAt: data.createdAt
     })
     return "Compra registrada com sucesso!"
   } catch (error) {

@@ -6,22 +6,22 @@ export default function Header() {
     <header>
 
       <Link to={'/'} className="link">
-        <span style={{ color: "#FAC100" }}><MdListAlt /></span>
+        <span style={{ color: "#CFC5BC" }}><MdListAlt /></span>
         <span>Relatório</span>
       </Link>
 
       <Link to={'/materials'} className="link">
-        <span style={{ color: "rgb(233, 113, 113)" }}><MdOutlineLayers /></span>
+        <span style={{ color: "#F72019" }}><MdOutlineLayers /></span>
         <span>Materiais</span>
       </Link>
 
       <Link to={'/sales'} className="link">
-        <span style={{ color: "#00CF66" }}><MdAttachMoney /></span>
+        <span style={{ color: "#00CF22" }}><MdAttachMoney /></span>
         <span>Vendas</span>
       </Link>
 
       <Link to={'/products'} className="link">
-        <span style={{ color: "rgb(77, 77, 236)" }}><MdOutlineAddBox /></span>
+        <span style={{ color: "#3254FF" }}><MdOutlineAddBox /></span>
         <span>Produtos</span>
       </Link>
     </header>
