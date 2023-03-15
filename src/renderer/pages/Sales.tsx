@@ -66,30 +66,24 @@ export default function Sales() {
           <p style={{ margin: "2rem auto", textAlign: "center", fontSize: "1.2rem" }}>Nenhuma venda registrada</p>
         ) : (
           <div className='table-container'>
-            <table>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Produto</th>
-                  <th>Quantidade</th>
-                  <th>Preço</th>
-                  <th>Data da venda</th>
-                </tr>
-              </thead>
-              <tbody>
-                {sales?.map((sale, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{sale.id}</td>
-                      <td>{sale.Product.name}</td>
-                      <td>{sale.quantity}</td>
-                      <td>R$ {sale.amountInCents / 100}</td>
-                      <td>{sale.createdAt}</td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
+            <div className='table-head'>
+              <strong>ID</strong>
+              <strong>Produto</strong>
+              <strong>Quantidade</strong>
+              <strong>Preço</strong>
+              <strong>Data da venda</strong>
+            </div>
+            {sales?.map((sale, index) => {
+              return (
+                <div key={index} className='table-row'>
+                  <span>{sale.id}</span>
+                  <span>{sale.Product.name}</span>
+                  <span>{sale.quantity}</span>
+                  <span>R$ {sale.amountInCents / 100}</span>
+                  <span>{sale.createdAt}</span>
+                </div>
+              )
+            })}
           </div>
         )}
 
@@ -130,11 +124,11 @@ export default function Sales() {
               min={1}
               disabled={products?.length === 0}
             />
-
-            {errors?.quantity?.type === "required" && (
-              <span className="error">Digite a quantidade vendida</span>
-            )}
           </div>
+
+          {errors?.quantity?.type === "required" && (
+            <span className="error" style={{ textAlign: "end" }}>Digite a quantidade vendida</span>
+          )}
 
           <input
             type="submit"
@@ -142,11 +136,10 @@ export default function Sales() {
             disabled={products?.length === 0}
           />
 
-
-
         </form>
 
       </div>
+
     </>
   )
 }

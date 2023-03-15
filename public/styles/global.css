@@ -35,7 +35,7 @@ button {
   border-radius: 4px;
   font-size: 1rem;
   font-weight: 600;
-  background-color: burlywood;
+  background-color: #748cab;
   color: #1d1d1d;
 }
 
@@ -102,6 +102,92 @@ select {
   border: none;
 }
 
+/*--------------------REPORT--------------------*/
+
+.flex-records {
+  display: flex;
+  flex-direction: column;
+  row-gap: 4rem;
+  margin: 4rem 2rem 2rem 2rem;
+}
+
+.first-line {
+  display: flex;
+  justify-content: space-around;
+}
+
+.second-line {
+  align-self: center;
+}
+
+.record {
+  height: 45%;
+  width: 45%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.3rem;
+  text-align: center;
+  border-radius: 8px;
+  background-color: #424242;
+  box-shadow: 4px 4px 10px #141414;
+}
+
+.record>span {
+  display: block;
+}
+
+.profit {
+  font-size: 1.7rem;
+  color: #00CF66;
+}
+
+.prejudice {
+  font-size: 1.7rem;
+  color: rgb(233, 113, 113);
+}
+
+/*--------------------MATERIALS--------------------*/
+
+.material-form {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
+.material-form>h2 {
+  margin-bottom: 1.5rem;
+}
+
+.material-form>div {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+}
+
+.material-form>div>input {
+  width: 100%;
+}
+
+.material-form>div>input[type="number"] {
+  padding-left: 2.2rem;
+}
+
+.money-span-materials {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 33.2%;
+  height: 100%;
+  font-size: 0.9rem;
+  border: 2px solid rgb(155, 155, 155);
+  border-radius: 4px 2px 2px 4px;
+  padding: 0 0.3rem 0 0.3rem;
+  color: black;
+}
+
 /* --------------------SALES--------------------*/
 
 .table-container {
@@ -109,32 +195,25 @@ select {
   margin: 2rem auto;
   max-height: 300px;
   overflow-y: auto;
-}
-
-table {
-  width: 100%;
-  border: 1px solid white;
-}
-
-thead {
   text-align: left;
 }
 
-tr {
+.table-head,
+.table-row {
   background-color: #3a3a3a;
   display: grid;
   grid-template-columns: 1fr 3fr 2fr 2fr 2fr;
   padding: 0.5rem;
 }
 
-tbody>tr:nth-child(odd) {
+.table-row:nth-child(even) {
   background-color: #5c5c5c;
 }
 
 .form-sales {
   display: flex;
   flex-direction: column;
-  row-gap: 1rem;
+  row-gap: 1.4rem;
   width: 50%;
   margin: 2rem auto;
 }
@@ -150,47 +229,12 @@ tbody>tr:nth-child(odd) {
   margin-left: 0.4rem;
 }
 
-/*--------------------REPORT--------------------*/
-
-.flex-records {
-  display: flex;
-  flex-direction: column;
-  row-gap: 3rem;
-  margin: 2rem;
-}
-
-.first-line {
-  display: flex;
-  justify-content: space-around;
-}
-
-.second-line {
-  align-self: center;
-}
-
-.record {
-  height: 14rem;
-  width: 18rem;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  row-gap: 1.3rem;
-  text-align: center;
-  border-radius: 8px;
-  background-color: #424242;
-  box-shadow: 4px 4px 10px #141414;
-}
-
-.record>span {
-  display: block;
-}
-
 /*--------------------PRODUCTS--------------------*/
 
 .form-products {
   display: flex;
   flex-direction: column;
-  row-gap: 1rem;
+  row-gap: 0.7rem;
   width: 50%;
   margin: 2rem auto;
 }

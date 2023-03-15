@@ -123,6 +123,7 @@ export async function countSales() {
     return await Sales.count()
   } catch (error) {
     console.log(error)
+    return 0
   }
 }
 
@@ -131,5 +132,6 @@ export async function getSalesAmount() {
     return await Sales.sum('amountInCents')
   } catch (error) {
     console.log(error)
+    return 0
   }
 }

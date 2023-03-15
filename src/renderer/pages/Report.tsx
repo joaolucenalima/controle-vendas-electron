@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
+import { countBuys, sumMaterialsAmount } from "../../database/materials";
 import { countSales, getSalesAmount } from "../../database/sales";
 
 import Header from "../components/Header";
 
 export default function Report() {
 
-  const [sales, setSales] = useState<number | undefined>(0)
-  const [salesAmount, setSalesAmount] = useState<number | undefined>(0)
+  const [sales, setSales] = useState<number | 0>(0)
+  const [salesAmount, setSalesAmount] = useState<number | 0>(0)
+  const [buys, setBuys] = useState<number | 0>(0)
+  const [buysAmount, setBuysAmount] = useState<number | 0>(0)
 
   useEffect(() => {
 
@@ -18,7 +21,17 @@ export default function Report() {
       setSalesAmount(amount)
     })
 
+    countBuys().then((data) => {
+      setBuys(data)
+    })
+
+    sumMaterialsAmount().then((data) => {
+      setBuysAmount(data)
+    })
+
   }, [])
+
+  const profit = (salesAmount - buysAmount) / 100
 
   return (
     <>
@@ -29,25 +42,25 @@ export default function Report() {
         <div className="first-line">
           <div className="record">
             <h1>Materiais:</h1>
-            <span style={{ fontSize: "1.3rem" }}>10 compras</span>
+            <span style={{ fontSize: "1.3rem" }}>{buys}</span>
             <strong>Gastos totais:</strong>
-            <span style={{ color: "rgb(233, 113, 113)", fontSize: "1.3rem" }}>R$ 10</span>
+            <span style={{ color: "rgb(233, 113, 113)", fontSize: "1.3rem" }}>R$ {buysAmount / 100}</span>
           </div>
 
           <div className="record">
             <h1>Vendas Totais:</h1>
-            <span style={{ fontSize: "1.3rem" }}>{sales == undefined ? '0' : sales}</span>
+            <span style={{ fontSize: "1.3rem" }}>{sales}</span>
             <strong>Lucro total:</strong>
-            <span style={{ color: "#00CF66", fontSize: "1.3rem" }}>R$ {salesAmount == undefined ? '0' : salesAmount / 100}</span>
+            <span style={{ color: "#00CF66", fontSize: "1.3rem" }}>R$ {salesAmount / 100}</span>
           </div>
         </div>
 
         <div className="second-line record">
           <h1>Lucro final:</h1>
           <span
-            style={{ fontSize: "1.7rem" }}
+            className={profit > 0 ? "profit" : "prejudice"}
           >
-            R$ 10
+            R$ {profit}
           </span>
         </div>
 
