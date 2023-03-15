@@ -1,13 +1,18 @@
-import { Sequelize } from 'sequelize';
+import { ipcRenderer } from "electron"
+import path from "path"
+import { Sequelize } from "sequelize"
+
+const database_dir = ipcRenderer.sendSync('get-data-path')
+const database_path = path.resolve(database_dir, "database.sqlite")
 
 const sequelize = new Sequelize({
   dialect: 'sqlite',
-  storage: '../database/database.sqlite',
+  storage: database_path,
   logging: false,
 });
 
 (async () => {
-  await sequelize.sync();
-})();
+  await sequelize.sync()
+})()
 
-export default sequelize;
+export default sequelize
