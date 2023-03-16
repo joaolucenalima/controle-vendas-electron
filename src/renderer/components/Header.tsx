@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { MdAttachMoney, MdListAlt, MdOutlineLayers, MdOutlineAddBox } from 'react-icons/md'
+import { MdAttachMoney, MdListAlt, MdOutlineLayers, MdOutlineAddBox, MdShoppingCart } from 'react-icons/md'
 
 export default function Header() {
   return (
@@ -10,14 +10,19 @@ export default function Header() {
         <span>Relatório</span>
       </Link>
 
-      <Link to={'/materials'} className="link">
-        <span style={{ color: "#F72019" }}><MdOutlineLayers /></span>
-        <span>Materiais</span>
+      <Link to={'/shopping'} className="link">
+        <span style={{ color: "#CFC5BC" }}><MdShoppingCart /></span>
+        <span>Compras</span>
       </Link>
 
       <Link to={'/sales'} className="link">
         <span style={{ color: "#00CF22" }}><MdAttachMoney /></span>
         <span>Vendas</span>
+      </Link>
+
+      <Link to={'/materials'} className="link">
+        <span style={{ color: "#F72019" }}><MdOutlineLayers /></span>
+        <span>Materiais</span>
       </Link>
 
       <Link to={'/products'} className="link">

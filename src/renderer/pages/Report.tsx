@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { countBuys, sumMaterialsAmount } from "../../database/materials";
+import { countBuys, sumShoppingAmount } from "../../database/shopping";
 import { countSales, getSalesAmount } from "../../database/sales";
 
 import Header from "../components/Header";
@@ -25,7 +25,7 @@ export default function Report() {
       setBuys(data)
     })
 
-    sumMaterialsAmount().then((data) => {
+    sumShoppingAmount().then((data) => {
       setBuysAmount(data)
     })
 
