@@ -1,20 +1,5 @@
 import { app, BrowserWindow, nativeImage } from 'electron'
 import path from 'path'
-import fs from 'fs'
-
-require("./main-events")
-
-const appPath = app.getAppPath()
-
-function verifyDatabaseDir() {
-  //Definindo o diretório do banco de dados
-  const database_dir = path.resolve(app.getPath("userData"), "database")
-
-  //Se a pasta não existir, ela é criada
-  if (!fs.existsSync(database_dir)) {
-    fs.mkdirSync(database_dir)
-  }
-}
 
 function CreateWindow() {
 
@@ -60,7 +45,6 @@ if (!isUnicWindow) {
   app.quit()
 } else {
   app.whenReady().then(() => {
-    verifyDatabaseDir()
     CreateWindow()
   })
 }
