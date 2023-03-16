@@ -1,5 +1,5 @@
 {
-  "name": "controle-estoque-react",
+  "name": "controle-de-estoque",
   "version": "1.0.0",
   "description": "App para controle de estoque",
   "main": "./dist/main/main.js",
