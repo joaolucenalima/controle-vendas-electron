@@ -87,7 +87,7 @@ select {
   font-weight: 700;
   color: white;
   border-right: 2px solid gray;
-  padding: 0.5rem;
+  padding: 1rem 0.5rem;
 }
 
 .link:hover {

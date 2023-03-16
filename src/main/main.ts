@@ -35,6 +35,8 @@ function CreateWindow() {
     }
   })
 
+  mainWindow.setMenuBarVisibility(false);
+
   mainWindow.loadFile(path.resolve(app.getAppPath(), './public/index.html'))
 
   mainWindow.once('ready-to-show', () => {
