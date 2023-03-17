@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import Header from "../components/Header";
+import SuccessPopUp from '../components/SuccessPopUp';
 import { getMaterials, getShopping, setShopping } from '../../database/shopping';
 
 type getShoppingProps = Awaited<ReturnType<typeof getShopping>>
@@ -23,6 +24,7 @@ export default function Shopping() {
 
   const [purchases, setPurchases] = useState<getShoppingProps>([])
   const [materials, setMaterials] = useState<materialsProps[] | undefined>([])
+  const [response, setResponse] = useState<string | undefined>(undefined)
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<shoppingProps>();
 
@@ -38,6 +40,12 @@ export default function Shopping() {
 
   }, [])
 
+  useEffect(() => {
+    setTimeout(() => {
+      setResponse(undefined)
+    }, 3000);
+  }, [response])
+
   const handleSetPurchase: SubmitHandler<shoppingProps> = async data => {
 
     materials?.map((material) => {
@@ -47,7 +55,7 @@ export default function Shopping() {
     try {
       data.createdAt = (new Date()).toLocaleDateString()
       await setShopping(data).then((response) => {
-        console.log(response)
+        setResponse(response)
       })
       reset()
     } catch (error) {
@@ -59,6 +67,12 @@ export default function Shopping() {
   return (
     <>
       <Header />
+
+      {response != undefined ? (
+        <div>
+          {SuccessPopUp(response)}
+        </div>
+      ) : null}
 
       <div className='container'>
 

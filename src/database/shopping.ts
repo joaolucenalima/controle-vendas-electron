@@ -25,8 +25,14 @@ Materials.init({
     primaryKey: true,
     defaultValue: DataTypes.UUIDV4
   },
-  name: DataTypes.STRING,
-  priceInCents: DataTypes.INTEGER
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  priceInCents: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  }
 }, {
   sequelize,
   timestamps: false,
@@ -49,6 +55,7 @@ export async function setMaterials(props: setMaterialsProps) {
     return ("Material registrado com sucesso!")
   } catch (error) {
     console.log(error)
+    return "Não foi possível cadastrar o material. Tente novamente mais tarde"
   }
 }
 
@@ -70,10 +77,22 @@ Shopping.init({
     autoIncrement: true,
     primaryKey: true
   },
-  materialID: DataTypes.STRING,
-  quantity: DataTypes.NUMBER,
-  amountInCents: DataTypes.INTEGER,
-  createdAt: DataTypes.STRING
+  materialID: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  quantity: {
+    type: DataTypes.NUMBER,
+    allowNull: false
+  },
+  amountInCents: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  createdAt: {
+    type: DataTypes.STRING,
+    allowNull: false
+  }
 }, {
   sequelize,
   timestamps: false,

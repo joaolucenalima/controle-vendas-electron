@@ -1,6 +1,8 @@
+import { useState, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import Header from "../components/Header";
+import SuccessPopUp from '../components/SuccessPopUp';
 import { registerProduct } from '../../database/sales';
 
 type Inputs = {
@@ -10,12 +12,22 @@ type Inputs = {
 
 export default function Products() {
 
+  const [response, setResponse] = useState<string | undefined>(undefined)
+
   const { register, handleSubmit, reset, formState: { errors } } = useForm<Inputs>();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setResponse(undefined)
+    }, 3000);
+  }, [response])
 
   const handleProduct: SubmitHandler<Inputs> = async data => {
     try {
       data.priceInCents *= 100
-      await registerProduct(data)
+      await registerProduct(data).then((response) => {
+        setResponse(response)
+      })
       reset()
     } catch (err) {
       console.log(err)
@@ -27,28 +39,35 @@ export default function Products() {
     <>
       <Header />
 
+      {response != undefined ? (
+        <div>
+          {SuccessPopUp(response)}
+        </div>
+      ) : null}
+
       <div className="container">
 
-        <h2>Registre aqui um novo produto para adicioná-lo a uma venda</h2>
+        <form className="inline-form" autoComplete="off" onSubmit={handleSubmit(handleProduct)}>
 
-        <form className="form-products" autoComplete="off" onSubmit={handleSubmit(handleProduct)}>
+          <h2>Registrar produto</h2>
 
-          <label htmlFor="name">Nome do produto: </label>
-          <input
-            {...register('name', {
-              required: true,
-            })}
-            type="text"
-            name="name"
-          />
+          <div>
+            <label htmlFor="name">Nome do produto: </label>
+            <input
+              {...register('name', {
+                required: true,
+              })}
+              type="text"
+              name="name"
+            />
+          </div>
 
           {errors?.name?.type === "required" && (
-            <span className="error">Digite o nome do produto</span>
+            <span className="error">O campo Nome é obrigatório</span>
           )}
 
-          <label htmlFor="priceInCents">Preço unitário: </label>
-
           <div style={{ position: "relative" }}>
+            <label htmlFor="priceInCents">Preço unitário: </label>
             <span className='money-span'>R$</span>
             <input
               {...register('priceInCents', {
@@ -56,9 +75,9 @@ export default function Products() {
               })}
               type="number"
               name="priceInCents"
+              min={1}
+              step="0.10"
               placeholder="0,00"
-              step="0.50"
-              className='price-input'
             />
           </div>
 

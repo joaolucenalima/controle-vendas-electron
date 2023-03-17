@@ -11,7 +11,7 @@ export default function Header() {
       </Link>
 
       <Link to={'/shopping'} className="link">
-        <span style={{ color: "#CFC5BC" }}><MdShoppingCart /></span>
+        <span style={{ color: "#ca413c" }}><MdShoppingCart /></span>
         <span>Compras</span>
       </Link>
 
@@ -21,7 +21,7 @@ export default function Header() {
       </Link>
 
       <Link to={'/materials'} className="link">
-        <span style={{ color: "#F72019" }}><MdOutlineLayers /></span>
+        <span style={{ color: "#FAC100" }}><MdOutlineLayers /></span>
         <span>Materiais</span>
       </Link>
 
