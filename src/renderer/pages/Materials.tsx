@@ -1,7 +1,9 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useEffect, useState } from 'react'
 
 import Header from "../components/Header";
 import { setMaterials } from '../../database/shopping';
+import SuccessPopUp from '../components/SuccessPopUp';
 
 type setMaterialProps = {
   name: string,
@@ -10,16 +12,25 @@ type setMaterialProps = {
 
 export default function Materials() {
 
+  const [response, setResponse] = useState<string | undefined>(undefined)
+
   const { register, handleSubmit, reset, formState: { errors } } = useForm<setMaterialProps>();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setResponse(undefined)
+    }, 3000);
+  }, [response])
 
   const handleSetMaterial: SubmitHandler<setMaterialProps> = async data => {
     try {
       data.price *= 100
-      await setMaterials(data)
+      await setMaterials(data).then((response) => {
+        setResponse(response)
+      })
       reset()
     } catch (error) {
       console.log(error);
-      alert("Não foi possível cadastrar o material. Tente novamente mais tarde")
     }
   }
 
@@ -27,9 +38,15 @@ export default function Materials() {
     <>
       <Header />
 
+      {response != undefined ? (
+        <div>
+          {SuccessPopUp(response)}
+        </div>
+      ) : null}
+
       <div className="container">
 
-        <form className="material-form" onSubmit={handleSubmit(handleSetMaterial)}>
+        <form className="inline-form" onSubmit={handleSubmit(handleSetMaterial)}>
 
           <h2>Registrar materiais</h2>
 
@@ -50,15 +67,14 @@ export default function Materials() {
 
           <div style={{ position: "relative" }}>
             <label htmlFor="price">Preço unitário:</label>
-            <span className='money-span-materials'>R$</span>
+            <span className='money-span'>R$</span>
             <input
               {...register('price', {
                 required: true,
               })}
               type="number"
               name="price"
-              min={1}
-              step="0.50"
+              step="0.10"
               placeholder="0.00"
             />
           </div>

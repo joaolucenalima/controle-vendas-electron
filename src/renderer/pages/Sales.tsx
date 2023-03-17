@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import Header from "../components/Header";
+import SuccessPopUp from '../components/SuccessPopUp';
 import { listProducts, listSales, registerSale } from '../../database/sales'
 
 type listSalesResponse = Awaited<ReturnType<typeof listSales>>
@@ -21,8 +22,12 @@ type productsType = {
 
 export default function Sales() {
 
+  // produtos do select
   const [products, setProducts] = useState<productsType[] | undefined>([])
+  // vendas da tabela
   const [sales, setSales] = useState<listSalesResponse>([])
+  // resposta que será mostrada no popup
+  const [response, setResponse] = useState<string | undefined>(undefined)
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<salesType>();
 
@@ -38,15 +43,24 @@ export default function Sales() {
 
   }, [])
 
+  useEffect(() => {
+    setTimeout(() => {
+      setResponse(undefined)
+    }, 3000);
+  }, [response])
+
   const handleRegister: SubmitHandler<salesType> = async data => {
 
+    // recuperar informações do produto selecionado pelo id
     products?.map((product) => {
       data.productID == product.id ? data.amountInCents = product.priceInCents * data.quantity : null
     })
 
     try {
       data.createdAt = (new Date()).toLocaleDateString()
-      await registerSale(data)
+      await registerSale(data).then((response) => {
+        setResponse(response)
+      })
       reset()
     } catch (err) {
       console.log(err)
@@ -57,6 +71,12 @@ export default function Sales() {
   return (
     <>
       <Header />
+
+      {response != undefined ? (
+        <div>
+          {SuccessPopUp(response)}
+        </div>
+      ) : null}
 
       <div className="container">
 

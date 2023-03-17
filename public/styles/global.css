@@ -5,21 +5,13 @@
 }
 
 *:focus {
-  outline-style: solid;
-  outline-width: 2px;
-  outline-color: whitesmoke;
+  outline: none;
 }
 
 body {
   background-color: #252525;
   color: white;
   font-family: 'Lato', sans-serif;
-}
-
-header {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  border-bottom: 3px solid gray;
 }
 
 h1,
@@ -79,15 +71,21 @@ select {
 
 /*--------------------HEADER--------------------*/
 
+header {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  background-color: #1d1d1d;
+}
+
 .link {
+  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-decoration: none;
   font-weight: 700;
   color: white;
-  border-right: 2px solid gray;
-  padding: 1rem 0.5rem;
+  padding: 0.8rem
 }
 
 .link:hover {
@@ -96,10 +94,6 @@ select {
 
 .link>span:first-child {
   font-size: 1.5rem;
-}
-
-.link:last-child {
-  border: none;
 }
 
 /*--------------------REPORT--------------------*/
@@ -147,9 +141,9 @@ select {
   color: #cf231d;
 }
 
-/*--------------------MATERIALS--------------------*/
+/*--------------------INLINE-FORM--------------------*/
 
-.material-form {
+.inline-form {
   width: 80%;
   margin: 0 auto;
   display: flex;
@@ -157,25 +151,25 @@ select {
   row-gap: 1rem;
 }
 
-.material-form>h2 {
+.inline-form>h2 {
   margin-bottom: 1.5rem;
 }
 
-.material-form>div {
+.inline-form>div {
   display: grid;
   grid-template-columns: 1fr 2fr;
   align-items: center;
 }
 
-.material-form>div>input {
+.inline-form>div>input {
   width: 100%;
 }
 
-.material-form>div>input[type="number"] {
+.inline-form>div>input[type="number"] {
   padding-left: 2.2rem;
 }
 
-.money-span-materials {
+.money-span {
   display: flex;
   align-items: center;
   position: absolute;
@@ -229,34 +223,20 @@ select {
   margin-left: 0.4rem;
 }
 
-/*--------------------PRODUCTS--------------------*/
+/*--------------------POPUP--------------------*/
 
-.form-products {
-  display: flex;
-  flex-direction: column;
-  row-gap: 0.7rem;
-  width: 50%;
-  margin: 2rem auto;
+.popup {
+  position: sticky;
+  left: 0;
+  top: 0.2rem;
+  width: 100%;
+  color: white;
+  padding: 0.5rem;
 }
 
-.form-products>input[type="submit"] {
-  margin-top: 1rem;
-}
-
-.money-span {
+.popup>strong {
   display: flex;
   align-items: center;
-  position: absolute;
-  left: 0;
-  height: 100%;
-  font-size: 0.9rem;
-  border: 2px solid rgb(155, 155, 155);
-  border-radius: 4px 2px 2px 4px;
-  padding: 0 0.3rem 0 0.3rem;
-  color: black;
-}
-
-.price-input {
-  width: 100%;
-  padding-left: 2.2rem !important;
+  justify-content: center;
+  column-gap: 0.5rem;
 }
