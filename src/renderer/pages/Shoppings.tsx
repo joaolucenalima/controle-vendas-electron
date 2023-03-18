@@ -24,6 +24,7 @@ export default function Shopping() {
 
   const [purchases, setPurchases] = useState<getShoppingProps>([])
   const [materials, setMaterials] = useState<materialsProps[] | undefined>([])
+
   const [response, setResponse] = useState<string | undefined>(undefined)
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<shoppingProps>();
@@ -110,7 +111,7 @@ export default function Shopping() {
           <div className="form-field">
             <label htmlFor="productID">Produto:</label>
 
-            {materials?.length === 0 ? <span className='error'>Cadastre um produto para registrar a venda</span> :
+            {materials?.length === 0 ? <span className='error'>Cadastre um produto para registrar a compra</span> :
               (
                 <select
                   {...register('materialID', {
@@ -143,12 +144,12 @@ export default function Shopping() {
           </div>
 
           {errors?.quantity?.type === "required" && (
-            <span className="error" style={{ textAlign: "end" }}>Digite a quantidade vendida</span>
+            <span className="error" style={{ textAlign: "end" }}>Digite a quantidade comprada</span>
           )}
 
           <input
             type="submit"
-            value="Cadastrar venda"
+            value="Cadastrar compra"
             disabled={materials?.length === 0}
           />
 
