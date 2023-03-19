@@ -53,7 +53,6 @@ export default function Shopping() {
     })
 
     try {
-      data.createdAt = (new Date()).toLocaleDateString()
       await setShopping(data).then((response) => {
         setResponse(response)
       })
@@ -96,7 +95,7 @@ export default function Shopping() {
                   <span>{purchase.Material.name}</span>
                   <span>{purchase.quantity}</span>
                   <span>R$ {purchase.amountInCents / 100}</span>
-                  <span>{purchase.createdAt}</span>
+                  <span>{new Date(purchase.createdAt).toLocaleDateString()}</span>
                 </div>
               )
             })}
