@@ -74,7 +74,7 @@ export default function Materials() {
               })}
               type="number"
               name="price"
-              step="0.10"
+              step="0.01"
               placeholder="0.00"
             />
           </div>

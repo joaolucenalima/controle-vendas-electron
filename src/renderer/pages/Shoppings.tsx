@@ -38,7 +38,7 @@ export default function Shopping() {
       setMaterials(data)
     })
 
-  }, [])
+  }, [, response])
 
   useEffect(() => {
     setTimeout(() => {
@@ -75,41 +75,43 @@ export default function Shopping() {
 
       <div className='container'>
 
-        <h2>Compras de materiais</h2>
+        <div>
+          <h2>Compras de materiais</h2>
 
-        {purchases?.length === 0 ? (
-          <p style={{ margin: "2rem auto", textAlign: "center", fontSize: "1.2rem" }}>Nenhuma compra feita</p>
-        ) : (
-          <div className='table-container'>
-            <div className='table-head'>
-              <strong>ID</strong>
-              <strong>Material</strong>
-              <strong>Quantidade</strong>
-              <strong>Preço</strong>
-              <strong>Data da venda</strong>
+          {purchases?.length === 0 ? (
+            <p style={{ margin: "2rem auto", textAlign: "center", fontSize: "1.2rem" }}>Nenhuma compra feita</p>
+          ) : (
+            <div className='table-container'>
+              <div className='table-head'>
+                <strong>ID</strong>
+                <strong>Material</strong>
+                <strong>Quantidade</strong>
+                <strong>Preço</strong>
+                <strong>Data da compra</strong>
+              </div>
+              {purchases?.map((purchase, index) => {
+                return (
+                  <div key={index} className='table-row'>
+                    <span>{purchase.id}</span>
+                    <span>{purchase.Material.name}</span>
+                    <span>{purchase.quantity}</span>
+                    <span>R$ {purchase.amountInCents / 100}</span>
+                    <span>{new Date(purchase.createdAt).toLocaleDateString()}</span>
+                  </div>
+                )
+              })}
             </div>
-            {purchases?.map((purchase, index) => {
-              return (
-                <div key={index} className='table-row'>
-                  <span>{purchase.id}</span>
-                  <span>{purchase.Material.name}</span>
-                  <span>{purchase.quantity}</span>
-                  <span>R$ {purchase.amountInCents / 100}</span>
-                  <span>{new Date(purchase.createdAt).toLocaleDateString()}</span>
-                </div>
-              )
-            })}
-          </div>
-        )}
+          )}
+        </div>
 
         <form className="form-sales" onSubmit={handleSubmit(handleSetPurchase)}>
 
           <h2>Nova compra</h2>
 
           <div className="form-field">
-            <label htmlFor="productID">Produto:</label>
+            <label htmlFor="materialID">Material:</label>
 
-            {materials?.length === 0 ? <span className='error'>Cadastre um produto para registrar a venda</span> :
+            {materials?.length === 0 ? <span className='error'>Cadastre um material para registrar a compra</span> :
               (
                 <select
                   {...register('materialID', {
@@ -118,7 +120,7 @@ export default function Shopping() {
                   name="materialID"
                   defaultValue=''
                 >
-                  <option value='' disabled>Selecione o produto</option>
+                  <option value='' disabled>Selecione o material</option>
                   {materials?.map((material) => {
                     return (
                       <option key={material.id} value={material.id}>{material.name}</option>
@@ -142,7 +144,7 @@ export default function Shopping() {
           </div>
 
           {errors?.quantity?.type === "required" && (
-            <span className="error" style={{ textAlign: "end" }}>Digite a quantidade vendida</span>
+            <span className="error" style={{ textAlign: "end" }}>Digite a quantidade comprada</span>
           )}
 
           <input
