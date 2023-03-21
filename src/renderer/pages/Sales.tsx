@@ -41,7 +41,7 @@ export default function Sales() {
       setSales(sales)
     })
 
-  }, [, response])
+  }, [])
 
   useEffect(() => {
     setTimeout(() => {
@@ -57,6 +57,7 @@ export default function Sales() {
     })
 
     try {
+      data.createdAt = (new Date()).toLocaleDateString()
       await registerSale(data).then((response) => {
         setResponse(response)
       })
@@ -79,34 +80,32 @@ export default function Sales() {
 
       <div className="container">
 
-        <div>
-          <h2>Vendas Registradas</h2>
+        <h2>Vendas Registradas</h2>
 
-          {sales?.length === 0 ? (
-            <p style={{ margin: "2rem auto", textAlign: "center", fontSize: "1.2rem" }}>Nenhuma venda registrada</p>
-          ) : (
-            <div className='table-container'>
-              <div className='table-head'>
-                <strong>ID</strong>
-                <strong>Produto</strong>
-                <strong>Quantidade</strong>
-                <strong>Preço</strong>
-                <strong>Data da venda</strong>
-              </div>
-              {sales?.map((sale, index) => {
-                return (
-                  <div key={index} className='table-row'>
-                    <span>{sale.id}</span>
-                    <span>{sale.Product.name}</span>
-                    <span>{sale.quantity}</span>
-                    <span>R$ {sale.amountInCents / 100}</span>
-                    <span>{new Date(sale.createdAt).toLocaleDateString()}</span>
-                  </div>
-                )
-              })}
+        {sales?.length === 0 ? (
+          <p style={{ margin: "2rem auto", textAlign: "center", fontSize: "1.2rem" }}>Nenhuma venda registrada</p>
+        ) : (
+          <div className='table-container'>
+            <div className='table-head'>
+              <strong>ID</strong>
+              <strong>Produto</strong>
+              <strong>Quantidade</strong>
+              <strong>Preço</strong>
+              <strong>Data da venda</strong>
             </div>
-          )}
-        </div>
+            {sales?.map((sale, index) => {
+              return (
+                <div key={index} className='table-row'>
+                  <span>{sale.id}</span>
+                  <span>{sale.Product.name}</span>
+                  <span>{sale.quantity}</span>
+                  <span>R$ {sale.amountInCents / 100}</span>
+                  <span>{sale.createdAt}</span>
+                </div>
+              )
+            })}
+          </div>
+        )}
 
         <form className="form-sales" onSubmit={handleSubmit(handleRegister)}>
 
