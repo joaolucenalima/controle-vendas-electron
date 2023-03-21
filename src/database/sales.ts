@@ -79,10 +79,10 @@ Sales.init({
   },
   quantity: DataTypes.INTEGER,
   amountInCents: DataTypes.INTEGER,
-  createdAt: DataTypes.TEXT
 }, {
   sequelize,
-  timestamps: false
+  timestamps: true,
+  updatedAt: false
 });
 
 Sales.belongsTo(Products, {

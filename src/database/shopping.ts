@@ -89,13 +89,10 @@ Shopping.init({
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  createdAt: {
-    type: DataTypes.STRING,
-    allowNull: false
-  }
 }, {
   sequelize,
-  timestamps: false,
+  timestamps: true,
+  updatedAt: false,
 });
 
 Shopping.belongsTo(Materials, {
