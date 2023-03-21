@@ -24,6 +24,7 @@ export default function Shopping() {
 
   const [purchases, setPurchases] = useState<getShoppingProps>([])
   const [materials, setMaterials] = useState<materialsProps[] | undefined>([])
+
   const [response, setResponse] = useState<string | undefined>(undefined)
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<shoppingProps>();
@@ -149,7 +150,7 @@ export default function Shopping() {
 
           <input
             type="submit"
-            value="Cadastrar venda"
+            value="Cadastrar compra"
             disabled={materials?.length === 0}
           />
 

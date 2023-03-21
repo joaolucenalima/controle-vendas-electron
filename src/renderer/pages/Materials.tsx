@@ -83,7 +83,7 @@ export default function Materials() {
             <span className="error">O campo preço é obrigatório.</span>
           )}
 
-          <input type="submit" value="Registrar compra" />
+          <input type="submit" value="Registrar material" />
 
         </form>
 
