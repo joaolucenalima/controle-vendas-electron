@@ -83,7 +83,7 @@ export default function Shopping() {
             <p style={{ margin: "2rem auto", textAlign: "center", fontSize: "1.2rem" }}>Nenhuma compra feita</p>
           ) : (
             <div className='table-container'>
-              <div className='table-head'>
+              <div className='table-head col7'>
                 <strong>ID</strong>
                 <strong>Material</strong>
                 <strong>Quantidade</strong>
@@ -92,7 +92,7 @@ export default function Shopping() {
               </div>
               {purchases?.map((purchase, index) => {
                 return (
-                  <div key={index} className='table-row'>
+                  <div key={index} className='table-row col7'>
                     <span>{purchase.id}</span>
                     <span>{purchase.Material.name}</span>
                     <span>{purchase.quantity}</span>

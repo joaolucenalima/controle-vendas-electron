@@ -65,6 +65,7 @@ select {
 
 .error {
   font-size: 0.9rem;
+  text-align: end;
   color: tomato;
   display: block;
 }
@@ -141,6 +142,27 @@ header {
   color: #cf231d;
 }
 
+/* --------------------SALES--------------------*/
+
+.form-sales {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.4rem;
+  width: 90%;
+  margin: 2rem auto;
+}
+
+.form-field {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-field>input {
+  width: 100%;
+  margin-left: 0.4rem;
+}
+
 /*--------------------INLINE-FORM--------------------*/
 
 .inline-form {
@@ -157,7 +179,7 @@ header {
 
 .inline-form>div {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 3fr;
   align-items: center;
 }
 
@@ -173,7 +195,7 @@ header {
   display: flex;
   align-items: center;
   position: absolute;
-  left: 33.2%;
+  left: 25%;
   height: 100%;
   font-size: 0.9rem;
   border: 2px solid rgb(155, 155, 155);
@@ -182,45 +204,25 @@ header {
   color: black;
 }
 
-/* --------------------SALES--------------------*/
+/*--------------------TABLE--------------------*/
 
 .table-container {
-  width: 90%;
+  width: 95%;
   margin: 2rem auto;
-  max-height: 300px;
+  max-height: 70vh;
   overflow-y: auto;
   text-align: left;
+  border-collapse: collapse;
 }
 
-.table-head,
-.table-row {
+th {
   background-color: #3a3a3a;
-  display: grid;
-  grid-template-columns: 1fr 3fr 2fr 2fr 2fr;
   padding: 0.5rem;
 }
 
-.table-row:nth-child(even) {
+td {
   background-color: #5c5c5c;
-}
-
-.form-sales {
-  display: flex;
-  flex-direction: column;
-  row-gap: 1.4rem;
-  width: 50%;
-  margin: 2rem auto;
-}
-
-.form-field {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.form-field>input {
-  width: 100%;
-  margin-left: 0.4rem;
+  padding: 0.5rem;
 }
 
 /*--------------------POPUP--------------------*/
@@ -239,4 +241,98 @@ header {
   align-items: center;
   justify-content: center;
   column-gap: 0.5rem;
+}
+
+/*--------------------MODAL--------------------*/
+
+.DialogOverlay {
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  inset: 0;
+  animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.DialogContent {
+  background-color: #252525;
+  border-radius: 6px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  max-width: 450px;
+  max-height: 85vh;
+  padding: 25px;
+  animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.DialogDescription {
+  margin: 10px 0 20px;
+  color: #A09FA6;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.CloseButton {
+  font-family: inherit;
+  font-size: 1.3rem;
+  border-radius: 50%;
+  height: 2rem;
+  width: 2rem;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background-color: #252525;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+}
+
+.CloseButton:hover {
+  background-color: #424242;
+}
+
+@keyframes overlayShow {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes contentShow {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.NewSaleButton {
+  position: fixed;
+  right: 0.8rem;
+  bottom: 1rem;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  background-color: #2cd448;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #424242;
+}
+
+.NewSaleButton:hover {
+  background-color: #28b840;
+  transition: 200ms;
 }

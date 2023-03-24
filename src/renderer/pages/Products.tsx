@@ -75,9 +75,9 @@ export default function Products() {
               })}
               type="number"
               name="priceInCents"
-              min={1}
               step="0.01"
-              placeholder="0,00"
+              placeholder="0.00"
+              min={0.01}
             />
           </div>
 
