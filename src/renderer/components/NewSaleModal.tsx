@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { MdAdd } from 'react-icons/md';
 import * as Dialog from '@radix-ui/react-dialog';
 
 import { listProducts, registerSale } from '../../database/sales'
+import { ResponseContext } from '../../contexts/ResponseContext';
 
 type productsType = {
   id: string,
@@ -20,9 +21,9 @@ type salesType = {
 
 export default function NewSaleModal() {
 
+  const { response, setResponseValue } = useContext(ResponseContext);
   // produtos do select
   const [products, setProducts] = useState<productsType[] | undefined>([])
-  const [response, setResponse] = useState<string | undefined>(undefined)
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<salesType>();
 
@@ -41,7 +42,7 @@ export default function NewSaleModal() {
 
     try {
       await registerSale(data).then((response) => {
-        setResponse(response)
+        setResponseValue(response)
       })
       reset()
     } catch (err) {

@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { MdDelete, MdEdit } from 'react-icons/md';
 
 import Header from "../components/Header";
 import SuccessPopUp from '../components/SuccessPopUp';
 import { listProducts, registerProduct } from '../../database/sales';
+import { ResponseContext } from '../../contexts/ResponseContext';
 
 type Inputs = {
   name: string,
@@ -19,28 +20,29 @@ type ProductListType = {
 
 export default function Products() {
 
-  const [response, setResponse] = useState<string | undefined>(undefined)
+  const { response, setResponseValue } = useContext(ResponseContext);
+
   const [productList, setProductList] = useState<ProductListType[] | undefined>([])
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<Inputs>();
 
   useEffect(() => {
+
     listProducts().then((product) => {
       setProductList(product)
     })
-  }, [, response])
 
-  useEffect(() => {
     setTimeout(() => {
-      setResponse(undefined)
-    }, 3000);
+      setResponseValue(undefined)
+    }, 3000)
+
   }, [response])
 
   const handleProduct: SubmitHandler<Inputs> = async data => {
     try {
       data.priceInCents *= 100
       await registerProduct(data).then((response) => {
-        setResponse(response)
+        setResponseValue(response)
       })
       reset()
     } catch (err) {

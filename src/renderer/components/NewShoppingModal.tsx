@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { MdAdd } from 'react-icons/md';
 import * as Dialog from '@radix-ui/react-dialog';
 
 import { getMaterials, getShopping, setShopping } from '../../database/shopping';
+import { ResponseContext } from '../../contexts/ResponseContext';
 
 type getShoppingProps = Awaited<ReturnType<typeof getShopping>>
 
@@ -22,10 +23,11 @@ type materialsProps = {
 
 export default function NewShoppingModal() {
 
+  const { response, setResponseValue } = useContext(ResponseContext);
+
   const [purchases, setPurchases] = useState<getShoppingProps>([])
   const [materials, setMaterials] = useState<materialsProps[] | undefined>([])
 
-  const [response, setResponse] = useState<string | undefined>(undefined)
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<shoppingProps>();
 
@@ -39,7 +41,7 @@ export default function NewShoppingModal() {
       setMaterials(data)
     })
 
-  }, [, response])
+  }, [response])
 
   const handleSetPurchase: SubmitHandler<shoppingProps> = async data => {
 
@@ -49,7 +51,7 @@ export default function NewShoppingModal() {
 
     try {
       await setShopping(data).then((response) => {
-        setResponse(response)
+        setResponseValue(response)
       })
       reset()
     } catch (error) {

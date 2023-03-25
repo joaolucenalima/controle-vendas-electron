@@ -1,32 +1,31 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { MdDelete, MdEdit } from 'react-icons/md';
 
 import Header from "../components/Header";
 import SuccessPopUp from '../components/SuccessPopUp';
 import NewSaleModal from '../components/NewSaleModal';
 import { listSales } from '../../database/sales'
+import { ResponseContext } from '../../contexts/ResponseContext';
 
 type listSalesResponse = Awaited<ReturnType<typeof listSales>>
 
 export default function Sales() {
 
+  const { response, setResponseValue } = useContext(ResponseContext);
+
   // vendas da tabela
   const [sales, setSales] = useState<listSalesResponse>([])
-  // resposta que será mostrada no popup
-  const [response, setResponse] = useState<string | undefined>(undefined)
 
   useEffect(() => {
+
+    setTimeout(() => {
+      setResponseValue(undefined)
+    }, 3000);
 
     listSales().then((sales) => {
       setSales(sales)
     })
 
-  }, [, response])
-
-  useEffect(() => {
-    setTimeout(() => {
-      setResponse(undefined)
-    }, 3000);
   }, [response])
 
   return (

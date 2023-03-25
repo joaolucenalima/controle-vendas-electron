@@ -1,31 +1,30 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { MdDelete, MdEdit } from 'react-icons/md';
 
 import Header from "../components/Header";
 import SuccessPopUp from '../components/SuccessPopUp';
-import { getShopping } from '../../database/shopping';
 import NewShoppingModal from '../components/NewShoppingModal';
+import { getShopping } from '../../database/shopping';
+import { ResponseContext } from '../../contexts/ResponseContext';
 
 type getShoppingProps = Awaited<ReturnType<typeof getShopping>>
 
 export default function Shopping() {
 
+  const { response, setResponseValue } = useContext(ResponseContext);
+
   const [purchases, setPurchases] = useState<getShoppingProps>([])
 
-  const [response, setResponse] = useState<string | undefined>(undefined)
-
   useEffect(() => {
+
+    setTimeout(() => {
+      setResponseValue(undefined)
+    }, 3000);
 
     getShopping().then((data) => {
       setPurchases(data)
     })
 
-  }, [, response])
-
-  useEffect(() => {
-    setTimeout(() => {
-      setResponse(undefined)
-    }, 3000);
   }, [response])
 
   return (

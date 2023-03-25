@@ -1,10 +1,11 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { MdDelete, MdEdit } from 'react-icons/md';
 
 import Header from "../components/Header";
 import SuccessPopUp from '../components/SuccessPopUp';
 import { getMaterials, setMaterials } from '../../database/shopping';
-import { MdDelete, MdEdit } from 'react-icons/md';
+import { ResponseContext } from '../../contexts/ResponseContext';
 
 type setMaterialProps = {
   name: string,
@@ -19,28 +20,29 @@ type MaterialListType = {
 
 export default function Materials() {
 
-  const [response, setResponse] = useState<string | undefined>(undefined)
+  const { response, setResponseValue } = useContext(ResponseContext);
+
   const [materialList, setMaterialList] = useState<MaterialListType[] | undefined>([])
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<setMaterialProps>();
 
   useEffect(() => {
+
+    setTimeout(() => {
+      setResponseValue(undefined)
+    }, 3000)
+
     getMaterials().then((material) => {
       setMaterialList(material)
     })
-  }, [, response])
 
-  useEffect(() => {
-    setTimeout(() => {
-      setResponse(undefined)
-    }, 3000);
   }, [response])
 
   const handleSetMaterial: SubmitHandler<setMaterialProps> = async data => {
     try {
       data.price *= 100
       await setMaterials(data).then((response) => {
-        setResponse(response)
+        setResponseValue(response)
       })
       reset()
     } catch (error) {
