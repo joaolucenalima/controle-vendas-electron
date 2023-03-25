@@ -5,7 +5,7 @@ import { MdDelete, MdEdit } from 'react-icons/md';
 import Header from "../components/Header";
 import SuccessPopUp from '../components/SuccessPopUp';
 import { getMaterials, setMaterials } from '../../database/shopping';
-import { ResponseContext } from '../../contexts/ResponseContext';
+import { ResponseContext } from '../contexts/ResponseContext';
 
 type setMaterialProps = {
   name: string,

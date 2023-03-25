@@ -5,7 +5,7 @@ import { MdDelete, MdEdit } from 'react-icons/md';
 import Header from "../components/Header";
 import SuccessPopUp from '../components/SuccessPopUp';
 import { listProducts, registerProduct } from '../../database/sales';
-import { ResponseContext } from '../../contexts/ResponseContext';
+import { ResponseContext } from '../contexts/ResponseContext';
 
 type Inputs = {
   name: string,

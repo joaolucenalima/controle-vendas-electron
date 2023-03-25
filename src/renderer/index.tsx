@@ -1,6 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
-import { ResponseProvider } from "../contexts/ResponseContext"
+import { ResponseProvider } from "./contexts/ResponseContext"
 import { AppRoutes } from "./routes"
 
 function App() {

@@ -4,7 +4,7 @@ import { MdAdd } from 'react-icons/md';
 import * as Dialog from '@radix-ui/react-dialog';
 
 import { listProducts, registerSale } from '../../database/sales'
-import { ResponseContext } from '../../contexts/ResponseContext';
+import { ResponseContext } from '../contexts/ResponseContext';
 
 type productsType = {
   id: string,

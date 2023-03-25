@@ -4,7 +4,7 @@ import { MdAdd } from 'react-icons/md';
 import * as Dialog from '@radix-ui/react-dialog';
 
 import { getMaterials, getShopping, setShopping } from '../../database/shopping';
-import { ResponseContext } from '../../contexts/ResponseContext';
+import { ResponseContext } from '../contexts/ResponseContext';
 
 type getShoppingProps = Awaited<ReturnType<typeof getShopping>>
 
