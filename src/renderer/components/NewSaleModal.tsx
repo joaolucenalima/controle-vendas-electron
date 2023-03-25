@@ -54,7 +54,11 @@ export default function NewSaleModal() {
     <Dialog.Root>
 
       <Dialog.Trigger asChild>
-        <MdAdd title='Cadastrar nova venda' className='NewSaleButton' />
+        <MdAdd
+          title='Cadastrar nova venda'
+          className='ModalButton'
+          style={{ backgroundColor: '#2cd448', color: '#404040' }}
+        />
       </Dialog.Trigger>
 
       <Dialog.Portal>

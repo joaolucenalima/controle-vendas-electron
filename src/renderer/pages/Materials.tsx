@@ -12,6 +12,7 @@ type setMaterialProps = {
 }
 
 type MaterialListType = {
+  id: string,
   name: string,
   priceInCents: number
 }
@@ -117,9 +118,9 @@ export default function Materials() {
                 </tr>
               </thead>
               <tbody>
-                {materialList?.map((material, index) => {
+                {materialList?.map((material) => {
                   return (
-                    <tr key={index}>
+                    <tr key={material.id}>
                       <td>{material.name}</td>
                       <td>R$ {material.priceInCents / 100}</td>
                       <td style={{ textAlign: 'center' }}><MdEdit /></td>

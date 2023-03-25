@@ -70,6 +70,12 @@ select {
   display: block;
 }
 
+.no-register {
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 3rem;
+}
+
 /*--------------------HEADER--------------------*/
 
 header {
@@ -316,23 +322,22 @@ td {
   }
 }
 
-.NewSaleButton {
+.ModalButton {
   position: fixed;
   right: 0.8rem;
   bottom: 1rem;
   border-radius: 50%;
   width: 3rem;
   height: 3rem;
-  background-color: #2cd448;
   padding: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: #424242;
+  color: #5873fc;
 }
 
-.NewSaleButton:hover {
-  background-color: #28b840;
+.ModalButton:hover {
+  opacity: 80%;
   transition: 200ms;
 }

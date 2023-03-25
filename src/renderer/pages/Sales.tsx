@@ -45,7 +45,7 @@ export default function Sales() {
           <h2>Vendas Registradas</h2>
 
           {sales?.length === 0 ? (
-            <p style={{ margin: "2rem auto", textAlign: "center", fontSize: "1.2rem" }}>Nenhuma venda registrada</p>
+            <p className='no-register'>Nenhuma venda registrada</p>
           ) : (
             <table className='table-container'>
               <thead>

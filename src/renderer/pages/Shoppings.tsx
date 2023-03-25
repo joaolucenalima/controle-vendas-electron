@@ -1,42 +1,23 @@
 import { useEffect, useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { MdDelete, MdEdit } from 'react-icons/md';
 
 import Header from "../components/Header";
 import SuccessPopUp from '../components/SuccessPopUp';
-import { getMaterials, getShopping, setShopping } from '../../database/shopping';
+import { getShopping } from '../../database/shopping';
+import NewShoppingModal from '../components/NewShoppingModal';
 
 type getShoppingProps = Awaited<ReturnType<typeof getShopping>>
-
-type shoppingProps = {
-  materialID: string,
-  quantity: number,
-  amount: number,
-  createdAt: string
-}
-
-type materialsProps = {
-  id: string,
-  name: string,
-  priceInCents: number
-}
 
 export default function Shopping() {
 
   const [purchases, setPurchases] = useState<getShoppingProps>([])
-  const [materials, setMaterials] = useState<materialsProps[] | undefined>([])
 
   const [response, setResponse] = useState<string | undefined>(undefined)
-
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<shoppingProps>();
 
   useEffect(() => {
 
     getShopping().then((data) => {
       setPurchases(data)
-    })
-
-    getMaterials().then((data) => {
-      setMaterials(data)
     })
 
   }, [, response])
@@ -46,23 +27,6 @@ export default function Shopping() {
       setResponse(undefined)
     }, 3000);
   }, [response])
-
-  const handleSetPurchase: SubmitHandler<shoppingProps> = async data => {
-
-    materials?.map((material) => {
-      data.materialID == material.id ? data.amount = material.priceInCents * data.quantity : null
-    })
-
-    try {
-      await setShopping(data).then((response) => {
-        setResponse(response)
-      })
-      reset()
-    } catch (error) {
-      console.log(error);
-      alert("Não foi possível cadastrar a compra de materiais. Tente novamente mais tarde.")
-    }
-  }
 
   return (
     <>
@@ -80,81 +44,40 @@ export default function Shopping() {
           <h2>Compras de materiais</h2>
 
           {purchases?.length === 0 ? (
-            <p style={{ margin: "2rem auto", textAlign: "center", fontSize: "1.2rem" }}>Nenhuma compra feita</p>
+            <p className='no-register'>Nenhuma compra feita</p>
           ) : (
-            <div className='table-container'>
-              <div className='table-head col7'>
-                <strong>ID</strong>
-                <strong>Material</strong>
-                <strong>Quantidade</strong>
-                <strong>Preço</strong>
-                <strong>Data da compra</strong>
-              </div>
-              {purchases?.map((purchase, index) => {
-                return (
-                  <div key={index} className='table-row col7'>
-                    <span>{purchase.id}</span>
-                    <span>{purchase.Material.name}</span>
-                    <span>{purchase.quantity}</span>
-                    <span>R$ {purchase.amountInCents / 100}</span>
-                    <span>{new Date(purchase.createdAt).toLocaleDateString()}</span>
-                  </div>
-                )
-              })}
-            </div>
+            <table className='table-container'>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Material</th>
+                  <th>Quantidade</th>
+                  <th>Preço</th>
+                  <th style={{ textAlign: 'center' }}>Data da compra</th>
+                  <th style={{ textAlign: 'center' }}>Editar</th>
+                  <th style={{ textAlign: 'center' }}>Excluir</th>
+                </tr>
+              </thead>
+              <tbody>
+                {purchases?.map((purchase, index) => {
+                  return (
+                    <tr key={index} >
+                      <td>{purchase.id}</td>
+                      <td>{purchase.Material.name}</td>
+                      <td>{purchase.quantity}</td>
+                      <td>R$ {purchase.amountInCents / 100}</td>
+                      <td style={{ textAlign: 'center' }}>{new Date(purchase.createdAt).toLocaleDateString()}</td>
+                      <td style={{ textAlign: 'center' }}><MdEdit /></td>
+                      <td style={{ textAlign: 'center' }}><MdDelete /></td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
           )}
         </div>
 
-        <form className="form-sales" onSubmit={handleSubmit(handleSetPurchase)}>
-
-          <h2>Nova compra</h2>
-
-          <div className="form-field">
-            <label htmlFor="materialID">Material:</label>
-
-            {materials?.length === 0 ? <span className='error'>Cadastre um material para registrar a compra</span> :
-              (
-                <select
-                  {...register('materialID', {
-                    required: true,
-                  })}
-                  name="materialID"
-                  defaultValue=''
-                >
-                  <option value='' disabled>Selecione o material</option>
-                  {materials?.map((material) => {
-                    return (
-                      <option key={material.id} value={material.id}>{material.name}</option>
-                    )
-                  })}
-                </select>
-              )}
-          </div>
-
-          <div className="form-field">
-            <label htmlFor="quantity">Quantidade:</label>
-            <input
-              {...register('quantity', {
-                required: true,
-              })}
-              type="number"
-              name="quantity"
-              min={1}
-              disabled={materials?.length === 0}
-            />
-          </div>
-
-          {errors?.quantity?.type === "required" && (
-            <span className="error" style={{ textAlign: "end" }}>Digite a quantidade comprada</span>
-          )}
-
-          <input
-            type="submit"
-            value="Cadastrar compra"
-            disabled={materials?.length === 0}
-          />
-
-        </form>
+        <NewShoppingModal />
 
       </div>
     </>
