@@ -4,6 +4,7 @@ import { MdDelete, MdEdit } from 'react-icons/md';
 
 import Header from "../components/Header";
 import SuccessPopUp from '../components/SuccessPopUp';
+import EditProducts from '../components/EditProducts';
 import { listProducts, registerProduct } from '../../database/sales';
 import { ResponseContext } from '../contexts/ResponseContext';
 
@@ -25,6 +26,10 @@ export default function Products() {
   const [productList, setProductList] = useState<ProductListType[] | undefined>([])
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<Inputs>();
+
+  useEffect(() => {
+    setResponseValue(undefined)
+  }, [])
 
   useEffect(() => {
 
@@ -106,7 +111,7 @@ export default function Products() {
         </form>
 
         <div style={{ marginTop: '1.5rem' }}>
-          <h2>Materiais</h2>
+          <h2>Produtos</h2>
 
           {productList?.length === 0 ? (
             <p style={{ margin: "2rem auto", textAlign: "center", fontSize: "1.2rem" }}>Nenhum produto cadastrado</p>
@@ -126,7 +131,9 @@ export default function Products() {
                     <tr key={product.id}>
                       <td>{product.name}</td>
                       <td>R$ {product.priceInCents / 100}</td>
-                      <td style={{ textAlign: 'center' }}><MdEdit /></td>
+                      <td style={{ textAlign: 'center' }}>
+                        <EditProducts id={product.id} name={product.name} priceInCents={product.priceInCents} />
+                      </td>
                       <td style={{ textAlign: 'center' }}><MdDelete /></td>
                     </tr>
                   )

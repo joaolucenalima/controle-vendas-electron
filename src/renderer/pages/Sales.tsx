@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from 'react'
-import { MdDelete, MdEdit } from 'react-icons/md';
+import { MdDelete } from 'react-icons/md';
 
 import Header from "../components/Header";
 import SuccessPopUp from '../components/SuccessPopUp';
 import NewSaleModal from '../components/NewSaleModal';
+import EditSale from '../components/EditSale';
 import { listSales } from '../../database/sales'
 import { ResponseContext } from '../contexts/ResponseContext';
 
@@ -15,6 +16,10 @@ export default function Sales() {
 
   // vendas da tabela
   const [sales, setSales] = useState<listSalesResponse>([])
+
+  useEffect(() => {
+    setResponseValue(undefined)
+  }, [])
 
   useEffect(() => {
 
@@ -67,7 +72,9 @@ export default function Sales() {
                       <td>{sale.quantity}</td>
                       <td>R$ {sale.amountInCents / 100}</td>
                       <td style={{ textAlign: 'center' }}>{new Date(sale.createdAt).toLocaleDateString()}</td>
-                      <td style={{ textAlign: 'center' }}><MdEdit /></td>
+                      <td style={{ textAlign: 'center' }}>
+                        <EditSale id={sale.id} productID={sale.Product.id} quantity={sale.quantity} />
+                      </td>
                       <td style={{ textAlign: 'center' }}><MdDelete /></td>
                     </tr>
                   )

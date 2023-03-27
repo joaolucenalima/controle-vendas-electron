@@ -1,6 +1,17 @@
 import sequelize from "./connection";
 import { DataTypes, Model } from "sequelize";
 
+type setMaterialsProps = {
+  name: string,
+  price: number
+}
+
+type updateMaterialsProps = {
+  id: string,
+  name: string,
+  priceInCents: number,
+}
+
 type setShoppingProps = {
   materialID: string,
   quantity: number,
@@ -8,9 +19,11 @@ type setShoppingProps = {
   createdAt: string
 }
 
-type setMaterialsProps = {
-  name: string,
-  price: number
+type updateShoppingProps = {
+  id: number,
+  materialID: string,
+  quantity: number,
+  amountInCents: number
 }
 
 class Materials extends Model {
@@ -59,6 +72,24 @@ export async function setMaterials(props: setMaterialsProps) {
   }
 }
 
+export async function updateMaterials(props: updateMaterialsProps) {
+  try {
+    await Materials.update({
+      name: props.name,
+      priceInCents: props.priceInCents
+    },
+      {
+        where: {
+          id: props.id
+        }
+      })
+    return ("Edição salva com sucesso!")
+  } catch (error) {
+    console.log(error)
+    return "Não foi possível registrar as mudanças. Tente novamente mais tarde"
+  }
+}
+
 class Shopping extends Model {
   declare id: number;
   declare materialID: string;
@@ -66,6 +97,7 @@ class Shopping extends Model {
   declare amountInCents: number;
   declare createdAt: string;
   declare Material: {
+    id: string;
     name: string,
     price: number
   }
@@ -127,6 +159,24 @@ export async function setShopping(data: setShoppingProps) {
   } catch (error) {
     console.log(error)
     return "Erro ao registrar compra no banco de dados"
+  }
+}
+
+export async function updateShopping(props: updateShoppingProps) {
+  try {
+    await Shopping.update({
+      materialID: props.materialID,
+      quantity: props.quantity
+    },
+      {
+        where: {
+          id: props.id
+        }
+      })
+    return ("Edição salva com sucesso!")
+  } catch (error) {
+    console.log(error)
+    return "Não foi possível registrar as mudanças. Tente novamente mais tarde."
   }
 }
 

@@ -6,6 +6,7 @@ import Header from "../components/Header";
 import SuccessPopUp from '../components/SuccessPopUp';
 import { getMaterials, setMaterials } from '../../database/shopping';
 import { ResponseContext } from '../contexts/ResponseContext';
+import EditMaterials from '../components/EditMaterials';
 
 type setMaterialProps = {
   name: string,
@@ -25,6 +26,10 @@ export default function Materials() {
   const [materialList, setMaterialList] = useState<MaterialListType[] | undefined>([])
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<setMaterialProps>();
+
+  useEffect(() => {
+    setResponseValue(undefined)
+  }, [])
 
   useEffect(() => {
 
@@ -125,7 +130,9 @@ export default function Materials() {
                     <tr key={material.id}>
                       <td>{material.name}</td>
                       <td>R$ {material.priceInCents / 100}</td>
-                      <td style={{ textAlign: 'center' }}><MdEdit /></td>
+                      <td style={{ textAlign: 'center' }}>
+                        <EditMaterials id={material.id} name={material.name} priceInCents={material.priceInCents} />
+                      </td>
                       <td style={{ textAlign: 'center' }}><MdDelete /></td>
                     </tr>
                   )

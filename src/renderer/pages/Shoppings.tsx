@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from 'react'
-import { MdDelete, MdEdit } from 'react-icons/md';
+import { MdDelete } from 'react-icons/md';
 
 import Header from "../components/Header";
 import SuccessPopUp from '../components/SuccessPopUp';
 import NewShoppingModal from '../components/NewShoppingModal';
+import EditShopping from '../components/EditShopping';
 import { getShopping } from '../../database/shopping';
 import { ResponseContext } from '../contexts/ResponseContext';
 
@@ -14,6 +15,10 @@ export default function Shopping() {
   const { response, setResponseValue } = useContext(ResponseContext);
 
   const [purchases, setPurchases] = useState<getShoppingProps>([])
+
+  useEffect(() => {
+    setResponseValue(undefined)
+  }, [])
 
   useEffect(() => {
 
@@ -66,7 +71,9 @@ export default function Shopping() {
                       <td>{purchase.quantity}</td>
                       <td>R$ {purchase.amountInCents / 100}</td>
                       <td style={{ textAlign: 'center' }}>{new Date(purchase.createdAt).toLocaleDateString()}</td>
-                      <td style={{ textAlign: 'center' }}><MdEdit /></td>
+                      <td style={{ textAlign: 'center' }}>
+                        <EditShopping id={purchase.id} materialID={purchase.Material.id} quantity={purchase.quantity} />
+                      </td>
                       <td style={{ textAlign: 'center' }}><MdDelete /></td>
                     </tr>
                   )

@@ -179,8 +179,8 @@ header {
   row-gap: 1rem;
 }
 
-.inline-form>h2 {
-  margin-bottom: 1.5rem;
+.inline-form>div:first-child {
+  margin-top: 1.5rem;
 }
 
 .inline-form>div {
@@ -224,6 +224,10 @@ header {
 th {
   background-color: #3a3a3a;
   padding: 0.5rem;
+}
+
+tbody>tr {
+  border-bottom: 1px solid #3b3b3b;
 }
 
 td {
@@ -334,10 +338,14 @@ td {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: #5873fc;
 }
 
 .ModalButton:hover {
   opacity: 80%;
   transition: 200ms;
+}
+
+.EditButton:hover {
+  color: #00CF66;
+  cursor: pointer;
 }

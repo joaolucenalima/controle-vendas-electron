@@ -7,14 +7,13 @@ interface ResponseContextData {
 
 interface ResponseProviderProps {
   children: ReactNode,
-  response: string
 }
 
 export const ResponseContext = createContext({} as ResponseContextData);
 
-export function ResponseProvider({ children, ...rest }: ResponseProviderProps) {
+export function ResponseProvider({ children }: ResponseProviderProps) {
 
-  const [response, setResponse] = useState<string | undefined>(rest.response ?? undefined)
+  const [response, setResponse] = useState<string | undefined>(undefined)
 
   function setResponseValue(message: string | undefined) {
     setResponse(message)

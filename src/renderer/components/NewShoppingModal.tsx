@@ -67,7 +67,7 @@ export default function NewShoppingModal() {
         <MdAdd
           title='Cadastrar nova compra'
           className='ModalButton'
-          style={{ backgroundColor: '#5873fc', color: 'white' }}
+          style={{ backgroundColor: '#ca413c', color: 'white' }}
         />
       </Dialog.Trigger>
 
