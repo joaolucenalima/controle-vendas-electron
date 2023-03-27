@@ -30,17 +30,16 @@ export default function EditShopping(props: EditShoppingProps) {
   const { response, setResponseValue } = useContext(ResponseContext);
 
   const [materials, setMaterials] = useState<materialsType[] | undefined>([])
+  // controlar se o modal está aberto ou não / fechar ele após submissão
+  const [open, setOpen] = useState(false);
 
-  const { register, handleSubmit, reset } = useForm<shoppingType>();
+  const { register, handleSubmit } = useForm<shoppingType>();
 
   useEffect(() => {
-
     getMaterials().then(data => {
       setMaterials(data)
     })
-
     setResponseValue(undefined)
-
   }, [])
 
   const handleEdit: SubmitHandler<shoppingType> = async data => {
@@ -52,15 +51,16 @@ export default function EditShopping(props: EditShoppingProps) {
 
     data.id = props.id
 
-    updateShopping(data).then(response => {
+    setOpen(false)
+
+    await updateShopping(data).then(response => {
       setResponseValue(response)
     })
 
-    reset()
   }
 
   return (
-    <Dialog.Root>
+    <Dialog.Root open={open} onOpenChange={setOpen}>
 
       <Dialog.Trigger asChild>
         <MdEdit

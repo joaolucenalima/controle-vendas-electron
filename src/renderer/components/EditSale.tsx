@@ -30,8 +30,10 @@ export default function EditSale(props: EditSaleProps) {
   const { response, setResponseValue } = useContext(ResponseContext);
 
   const [products, setProducts] = useState<productsType[] | undefined>([])
+  // controlar se o modal está aberto ou não / fechar ele após submissão
+  const [open, setOpen] = useState(false);
 
-  const { register, handleSubmit, reset } = useForm<salesType>();
+  const { register, handleSubmit } = useForm<salesType>();
 
   useEffect(() => {
 
@@ -51,14 +53,16 @@ export default function EditSale(props: EditSaleProps) {
     })
 
     data.id = props.id
-    updateSales(data).then(response => {
+
+    setOpen(false)
+
+    await updateSales(data).then(response => {
       setResponseValue(response)
     })
-    reset()
   }
 
   return (
-    <Dialog.Root>
+    <Dialog.Root open={open} onOpenChange={setOpen}>
 
       <Dialog.Trigger asChild>
         <MdEdit

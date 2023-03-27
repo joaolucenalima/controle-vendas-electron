@@ -1,6 +1,6 @@
 import { MdCheck } from "react-icons/md";
 
-export default function SuccessPopUp(message: string | undefined) {
+export default function SuccessAlert(message: string | undefined) {
   return (
     <div className="popup" style={{ backgroundColor: "green" }}>
       <strong>

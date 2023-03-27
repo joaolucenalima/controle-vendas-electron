@@ -27,9 +27,10 @@ export default function NewShoppingModal() {
 
   const [purchases, setPurchases] = useState<getShoppingProps>([])
   const [materials, setMaterials] = useState<materialsProps[] | undefined>([])
+  // controlar se o modal está aberto ou não / fechar ele após submissão
+  const [open, setOpen] = useState(false);
 
-
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<shoppingProps>();
+  const { register, handleSubmit, formState: { errors } } = useForm<shoppingProps>();
 
   useEffect(() => {
 
@@ -53,15 +54,16 @@ export default function NewShoppingModal() {
       await setShopping(data).then((response) => {
         setResponseValue(response)
       })
-      reset()
     } catch (error) {
       console.log(error);
       alert("Não foi possível cadastrar a compra de materiais. Tente novamente mais tarde.")
     }
+
+    setOpen(false)
   }
 
   return (
-    <Dialog.Root>
+    <Dialog.Root open={open} onOpenChange={setOpen}>
 
       <Dialog.Trigger asChild>
         <MdAdd

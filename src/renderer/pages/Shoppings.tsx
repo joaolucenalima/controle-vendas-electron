@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import { MdDelete } from 'react-icons/md';
 
 import Header from "../components/Header";
-import SuccessPopUp from '../components/SuccessPopUp';
+import SuccessAlert from '../components/SuccessAlert';
 import NewShoppingModal from '../components/NewShoppingModal';
 import EditShopping from '../components/EditShopping';
 import { getShopping } from '../../database/shopping';
@@ -15,10 +15,6 @@ export default function Shopping() {
   const { response, setResponseValue } = useContext(ResponseContext);
 
   const [purchases, setPurchases] = useState<getShoppingProps>([])
-
-  useEffect(() => {
-    setResponseValue(undefined)
-  }, [])
 
   useEffect(() => {
 
@@ -38,7 +34,7 @@ export default function Shopping() {
 
       {response != undefined ? (
         <div>
-          {SuccessPopUp(response)}
+          {SuccessAlert(response)}
         </div>
       ) : null}
 

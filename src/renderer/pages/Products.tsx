@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { MdDelete, MdEdit } from 'react-icons/md';
 
 import Header from "../components/Header";
-import SuccessPopUp from '../components/SuccessPopUp';
+import SuccessAlert from '../components/SuccessAlert';
 import EditProducts from '../components/EditProducts';
 import { listProducts, registerProduct } from '../../database/sales';
 import { ResponseContext } from '../contexts/ResponseContext';
@@ -26,10 +26,6 @@ export default function Products() {
   const [productList, setProductList] = useState<ProductListType[] | undefined>([])
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<Inputs>();
-
-  useEffect(() => {
-    setResponseValue(undefined)
-  }, [])
 
   useEffect(() => {
 
@@ -62,7 +58,7 @@ export default function Products() {
 
       {response != undefined ? (
         <div>
-          {SuccessPopUp(response)}
+          {SuccessAlert(response)}
         </div>
       ) : null}
 

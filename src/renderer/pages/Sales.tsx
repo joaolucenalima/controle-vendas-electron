@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import { MdDelete } from 'react-icons/md';
 
 import Header from "../components/Header";
-import SuccessPopUp from '../components/SuccessPopUp';
+import SuccessAlert from '../components/SuccessAlert';
 import NewSaleModal from '../components/NewSaleModal';
 import EditSale from '../components/EditSale';
 import { listSales } from '../../database/sales'
@@ -16,10 +16,6 @@ export default function Sales() {
 
   // vendas da tabela
   const [sales, setSales] = useState<listSalesResponse>([])
-
-  useEffect(() => {
-    setResponseValue(undefined)
-  }, [])
 
   useEffect(() => {
 
@@ -39,7 +35,7 @@ export default function Sales() {
 
       {response != undefined ? (
         <div>
-          {SuccessPopUp(response)}
+          {SuccessAlert(response)}
         </div>
       ) : null}
 

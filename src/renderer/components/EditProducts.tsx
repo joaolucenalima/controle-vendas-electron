@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { MdEdit } from 'react-icons/md';
 import * as Dialog from '@radix-ui/react-dialog';
@@ -16,7 +16,10 @@ export default function EditProducts(props: EditProductsProps) {
 
   const { response, setResponseValue } = useContext(ResponseContext);
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<EditProductsProps>();
+  // controlar se o modal está aberto ou não / fechar ele após submissão
+  const [open, setOpen] = useState(false);
+
+  const { register, handleSubmit, formState: { errors } } = useForm<EditProductsProps>();
 
   useEffect(() => {
     setResponseValue(undefined)
@@ -29,16 +32,17 @@ export default function EditProducts(props: EditProductsProps) {
 
     data.priceInCents *= 100
 
-    updateProducts(data).then(response => {
+    setOpen(false)
+
+    await updateProducts(data).then(response => {
       setResponseValue(response)
     })
 
-    reset()
   }
 
   return (
 
-    <Dialog.Root>
+    <Dialog.Root open={open} onOpenChange={setOpen}>
 
       <Dialog.Trigger asChild>
         <MdEdit

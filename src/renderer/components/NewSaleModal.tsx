@@ -22,10 +22,13 @@ type salesType = {
 export default function NewSaleModal() {
 
   const { response, setResponseValue } = useContext(ResponseContext);
+
   // produtos do select
   const [products, setProducts] = useState<productsType[] | undefined>([])
+  // controlar se o modal está aberto ou não / fechar ele após submissão
+  const [open, setOpen] = useState(false);
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<salesType>();
+  const { register, handleSubmit, formState: { errors } } = useForm<salesType>();
 
   useEffect(() => {
     listProducts().then((data) => {
@@ -44,15 +47,16 @@ export default function NewSaleModal() {
       await registerSale(data).then((response) => {
         setResponseValue(response)
       })
-      reset()
     } catch (err) {
       console.log(err)
       alert("Não foi possível cadastrar a venda. Tente novamente mais tarde.")
     }
+
+    setOpen(false)
   }
 
   return (
-    <Dialog.Root>
+    <Dialog.Root open={open} onOpenChange={setOpen}>
 
       <Dialog.Trigger asChild>
         <MdAdd

@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react'
 import { MdDelete, MdEdit } from 'react-icons/md';
 
 import Header from "../components/Header";
-import SuccessPopUp from '../components/SuccessPopUp';
+import SuccessAlert from '../components/SuccessAlert';
 import { getMaterials, setMaterials } from '../../database/shopping';
 import { ResponseContext } from '../contexts/ResponseContext';
 import EditMaterials from '../components/EditMaterials';
@@ -26,10 +26,6 @@ export default function Materials() {
   const [materialList, setMaterialList] = useState<MaterialListType[] | undefined>([])
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<setMaterialProps>();
-
-  useEffect(() => {
-    setResponseValue(undefined)
-  }, [])
 
   useEffect(() => {
 
@@ -61,7 +57,7 @@ export default function Materials() {
 
       {response != undefined ? (
         <div>
-          {SuccessPopUp(response)}
+          {SuccessAlert(response)}
         </div>
       ) : null}
 
