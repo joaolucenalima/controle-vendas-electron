@@ -1,3 +1,5 @@
+const { version } = require("./package.json")
+
 module.exports = {
   packagerConfig: {
     icon: './build/icon',
@@ -13,7 +15,7 @@ module.exports = {
       name: '@electron-forge/maker-squirrel',
       config: {
         "setupIcon": "./build/icon.ico",
-        "setupExe": `controle-estoque.exe`,
+        "setupExe": `controle-estoque-${version}.exe`,
       },
     },
     {
