@@ -106,7 +106,7 @@ export default function EditMaterials(props: EditMaterialsProps) {
             <input
               type="submit"
               value="Salvar alterações"
-              style={{ backgroundColor: '#33aa47' }}
+              style={{ backgroundColor: 'rgb(233, 203, 105)' }}
             />
 
           </form>

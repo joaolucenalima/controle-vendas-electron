@@ -106,7 +106,7 @@ export default function EditProducts(props: EditProductsProps) {
             <input
               type="submit"
               value="Salvar alterações"
-              style={{ backgroundColor: '#33aa47' }}
+              style={{ backgroundColor: "#748cab" }}
             />
 
           </form>
