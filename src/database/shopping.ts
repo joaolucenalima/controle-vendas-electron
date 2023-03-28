@@ -90,6 +90,20 @@ export async function updateMaterials(props: updateMaterialsProps) {
   }
 }
 
+export async function deleteMaterials(id: string | number) {
+  try {
+    await Materials.destroy({
+      where: {
+        id
+      }
+    })
+    return "Registro apagado com sucesso."
+  } catch (error) {
+    console.log(error)
+    return "Não foi possível apagar o registro. Tente novamente mais tarde"
+  }
+}
+
 class Shopping extends Model {
   declare id: number;
   declare materialID: string;
@@ -177,6 +191,20 @@ export async function updateShopping(props: updateShoppingProps) {
   } catch (error) {
     console.log(error)
     return "Não foi possível registrar as mudanças. Tente novamente mais tarde."
+  }
+}
+
+export async function deleteShopping(id: string | number) {
+  try {
+    await Shopping.destroy({
+      where: {
+        id
+      }
+    })
+    return "Registro apagado com sucesso."
+  } catch (error) {
+    console.log(error)
+    return "Não foi possível apagar o registro. Tente novamente mais tarde"
   }
 }
 

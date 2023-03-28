@@ -125,6 +125,7 @@ export default function NewSaleModal() {
               type="submit"
               value="Cadastrar venda"
               disabled={products?.length === 0}
+              style={{ backgroundColor: '#33aa47' }}
             />
 
           </form>

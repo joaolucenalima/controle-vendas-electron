@@ -124,6 +124,7 @@ export default function EditShopping(props: EditShoppingProps) {
             <input
               type="submit"
               value="Salvar alterações"
+              style={{ backgroundColor: '#33aa47' }}
             />
 
           </form>

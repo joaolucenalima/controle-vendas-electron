@@ -1,12 +1,12 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useContext, useEffect, useState } from 'react'
-import { MdDelete, MdEdit } from 'react-icons/md';
 
 import Header from "../components/Header";
 import SuccessAlert from '../components/SuccessAlert';
+import EditMaterials from '../components/EditMaterials';
+import DeletePopUp from '../components/DeletePopUp';
 import { getMaterials, setMaterials } from '../../database/shopping';
 import { ResponseContext } from '../contexts/ResponseContext';
-import EditMaterials from '../components/EditMaterials';
 
 type setMaterialProps = {
   name: string,
@@ -101,7 +101,11 @@ export default function Materials() {
             <span className="error">O campo preço é obrigatório.</span>
           )}
 
-          <input type="submit" value="Registrar material" />
+          <input
+            type="submit"
+            value="Registrar material"
+            style={{ backgroundColor: 'rgb(233, 203, 105)' }}
+          />
 
         </form>
 
@@ -129,7 +133,9 @@ export default function Materials() {
                       <td style={{ textAlign: 'center' }}>
                         <EditMaterials id={material.id} name={material.name} priceInCents={material.priceInCents} />
                       </td>
-                      <td style={{ textAlign: 'center' }}><MdDelete /></td>
+                      <td style={{ textAlign: 'center' }}>
+                        <DeletePopUp id={material.id} register={'material'} />
+                      </td>
                     </tr>
                   )
                 })}

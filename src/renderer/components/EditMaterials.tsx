@@ -103,7 +103,11 @@ export default function EditMaterials(props: EditMaterialsProps) {
               <span className="error">O campo Preço é obrigatório</span>
             )}
 
-            <input type="submit" value="Salvar alterações" />
+            <input
+              type="submit"
+              value="Salvar alterações"
+              style={{ backgroundColor: '#33aa47' }}
+            />
 
           </form>
 

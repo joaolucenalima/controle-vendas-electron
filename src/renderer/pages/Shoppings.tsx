@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react'
-import { MdDelete } from 'react-icons/md';
 
 import Header from "../components/Header";
 import SuccessAlert from '../components/SuccessAlert';
 import NewShoppingModal from '../components/NewShoppingModal';
 import EditShopping from '../components/EditShopping';
+import DeletePopUp from '../components/DeletePopUp';
 import { getShopping } from '../../database/shopping';
 import { ResponseContext } from '../contexts/ResponseContext';
 
@@ -70,7 +70,9 @@ export default function Shopping() {
                       <td style={{ textAlign: 'center' }}>
                         <EditShopping id={purchase.id} materialID={purchase.Material.id} quantity={purchase.quantity} />
                       </td>
-                      <td style={{ textAlign: 'center' }}><MdDelete /></td>
+                      <td style={{ textAlign: 'center' }}>
+                        <DeletePopUp id={purchase.id} register={'shopping'} />
+                      </td>
                     </tr>
                   )
                 })}

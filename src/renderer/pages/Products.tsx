@@ -1,10 +1,10 @@
 import { useState, useEffect, useContext } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { MdDelete, MdEdit } from 'react-icons/md';
 
 import Header from "../components/Header";
 import SuccessAlert from '../components/SuccessAlert';
 import EditProducts from '../components/EditProducts';
+import DeletePopUp from '../components/DeletePopUp';
 import { listProducts, registerProduct } from '../../database/sales';
 import { ResponseContext } from '../contexts/ResponseContext';
 
@@ -102,7 +102,11 @@ export default function Products() {
             <span className="error">O campo Preço é obrigatório</span>
           )}
 
-          <input type="submit" value="Registrar produto" />
+          <input
+            type="submit"
+            value="Registrar produto"
+            style={{ backgroundColor: "#748cab" }}
+          />
 
         </form>
 
@@ -130,7 +134,9 @@ export default function Products() {
                       <td style={{ textAlign: 'center' }}>
                         <EditProducts id={product.id} name={product.name} priceInCents={product.priceInCents} />
                       </td>
-                      <td style={{ textAlign: 'center' }}><MdDelete /></td>
+                      <td style={{ textAlign: 'center' }}>
+                        <DeletePopUp id={product.id} register={'product'} />
+                      </td>
                     </tr>
                   )
                 })}

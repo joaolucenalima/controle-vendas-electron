@@ -132,6 +132,7 @@ export default function NewShoppingModal() {
               type="submit"
               value="Cadastrar compra"
               disabled={materials?.length === 0}
+              style={{ backgroundColor: '#a8312d', color: '#ebebeb' }}
             />
 
           </form>

@@ -84,6 +84,20 @@ export async function updateProducts(props: updateProductsProps) {
   }
 }
 
+export async function deleteProducts(id: string | number) {
+  try {
+    await Products.destroy({
+      where: {
+        id
+      }
+    })
+    return "Registro apagado com sucesso."
+  } catch (error) {
+    console.log(error)
+    return "Não foi possível apagar o registro. Tente novamente mais tarde"
+  }
+}
+
 
 class Sales extends Model {
   declare id: number;
@@ -167,6 +181,21 @@ export async function updateSales(props: updateSalesProps) {
     return "Não foi possível registrar as mudanças. Tente novamente mais tarde."
   }
 }
+
+export async function deleteSales(id: string | number) {
+  try {
+    await Sales.destroy({
+      where: {
+        id
+      }
+    })
+    return "Registro apagado com sucesso."
+  } catch (error) {
+    console.log(error)
+    return "Não foi possível apagar o registro. Tente novamente mais tarde"
+  }
+}
+
 
 export async function countSales() {
   try {

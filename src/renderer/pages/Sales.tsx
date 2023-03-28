@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react'
-import { MdDelete } from 'react-icons/md';
 
 import Header from "../components/Header";
 import SuccessAlert from '../components/SuccessAlert';
 import NewSaleModal from '../components/NewSaleModal';
 import EditSale from '../components/EditSale';
+import DeletePopUp from '../components/DeletePopUp';
 import { listSales } from '../../database/sales'
 import { ResponseContext } from '../contexts/ResponseContext';
 
@@ -71,7 +71,9 @@ export default function Sales() {
                       <td style={{ textAlign: 'center' }}>
                         <EditSale id={sale.id} productID={sale.Product.id} quantity={sale.quantity} />
                       </td>
-                      <td style={{ textAlign: 'center' }}><MdDelete /></td>
+                      <td style={{ textAlign: 'center' }}>
+                        <DeletePopUp id={sale.id} register={'sale'} />
+                      </td>
                     </tr>
                   )
                 })}
