@@ -1,5 +1,6 @@
-import sequelize from "./connection";
 import { DataTypes, Model } from "sequelize";
+import { Op } from "sequelize";
+import sequelize from "./connection";
 
 interface productProps {
   name: string,
@@ -196,21 +197,41 @@ export async function deleteSales(id: string | number) {
   }
 }
 
-
-export async function countSales() {
+export async function countAndSumSales(firstDay: string, lastDay: string) {
   try {
-    return await Sales.count()
+    const salesCount = await Sales.count({
+      where: {
+        createdAt: {
+          [Op.between]: [firstDay, lastDay]
+        }
+      }
+    })
+    const salesAmount = await Sales.sum('amountInCents',
+      {
+        where: {
+          createdAt: {
+            [Op.between]: [firstDay, lastDay]
+          }
+        }
+      })
+
+    return { salesCount, salesAmount }
   } catch (error) {
     console.log(error)
-    return 0
+    return { salesCount: 0, salesAmount: 0 }
   }
 }
 
-export async function getSalesAmount() {
+export async function getDateofFirstSale() {
   try {
-    return await Sales.sum('amountInCents')
+    return await Sales.findOne({
+      attributes: ['createdAt'],
+      order: [
+        ['id', 'ASC']
+      ]
+    })
   } catch (error) {
     console.log(error)
-    return 0
+    return undefined
   }
 }

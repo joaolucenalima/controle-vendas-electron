@@ -6,6 +6,7 @@ import NewShoppingModal from '../components/NewShoppingModal';
 import EditShopping from '../components/EditShopping';
 import DeletePopUp from '../components/DeletePopUp';
 import { getShopping } from '../../database/shopping';
+
 import { ResponseContext } from '../contexts/ResponseContext';
 
 type getShoppingProps = Awaited<ReturnType<typeof getShopping>>

@@ -1,5 +1,6 @@
-import sequelize from "./connection";
 import { DataTypes, Model } from "sequelize";
+import { Op } from "sequelize";
+import sequelize from "./connection";
 
 type setMaterialsProps = {
   name: string,
@@ -208,21 +209,43 @@ export async function deleteShopping(id: string | number) {
   }
 }
 
-export async function countBuys() {
+export async function countAndSumShopping(firstDay: string, lastDay: string) {
+
   try {
-    return await Shopping.count()
+    const shoppingCount = await Shopping.count({
+      where: {
+        createdAt: {
+          [Op.between]: [firstDay, lastDay]
+        }
+      }
+    })
+    const shoppingAmount = await Shopping.sum('amountInCents',
+      {
+        where: {
+          createdAt: {
+            [Op.between]: [firstDay, lastDay]
+          }
+        }
+      }
+    )
+
+    return { shoppingCount, shoppingAmount }
   } catch (error) {
     console.log(error)
-    return 0
+    return { shoppingCount: 0, shoppingAmount: 0 }
   }
 }
 
-// soma o custo total
-export async function sumShoppingAmount() {
+export async function getDateofFirstShopping() {
   try {
-    return await Shopping.sum('amountInCents')
+    return await Shopping.findOne({
+      attributes: ['createdAt'],
+      order: [
+        ['id', 'ASC']
+      ]
+    })
   } catch (error) {
     console.log(error)
-    return 0
+    return undefined
   }
 }

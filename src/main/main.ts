@@ -4,8 +4,6 @@ import fs from 'fs'
 
 require("./main-events")
 
-const appPath = app.getAppPath()
-
 function verifyDatabaseDir() {
   //Definindo o diretório do banco de dados
   const database_dir = path.resolve(app.getPath("userData"), "database")
@@ -18,7 +16,7 @@ function verifyDatabaseDir() {
 
 function CreateWindow() {
 
-  const icon = nativeImage.createFromPath('./build/icon.ico')
+  const icon = nativeImage.createFromPath('./build/icone-removebg.png')
 
   if (app.dock) {
     app.dock.setIcon(icon)

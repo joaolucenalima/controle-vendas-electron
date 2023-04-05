@@ -1,70 +1,114 @@
 import { useEffect, useState } from "react";
-import { countBuys, sumShoppingAmount } from "../../database/shopping";
-import { countSales, getSalesAmount } from "../../database/sales";
 
 import Header from "../components/Header";
+import { countAndSumShopping, getDateofFirstShopping } from "../../database/shopping";
+import { countAndSumSales, getDateofFirstSale } from "../../database/sales";
+import { getMonthsUntilNow } from "../../utils/getMonthsUntilNow";
+import { getMonthRange } from "../../utils/getMonthRange";
 
 export default function Report() {
 
-  const [sales, setSales] = useState<number | 0>(0)
-  const [salesAmount, setSalesAmount] = useState<number | 0>(0)
-  const [buys, setBuys] = useState<number | 0>(0)
-  const [buysAmount, setBuysAmount] = useState<number | 0>(0)
+  // período escolhido para gerar relatório
+  const [selectedDate, setSelectedDate] = useState('')
+  // opções de data do select
+  const [dateOptions, setDateOptions] = useState<string[]>([])
+
+  const [salesData, setSalesData] = useState({
+    salesCount: 0,
+    salesAmount: 0
+  })
+
+  const [shoppingData, setShoppingData] = useState({
+    shoppingCount: 0,
+    shoppingAmount: 0
+  })
 
   useEffect(() => {
 
-    countSales().then((data) => {
-      setSales(data)
-    })
+    let firstSaleMonth = getDateofFirstSale()
+    let firstShoppingMonth = getDateofFirstShopping()
 
-    getSalesAmount().then((amount) => {
-      setSalesAmount(amount)
-    })
+    Promise.all([firstSaleMonth, firstShoppingMonth]).then(async values => {
 
-    countBuys().then((data) => {
-      setBuys(data)
-    })
+      if (await firstSaleMonth && firstShoppingMonth != undefined) {
+        if (values[0]!.createdAt < values[1]!.createdAt) {
+          setDateOptions(getMonthsUntilNow(values[0]!.createdAt))
+        } else {
+          setDateOptions(getMonthsUntilNow(values[1]!.createdAt))
+        }
+      }
 
-    sumShoppingAmount().then((data) => {
-      setBuysAmount(data)
     })
 
   }, [])
 
-  const profit = (salesAmount - buysAmount) / 100
+  useEffect(() => {
+
+    if (selectedDate != '') {
+
+      const { firstDay, lastDay } = getMonthRange(selectedDate)
+
+      countAndSumSales(firstDay, lastDay).then((data) => {
+        setSalesData({ salesCount: data.salesCount, salesAmount: data.salesAmount })
+      })
+
+      countAndSumShopping(firstDay, lastDay).then((data) => {
+        setShoppingData({ shoppingCount: data.shoppingCount, shoppingAmount: data.shoppingAmount })
+      })
+    }
+
+  }, [selectedDate])
+
+  const profit = (salesData.salesAmount - shoppingData.shoppingAmount) / 100
 
   return (
     <>
       <Header />
 
-      <div className="flex-records">
+      <select
+        name="date"
+        value={selectedDate}
+        onChange={(e) => { setSelectedDate(e.target.value) }}
+      >
+        <option value="" disabled>Escolha um mês</option>
 
-        <div className="first-line">
-          <div className="record">
-            <h1>Materiais:</h1>
-            <span style={{ fontSize: "1.3rem" }}>{buys}</span>
-            <strong>Gastos totais:</strong>
-            <span style={{ color: "#cf231d", fontSize: "1.3rem" }}>R$ {buysAmount / 100}</span>
+        {dateOptions.map((dateOption, index) => {
+          return (
+            <option key={index} value={dateOption} >{dateOption}</option>
+          )
+
+        })}
+
+      </select>
+
+      {selectedDate.length > 0 ? (
+        <div className="flex-records">
+
+          <div className="first-line">
+            <div className="record">
+              <h1>Materiais:</h1>
+              <span style={{ fontSize: "1.3rem" }}>{shoppingData.shoppingCount}</span>
+              <strong>Gastos totais:</strong>
+              <span style={{ color: "#cf231d", fontSize: "1.3rem" }}>R$ {shoppingData.shoppingAmount / 100}</span>
+            </div>
+
+            <div className="record">
+              <h1>Vendas Totais:</h1>
+              <span style={{ fontSize: "1.3rem" }}>{salesData.salesCount}</span>
+              <strong>Lucro total:</strong>
+              <span style={{ color: "#00CF22", fontSize: "1.3rem" }}>R$ {salesData.salesAmount / 100}</span>
+            </div>
           </div>
 
-          <div className="record">
-            <h1>Vendas Totais:</h1>
-            <span style={{ fontSize: "1.3rem" }}>{sales}</span>
-            <strong>Lucro total:</strong>
-            <span style={{ color: "#00CF22", fontSize: "1.3rem" }}>R$ {salesAmount / 100}</span>
+          <div className="second-line record">
+            <h1>Lucro final:</h1>
+            <span className={profit > 0 ? "profit" : "prejudice"}>
+              R$ {profit}
+            </span>
           </div>
-        </div>
 
-        <div className="second-line record">
-          <h1>Lucro final:</h1>
-          <span
-            className={profit > 0 ? "profit" : "prejudice"}
-          >
-            R$ {profit}
-          </span>
         </div>
-
-      </div>
+      ) : null}
 
     </>
   )
