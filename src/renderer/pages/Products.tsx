@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import Header from "../components/Header";
 import SuccessAlert from '../components/SuccessAlert';
-import EditProducts from '../components/EditProducts';
+import EditProducts from '../components/Edit/EditProducts';
 import DeletePopUp from '../components/DeletePopUp';
 import { listProducts, registerProduct } from '../../database/sales';
 import { ResponseContext } from '../contexts/ResponseContext';
@@ -121,8 +121,8 @@ export default function Products() {
                 <tr>
                   <th>Produto</th>
                   <th>Preço</th>
-                  <th style={{ textAlign: 'center' }}>Editar</th>
-                  <th style={{ textAlign: 'center' }}>Excluir</th>
+                  <th className="textCenter">Editar</th>
+                  <th className="textCenter">Excluir</th>
                 </tr>
               </thead>
               <tbody>
@@ -131,10 +131,10 @@ export default function Products() {
                     <tr key={product.id}>
                       <td>{product.name}</td>
                       <td>R$ {product.priceInCents / 100}</td>
-                      <td style={{ textAlign: 'center' }}>
+                      <td className="textCenter">
                         <EditProducts id={product.id} name={product.name} priceInCents={product.priceInCents} />
                       </td>
-                      <td style={{ textAlign: 'center' }}>
+                      <td className="textCenter">
                         <DeletePopUp id={product.id} register={'product'} />
                       </td>
                     </tr>

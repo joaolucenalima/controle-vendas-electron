@@ -1,4 +1,4 @@
-import { app, BrowserWindow, nativeImage } from 'electron'
+import { app, BrowserWindow } from 'electron'
 import path from 'path'
 import fs from 'fs'
 
@@ -16,14 +16,8 @@ function verifyDatabaseDir() {
 
 function CreateWindow() {
 
-  const icon = nativeImage.createFromPath('./build/icone-removebg.png')
-
-  if (app.dock) {
-    app.dock.setIcon(icon)
-  }
-
   const mainWindow = new BrowserWindow({
-    icon,
+    icon: './build/icone-removebg.png',
     width: 800,
     height: 700,
     show: false,

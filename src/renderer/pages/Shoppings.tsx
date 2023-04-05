@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react'
 import Header from "../components/Header";
 import SuccessAlert from '../components/SuccessAlert';
 import NewShoppingModal from '../components/NewShoppingModal';
-import EditShopping from '../components/EditShopping';
+import EditShopping from '../components/Edit/EditShopping';
 import DeletePopUp from '../components/DeletePopUp';
 import { getShopping } from '../../database/shopping';
 
@@ -54,9 +54,9 @@ export default function Shopping() {
                   <th>Material</th>
                   <th>Quantidade</th>
                   <th>Preço</th>
-                  <th style={{ textAlign: 'center' }}>Data da compra</th>
-                  <th style={{ textAlign: 'center' }}>Editar</th>
-                  <th style={{ textAlign: 'center' }}>Excluir</th>
+                  <th className="textCenter">Data da compra</th>
+                  <th className="textCenter">Editar</th>
+                  <th className="textCenter">Excluir</th>
                 </tr>
               </thead>
               <tbody>
@@ -67,11 +67,11 @@ export default function Shopping() {
                       <td>{purchase.Material.name}</td>
                       <td>{purchase.quantity}</td>
                       <td>R$ {purchase.amountInCents / 100}</td>
-                      <td style={{ textAlign: 'center' }}>{new Date(purchase.createdAt).toLocaleDateString()}</td>
-                      <td style={{ textAlign: 'center' }}>
+                      <td className="textCenter">{new Date(purchase.createdAt).toLocaleDateString()}</td>
+                      <td className="textCenter">
                         <EditShopping id={purchase.id} materialID={purchase.Material.id} quantity={purchase.quantity} />
                       </td>
-                      <td style={{ textAlign: 'center' }}>
+                      <td className="textCenter">
                         <DeletePopUp id={purchase.id} register={'shopping'} />
                       </td>
                     </tr>

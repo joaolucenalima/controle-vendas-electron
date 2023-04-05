@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react'
 import Header from "../components/Header";
 import SuccessAlert from '../components/SuccessAlert';
 import NewSaleModal from '../components/NewSaleModal';
-import EditSale from '../components/EditSale';
+import EditSale from '../components/Edit/EditSale';
 import DeletePopUp from '../components/DeletePopUp';
 import { listSales } from '../../database/sales'
 import { ResponseContext } from '../contexts/ResponseContext';
@@ -54,9 +54,9 @@ export default function Sales() {
                   <th>Produto</th>
                   <th>Quantidade</th>
                   <th>Preço</th>
-                  <th style={{ textAlign: 'center' }}>Data da venda</th>
-                  <th style={{ textAlign: 'center' }}>Editar</th>
-                  <th style={{ textAlign: 'center' }}>Excluir</th>
+                  <th className="textCenter">Data da venda</th>
+                  <th className="textCenter">Editar</th>
+                  <th className="textCenter">Excluir</th>
                 </tr>
               </thead>
               <tbody>
@@ -67,11 +67,11 @@ export default function Sales() {
                       <td>{sale.Product.name}</td>
                       <td>{sale.quantity}</td>
                       <td>R$ {sale.amountInCents / 100}</td>
-                      <td style={{ textAlign: 'center' }}>{new Date(sale.createdAt).toLocaleDateString()}</td>
-                      <td style={{ textAlign: 'center' }}>
+                      <td className="textCenter">{new Date(sale.createdAt).toLocaleDateString()}</td>
+                      <td className="textCenter">
                         <EditSale id={sale.id} productID={sale.Product.id} quantity={sale.quantity} />
                       </td>
-                      <td style={{ textAlign: 'center' }}>
+                      <td className="textCenter">
                         <DeletePopUp id={sale.id} register={'sale'} />
                       </td>
                     </tr>

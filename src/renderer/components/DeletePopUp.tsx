@@ -68,7 +68,7 @@ export default function DeletePopUp(props: DeleteProps) {
 
           <AlertDialog.Title className="DialogTitle">Tem certeza de que deseja apagar?</AlertDialog.Title>
 
-          <AlertDialog.Description className="DialogDescription" style={{ textAlign: 'center' }}>
+          <AlertDialog.Description className="DialogDescription textCenter">
             Essa ação é irreversível.
           </AlertDialog.Description>
 

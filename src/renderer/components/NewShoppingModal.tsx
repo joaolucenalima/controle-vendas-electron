@@ -3,10 +3,8 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { MdAdd } from 'react-icons/md';
 import * as Dialog from '@radix-ui/react-dialog';
 
-import { getMaterials, getShopping, setShopping } from '../../database/shopping';
+import { getMaterials, setShopping } from '../../database/shopping';
 import { ResponseContext } from '../contexts/ResponseContext';
-
-type getShoppingProps = Awaited<ReturnType<typeof getShopping>>
 
 type shoppingProps = {
   materialID: string,
@@ -23,9 +21,8 @@ type materialsProps = {
 
 export default function NewShoppingModal() {
 
-  const { response, setResponseValue } = useContext(ResponseContext);
+  const { setResponseValue } = useContext(ResponseContext);
 
-  const [purchases, setPurchases] = useState<getShoppingProps>([])
   const [materials, setMaterials] = useState<materialsProps[] | undefined>([])
   // controlar se o modal está aberto ou não / fechar ele após submissão
   const [open, setOpen] = useState(false);
@@ -34,15 +31,11 @@ export default function NewShoppingModal() {
 
   useEffect(() => {
 
-    getShopping().then((data) => {
-      setPurchases(data)
-    })
-
     getMaterials().then((data) => {
       setMaterials(data)
     })
 
-  }, [response])
+  }, [])
 
   const handleSetPurchase: SubmitHandler<shoppingProps> = async data => {
 

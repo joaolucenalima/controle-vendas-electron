@@ -21,7 +21,7 @@ type salesType = {
 
 export default function NewSaleModal() {
 
-  const { response, setResponseValue } = useContext(ResponseContext);
+  const { setResponseValue } = useContext(ResponseContext);
 
   // produtos do select
   const [products, setProducts] = useState<productsType[] | undefined>([])
@@ -31,9 +31,11 @@ export default function NewSaleModal() {
   const { register, handleSubmit, formState: { errors } } = useForm<salesType>();
 
   useEffect(() => {
+
     listProducts().then((data) => {
       setProducts(data)
     })
+
   }, [])
 
   const handleRegister: SubmitHandler<salesType> = async data => {

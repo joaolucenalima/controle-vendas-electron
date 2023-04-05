@@ -1,11 +1,12 @@
-import { SubmitHandler, useForm } from 'react-hook-form'
 import { useContext, useEffect, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
 import Header from "../components/Header";
 import SuccessAlert from '../components/SuccessAlert';
-import EditMaterials from '../components/EditMaterials';
+import EditMaterials from '../components/Edit/EditMaterials';
 import DeletePopUp from '../components/DeletePopUp';
 import { getMaterials, setMaterials } from '../../database/shopping';
+
 import { ResponseContext } from '../contexts/ResponseContext';
 
 type setMaterialProps = {
@@ -29,13 +30,13 @@ export default function Materials() {
 
   useEffect(() => {
 
-    setTimeout(() => {
-      setResponseValue(undefined)
-    }, 3000)
-
     getMaterials().then((material) => {
       setMaterialList(material)
     })
+
+    setTimeout(() => {
+      setResponseValue(undefined)
+    }, 3000)
 
   }, [response])
 
@@ -120,8 +121,8 @@ export default function Materials() {
                 <tr>
                   <th>Material</th>
                   <th>Preço</th>
-                  <th style={{ textAlign: 'center' }}>Editar</th>
-                  <th style={{ textAlign: 'center' }}>Excluir</th>
+                  <th className="textCenter">Editar</th>
+                  <th className="textCenter">Excluir</th>
                 </tr>
               </thead>
               <tbody>
@@ -130,10 +131,10 @@ export default function Materials() {
                     <tr key={material.id}>
                       <td>{material.name}</td>
                       <td>R$ {material.priceInCents / 100}</td>
-                      <td style={{ textAlign: 'center' }}>
+                      <td className="textCenter">
                         <EditMaterials id={material.id} name={material.name} priceInCents={material.priceInCents} />
                       </td>
-                      <td style={{ textAlign: 'center' }}>
+                      <td className="textCenter">
                         <DeletePopUp id={material.id} register={'material'} />
                       </td>
                     </tr>

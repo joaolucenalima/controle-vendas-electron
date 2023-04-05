@@ -3,8 +3,8 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { MdEdit } from 'react-icons/md';
 import * as Dialog from '@radix-ui/react-dialog';
 
-import { ResponseContext } from '../contexts/ResponseContext';
-import { updateProducts } from '../../database/sales';
+import { ResponseContext } from '../../contexts/ResponseContext';
+import { updateProducts } from '../../../database/sales';
 
 type EditProductsProps = {
   id: string,

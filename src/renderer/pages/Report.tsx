@@ -23,7 +23,7 @@ export default function Report() {
     shoppingAmount: 0
   })
 
-  useEffect(() => {
+  useEffect(() => { // busca os meses possíveis (options)
 
     let firstSaleMonth = getDateofFirstSale()
     let firstShoppingMonth = getDateofFirstShopping()
@@ -42,7 +42,7 @@ export default function Report() {
 
   }, [])
 
-  useEffect(() => {
+  useEffect(() => { // faz a busca quando um mês é selecionado
 
     if (selectedDate != '') {
 
