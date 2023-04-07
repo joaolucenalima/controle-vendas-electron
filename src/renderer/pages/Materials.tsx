@@ -42,7 +42,7 @@ export default function Materials() {
 
   const handleSetMaterial: SubmitHandler<setMaterialProps> = async data => {
     try {
-      data.price *= 100
+      data.price = parseFloat((data.price * 100).toFixed(2))
       await setMaterials(data).then((response) => {
         setResponseValue(response)
       })

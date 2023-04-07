@@ -28,14 +28,22 @@ export default function Report() {
     let firstSaleMonth = getDateofFirstSale()
     let firstShoppingMonth = getDateofFirstShopping()
 
-    Promise.all([firstSaleMonth, firstShoppingMonth]).then(async values => {
+    Promise.all([firstSaleMonth, firstShoppingMonth]).then(values => {
 
-      if (await firstSaleMonth && firstShoppingMonth != undefined) {
+      if (values[1] !== null && values[0] === null) {
+        setDateOptions(getMonthsUntilNow(values[1]!.createdAt))
+      }
+      else if (values[1] === null && values[0] !== null) {
+        setDateOptions(getMonthsUntilNow(values[0]!.createdAt))
+      }
+      else if (values[1] !== null && values[0] !== null) {
+
         if (values[0]!.createdAt < values[1]!.createdAt) {
           setDateOptions(getMonthsUntilNow(values[0]!.createdAt))
         } else {
           setDateOptions(getMonthsUntilNow(values[1]!.createdAt))
         }
+
       }
 
     })
@@ -65,50 +73,58 @@ export default function Report() {
     <>
       <Header />
 
-      <select
-        name="date"
-        value={selectedDate}
-        onChange={(e) => { setSelectedDate(e.target.value) }}
-      >
-        <option value="" disabled>Escolha um mês</option>
+      <div className="dateSelectContainer">
 
-        {dateOptions.map((dateOption, index) => {
-          return (
-            <option key={index} value={dateOption} >{dateOption}</option>
-          )
+        <h2>Selecione um mês para gerar o relatório</h2>
 
-        })}
+        <select
+          name="date"
+          value={selectedDate}
+          onChange={(e) => { setSelectedDate(e.target.value) }}
+          style={{ fontSize: "1.3rem" }}
+        >
+          <option value="" disabled>Escolha um mês</option>
 
-      </select>
+          {dateOptions.map((dateOption, index) => {
+            return (
+              <option key={index} value={dateOption} >{dateOption}</option>
+            )
 
-      {selectedDate.length > 0 ? (
-        <div className="flex-records">
+          })}
 
-          <div className="first-line">
-            <div className="record">
-              <h1>Materiais:</h1>
-              <span style={{ fontSize: "1.3rem" }}>{shoppingData.shoppingCount}</span>
-              <strong>Gastos totais:</strong>
-              <span style={{ color: "#cf231d", fontSize: "1.3rem" }}>R$ {shoppingData.shoppingAmount / 100}</span>
+        </select>
+      </div>
+
+      {
+        selectedDate.length > 0 ? (
+          <div className="flex-records">
+
+            <div className="first-line">
+              <div className="record">
+                <h1>Materiais:</h1>
+                <span style={{ fontSize: "1.3rem" }}>{shoppingData.shoppingCount}</span>
+                <strong>Gastos totais:</strong>
+                <span style={{ color: "#cf231d", fontSize: "1.3rem" }}>R$ {shoppingData.shoppingAmount / 100}</span>
+              </div>
+
+              <div className="record">
+                <h1>Vendas Totais:</h1>
+                <span style={{ fontSize: "1.3rem" }}>{salesData.salesCount}</span>
+                <strong>Lucro total:</strong>
+                <span style={{ color: "#00CF22", fontSize: "1.3rem" }}>R$ {salesData.salesAmount / 100}</span>
+              </div>
             </div>
 
-            <div className="record">
-              <h1>Vendas Totais:</h1>
-              <span style={{ fontSize: "1.3rem" }}>{salesData.salesCount}</span>
-              <strong>Lucro total:</strong>
-              <span style={{ color: "#00CF22", fontSize: "1.3rem" }}>R$ {salesData.salesAmount / 100}</span>
+            <div className="second-line record">
+              <h1>Lucro final:</h1>
+              <span className={profit > 0 ? "profit" : "prejudice"}>
+                R$ {profit}
+              </span>
             </div>
-          </div>
 
-          <div className="second-line record">
-            <h1>Lucro final:</h1>
-            <span className={profit > 0 ? "profit" : "prejudice"}>
-              R$ {profit}
-            </span>
           </div>
-
-        </div>
-      ) : null}
+        ) : null
+      }
 
     </>
   )

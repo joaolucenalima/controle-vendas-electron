@@ -41,7 +41,7 @@ export default function Products() {
 
   const handleProduct: SubmitHandler<Inputs> = async data => {
     try {
-      data.priceInCents *= 100
+      data.priceInCents = parseFloat((data.priceInCents * 100).toFixed(2))
       await registerProduct(data).then((response) => {
         setResponseValue(response)
       })

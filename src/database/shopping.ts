@@ -44,7 +44,7 @@ Materials.init({
     allowNull: false
   },
   priceInCents: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.DOUBLE,
     allowNull: false
   }
 }, {
@@ -133,7 +133,7 @@ Shopping.init({
     allowNull: false
   },
   amountInCents: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.DOUBLE,
     allowNull: false
   },
 }, {
@@ -143,7 +143,9 @@ Shopping.init({
 });
 
 Shopping.belongsTo(Materials, {
-  foreignKey: 'materialID'
+  foreignKey: 'materialID',
+  onDelete: 'NO ACTION',
+  onUpdate: 'CASCADE'
 })
 
 // busca informações para a tabela
@@ -181,7 +183,8 @@ export async function updateShopping(props: updateShoppingProps) {
   try {
     await Shopping.update({
       materialID: props.materialID,
-      quantity: props.quantity
+      quantity: props.quantity,
+      amountInCents: props.amountInCents,
     },
       {
         where: {

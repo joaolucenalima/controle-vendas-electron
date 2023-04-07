@@ -39,13 +39,14 @@ Products.init({
     primaryKey: true
   },
   name: DataTypes.STRING,
-  priceInCents: DataTypes.INTEGER
+  priceInCents: DataTypes.DOUBLE
 }, {
   sequelize,
   timestamps: false
 });
 
 export async function registerProduct(props: productProps) {
+  console.log(props.priceInCents)
   try {
     await Products.create({
       name: props.name,
@@ -72,12 +73,11 @@ export async function updateProducts(props: updateProductsProps) {
     await Products.update({
       name: props.name,
       priceInCents: props.priceInCents
-    },
-      {
-        where: {
-          id: props.id
-        }
-      })
+    }, {
+      where: {
+        id: props.id
+      }
+    })
     return ("Edição salva com sucesso!")
   } catch (error) {
     console.log(error)
@@ -124,7 +124,7 @@ Sales.init({
     allowNull: false
   },
   quantity: DataTypes.INTEGER,
-  amountInCents: DataTypes.INTEGER,
+  amountInCents: DataTypes.DOUBLE,
 }, {
   sequelize,
   timestamps: true,
@@ -132,7 +132,9 @@ Sales.init({
 });
 
 Sales.belongsTo(Products, {
-  foreignKey: 'productID'
+  foreignKey: 'productID',
+  onDelete: 'NO ACTION',
+  onUpdate: 'CASCADE'
 })
 
 export async function listSales() {
