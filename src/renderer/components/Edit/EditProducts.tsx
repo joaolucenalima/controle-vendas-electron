@@ -30,7 +30,7 @@ export default function EditProducts(props: EditProductsProps) {
     // registrando o id no data para ser usado no where do bd
     data.id = props.id
 
-    data.priceInCents *= 100
+    data.priceInCents = parseFloat((data.priceInCents * 100).toFixed(2))
 
     setOpen(false)
 
