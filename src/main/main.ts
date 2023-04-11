@@ -17,7 +17,7 @@ function verifyDatabaseDir() {
 function CreateWindow() {
 
   const mainWindow = new BrowserWindow({
-    icon: './build/icone-removebg.png',
+    icon: './build/favicon.ico',
     width: 800,
     height: 700,
     show: false,
