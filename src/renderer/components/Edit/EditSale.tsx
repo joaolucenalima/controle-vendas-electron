@@ -4,7 +4,7 @@ import { MdEdit } from 'react-icons/md';
 import * as Dialog from '@radix-ui/react-dialog';
 
 import { listProducts, updateSales } from '../../../database/sales';
-import { ResponseContext } from '../../contexts/ResponseContext';
+import { NotificationContext } from '../../contexts/NotificationContext';
 
 type EditSaleProps = {
   id: number,
@@ -27,7 +27,7 @@ type salesType = {
 
 export default function EditSale(props: EditSaleProps) {
 
-  const { response, setResponseValue } = useContext(ResponseContext);
+  const { showToast } = useContext(NotificationContext);
 
   const [products, setProducts] = useState<productsType[] | undefined>([])
   // controlar se o modal está aberto ou não / fechar ele após submissão
@@ -40,8 +40,6 @@ export default function EditSale(props: EditSaleProps) {
     listProducts().then(data => {
       setProducts(data)
     })
-
-    setResponseValue(undefined)
 
   }, [])
 
@@ -57,7 +55,7 @@ export default function EditSale(props: EditSaleProps) {
     setOpen(false)
 
     await updateSales(data).then(response => {
-      setResponseValue(response)
+      showToast(response)
     })
   }
 

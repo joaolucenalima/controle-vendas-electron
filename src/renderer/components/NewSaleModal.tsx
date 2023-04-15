@@ -4,7 +4,7 @@ import { MdAdd } from 'react-icons/md';
 import * as Dialog from '@radix-ui/react-dialog';
 
 import { listProducts, registerSale } from '../../database/sales'
-import { ResponseContext } from '../contexts/ResponseContext';
+import { NotificationContext } from '../contexts/NotificationContext';
 
 type productsType = {
   id: string,
@@ -21,7 +21,7 @@ type salesType = {
 
 export default function NewSaleModal() {
 
-  const { setResponseValue } = useContext(ResponseContext);
+  const { showToast } = useContext(NotificationContext);
 
   // produtos do select
   const [products, setProducts] = useState<productsType[] | undefined>([])
@@ -45,14 +45,9 @@ export default function NewSaleModal() {
       data.productID == product.id ? data.amountInCents = product.priceInCents * data.quantity : null
     })
 
-    try {
-      await registerSale(data).then((response) => {
-        setResponseValue(response)
-      })
-    } catch (err) {
-      console.log(err)
-      alert("Não foi possível cadastrar a venda. Tente novamente mais tarde.")
-    }
+    await registerSale(data).then((response) => {
+      showToast(response)
+    })
 
     setOpen(false)
   }

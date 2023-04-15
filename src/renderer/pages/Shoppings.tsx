@@ -1,43 +1,35 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react';
+import { ToastContainer } from 'react-toastify';
 
 import Header from "../components/Header";
-import SuccessAlert from '../components/SuccessAlert';
 import NewShoppingModal from '../components/NewShoppingModal';
 import EditShopping from '../components/Edit/EditShopping';
 import DeletePopUp from '../components/DeletePopUp';
+
 import { getShopping } from '../../database/shopping';
 
-import { ResponseContext } from '../contexts/ResponseContext';
+import { NotificationContext } from '../contexts/NotificationContext';
 
 type getShoppingProps = Awaited<ReturnType<typeof getShopping>>
 
 export default function Shopping() {
 
-  const { response, setResponseValue } = useContext(ResponseContext);
-
+  const { message } = useContext(NotificationContext);
   const [purchases, setPurchases] = useState<getShoppingProps>([])
 
   useEffect(() => {
-
-    setTimeout(() => {
-      setResponseValue(undefined)
-    }, 3000);
 
     getShopping().then((data) => {
       setPurchases(data)
     })
 
-  }, [response])
+  }, [message])
 
   return (
     <>
       <Header />
 
-      {response != undefined ? (
-        <div>
-          {SuccessAlert(response)}
-        </div>
-      ) : null}
+      <ToastContainer />
 
       <div className='container'>
 

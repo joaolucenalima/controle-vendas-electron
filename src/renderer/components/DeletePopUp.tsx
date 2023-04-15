@@ -4,7 +4,7 @@ import { MdDelete } from 'react-icons/md';
 import { deleteMaterials, deleteShopping } from '../../database/shopping'
 import { deleteProducts, deleteSales } from '../../database/sales'
 import { useContext } from 'react';
-import { ResponseContext } from '../contexts/ResponseContext';
+import { NotificationContext } from '../contexts/NotificationContext';
 
 type DeleteProps = {
   id: string | number,
@@ -13,7 +13,7 @@ type DeleteProps = {
 
 export default function DeletePopUp(props: DeleteProps) {
 
-  const { response, setResponseValue } = useContext(ResponseContext)
+  const { showToast } = useContext(NotificationContext)
 
   async function deleteAccepted() {
 
@@ -21,25 +21,25 @@ export default function DeletePopUp(props: DeleteProps) {
 
       case "product":
         await deleteProducts(props.id).then(data => {
-          setResponseValue(data)
+          showToast(data)
         })
         break;
 
       case "material":
         await deleteMaterials(props.id).then(data => {
-          setResponseValue(data)
+          showToast(data)
         })
         break;
 
       case "sale":
         await deleteSales(props.id).then(data => {
-          setResponseValue(data)
+          showToast(data)
         })
         break;
 
       case "shopping":
         await deleteShopping(props.id).then(data => {
-          setResponseValue(data)
+          showToast(data)
         })
         break;
 

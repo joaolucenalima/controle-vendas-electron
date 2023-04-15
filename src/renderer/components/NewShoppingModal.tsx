@@ -4,7 +4,7 @@ import { MdAdd } from 'react-icons/md';
 import * as Dialog from '@radix-ui/react-dialog';
 
 import { getMaterials, setShopping } from '../../database/shopping';
-import { ResponseContext } from '../contexts/ResponseContext';
+import { NotificationContext } from '../contexts/NotificationContext';
 
 type shoppingProps = {
   materialID: string,
@@ -21,10 +21,10 @@ type materialsProps = {
 
 export default function NewShoppingModal() {
 
-  const { setResponseValue } = useContext(ResponseContext);
+  const { showToast } = useContext(NotificationContext);
 
   const [materials, setMaterials] = useState<materialsProps[] | undefined>([])
-  // controlar se o modal está aberto ou não / fechar ele após submissão
+  // controlar se o modal está aberto / fechar ele após submissão
   const [open, setOpen] = useState(false);
 
   const { register, handleSubmit, formState: { errors } } = useForm<shoppingProps>();
@@ -43,14 +43,9 @@ export default function NewShoppingModal() {
       data.materialID == material.id ? data.amount = material.priceInCents * data.quantity : null
     })
 
-    try {
-      await setShopping(data).then((response) => {
-        setResponseValue(response)
-      })
-    } catch (error) {
-      console.log(error);
-      alert("Não foi possível cadastrar a compra de materiais. Tente novamente mais tarde.")
-    }
+    await setShopping(data).then((response) => {
+      showToast(response)
+    })
 
     setOpen(false)
   }

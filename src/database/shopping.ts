@@ -55,8 +55,8 @@ Materials.init({
 export async function getMaterials() {
   try {
     return await Materials.findAll()
-  } catch (error) {
-    console.log(error)
+  } catch (err) {
+    console.log(err)
   }
 }
 
@@ -66,10 +66,10 @@ export async function setMaterials(props: setMaterialsProps) {
       name: props.name,
       priceInCents: props.price
     })
-    return ("Material registrado com sucesso!")
-  } catch (error) {
-    console.log(error)
-    return "Não foi possível cadastrar o material. Tente novamente mais tarde"
+    return ({ success: "Material registrado com sucesso!" })
+  } catch (err) {
+    console.log(err)
+    return ({ error: "Não foi possível cadastrar o material." })
   }
 }
 
@@ -84,10 +84,10 @@ export async function updateMaterials(props: updateMaterialsProps) {
           id: props.id
         }
       })
-    return ("Edição salva com sucesso!")
-  } catch (error) {
-    console.log(error)
-    return "Não foi possível registrar as mudanças. Tente novamente mais tarde"
+    return ({ success: "Edição salva com sucesso!" })
+  } catch (err) {
+    console.log(err)
+    return ({ error: "Não foi possível registrar as mudanças." })
   }
 }
 
@@ -98,10 +98,10 @@ export async function deleteMaterials(id: string | number) {
         id
       }
     })
-    return "Registro apagado com sucesso."
-  } catch (error) {
-    console.log(error)
-    return "Não foi possível apagar o registro. Tente novamente mais tarde"
+    return ({ success: "Registro apagado com sucesso." })
+  } catch (err) {
+    console.log(err)
+    return ({ error: "Não foi possível apagar o registro." })
   }
 }
 
@@ -145,7 +145,6 @@ Shopping.init({
 Shopping.belongsTo(Materials, {
   foreignKey: 'materialID',
   onDelete: 'NO ACTION',
-  onUpdate: 'CASCADE'
 })
 
 // busca informações para a tabela
@@ -158,8 +157,8 @@ export async function getShopping() {
       ]
     })
   }
-  catch (error) {
-    console.log(error);
+  catch (err) {
+    console.log(err);
   }
 }
 
@@ -172,10 +171,10 @@ export async function setShopping(data: setShoppingProps) {
       amountInCents: data.amount,
       createdAt: data.createdAt
     })
-    return "Compra registrada com sucesso!"
-  } catch (error) {
-    console.log(error)
-    return "Erro ao registrar compra no banco de dados"
+    return ({ success: "Compra registrada com sucesso!" })
+  } catch (err) {
+    console.log(err)
+    return ({ error: "Erro ao registrar compra no banco de dados" })
   }
 }
 
@@ -191,10 +190,10 @@ export async function updateShopping(props: updateShoppingProps) {
           id: props.id
         }
       })
-    return ("Edição salva com sucesso!")
-  } catch (error) {
-    console.log(error)
-    return "Não foi possível registrar as mudanças. Tente novamente mais tarde."
+    return ({ success: "Edição salva com sucesso!" })
+  } catch (err) {
+    console.log(err)
+    return ({ error: "Não foi possível registrar as mudanças." })
   }
 }
 
@@ -205,10 +204,10 @@ export async function deleteShopping(id: string | number) {
         id
       }
     })
-    return "Registro apagado com sucesso."
-  } catch (error) {
-    console.log(error)
-    return "Não foi possível apagar o registro. Tente novamente mais tarde"
+    return ({ success: "Registro apagado com sucesso." })
+  } catch (err) {
+    console.log(err)
+    return ({ error: "Não foi possível apagar o registro." })
   }
 }
 
@@ -233,8 +232,8 @@ export async function countAndSumShopping(firstDay: string, lastDay: string) {
     )
 
     return { shoppingCount, shoppingAmount }
-  } catch (error) {
-    console.log(error)
+  } catch (err) {
+    console.log(err)
     return { shoppingCount: 0, shoppingAmount: 0 }
   }
 }
@@ -247,8 +246,8 @@ export async function getDateofFirstShopping() {
         ['id', 'ASC']
       ]
     })
-  } catch (error) {
-    console.log(error)
+  } catch (err) {
+    console.log(err)
     return undefined
   }
 }

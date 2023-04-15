@@ -4,7 +4,7 @@ import { MdEdit } from 'react-icons/md';
 import * as Dialog from '@radix-ui/react-dialog';
 
 import { getMaterials, updateShopping } from '../../../database/shopping';
-import { ResponseContext } from '../../contexts/ResponseContext';
+import { NotificationContext } from '../../contexts/NotificationContext';
 
 type EditShoppingProps = {
   id: number,
@@ -27,7 +27,7 @@ type shoppingType = {
 
 export default function EditShopping(props: EditShoppingProps) {
 
-  const { response, setResponseValue } = useContext(ResponseContext);
+  const { showToast } = useContext(NotificationContext);
 
   const [materials, setMaterials] = useState<materialsType[] | undefined>([])
   // controlar se o modal está aberto ou não / fechar ele após submissão
@@ -36,10 +36,11 @@ export default function EditShopping(props: EditShoppingProps) {
   const { register, handleSubmit } = useForm<shoppingType>();
 
   useEffect(() => {
+
     getMaterials().then(data => {
       setMaterials(data)
     })
-    setResponseValue(undefined)
+
   }, [])
 
   const handleEdit: SubmitHandler<shoppingType> = async data => {
@@ -54,7 +55,7 @@ export default function EditShopping(props: EditShoppingProps) {
     setOpen(false)
 
     await updateShopping(data).then(response => {
-      setResponseValue(response)
+      showToast(response)
     })
 
   }

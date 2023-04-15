@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { MdEdit } from 'react-icons/md';
 import * as Dialog from '@radix-ui/react-dialog';
 
-import { ResponseContext } from '../../contexts/ResponseContext';
+import { NotificationContext } from '../../contexts/NotificationContext';
 import { updateProducts } from '../../../database/sales';
 
 type EditProductsProps = {
@@ -14,16 +14,12 @@ type EditProductsProps = {
 
 export default function EditProducts(props: EditProductsProps) {
 
-  const { response, setResponseValue } = useContext(ResponseContext);
+  const { showToast } = useContext(NotificationContext);
 
   // controlar se o modal está aberto ou não / fechar ele após submissão
   const [open, setOpen] = useState(false);
 
   const { register, handleSubmit, formState: { errors } } = useForm<EditProductsProps>();
-
-  useEffect(() => {
-    setResponseValue(undefined)
-  }, [])
 
   const handleEdit: SubmitHandler<EditProductsProps> = async data => {
 
@@ -35,7 +31,7 @@ export default function EditProducts(props: EditProductsProps) {
     setOpen(false)
 
     await updateProducts(data).then(response => {
-      setResponseValue(response)
+      showToast(response)
     })
 
   }

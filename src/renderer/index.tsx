@@ -1,9 +1,13 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
-import { ResponseProvider } from "./contexts/ResponseContext"
+import { ResponseProvider } from "./contexts/NotificationContext"
 import { AppRoutes } from "./routes"
+import { injectStyle } from "react-toastify/dist/inject-style";
 
 function App() {
+
+  injectStyle();
+
   return (
     <React.StrictMode>
       <ResponseProvider>

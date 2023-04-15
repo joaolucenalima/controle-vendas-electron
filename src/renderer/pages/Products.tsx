@@ -2,11 +2,11 @@ import { useState, useEffect, useContext } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import Header from "../components/Header";
-import SuccessAlert from '../components/SuccessAlert';
 import EditProducts from '../components/Edit/EditProducts';
 import DeletePopUp from '../components/DeletePopUp';
 import { listProducts, registerProduct } from '../../database/sales';
-import { ResponseContext } from '../contexts/ResponseContext';
+import { NotificationContext } from '../contexts/NotificationContext';
+import { ToastContainer } from 'react-toastify';
 
 type Inputs = {
   name: string,
@@ -21,7 +21,7 @@ type ProductListType = {
 
 export default function Products() {
 
-  const { response, setResponseValue } = useContext(ResponseContext);
+  const { message, showToast } = useContext(NotificationContext);
 
   const [productList, setProductList] = useState<ProductListType[] | undefined>([])
 
@@ -33,34 +33,23 @@ export default function Products() {
       setProductList(product)
     })
 
-    setTimeout(() => {
-      setResponseValue(undefined)
-    }, 3000)
-
-  }, [response])
+  }, [message])
 
   const handleProduct: SubmitHandler<Inputs> = async data => {
-    try {
-      data.priceInCents = parseFloat((data.priceInCents * 100).toFixed(2))
-      await registerProduct(data).then((response) => {
-        setResponseValue(response)
-      })
-      reset()
-    } catch (err) {
-      console.log(err)
-      alert("Não foi possível cadastrar a venda. Tente novamente mais tarde.")
-    }
+    data.priceInCents = parseFloat((data.priceInCents * 100).toFixed(2))
+
+    await registerProduct(data).then((response) => {
+      showToast(response)
+    })
+
+    reset()
   }
 
   return (
     <>
       <Header />
 
-      {response != undefined ? (
-        <div>
-          {SuccessAlert(response)}
-        </div>
-      ) : null}
+      <ToastContainer />
 
       <div className="container">
 

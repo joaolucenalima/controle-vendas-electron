@@ -1,13 +1,14 @@
 import { useContext, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { ToastContainer } from 'react-toastify'
 
 import Header from "../components/Header";
-import SuccessAlert from '../components/SuccessAlert';
 import EditMaterials from '../components/Edit/EditMaterials';
 import DeletePopUp from '../components/DeletePopUp';
+
 import { getMaterials, setMaterials } from '../../database/shopping';
 
-import { ResponseContext } from '../contexts/ResponseContext';
+import { NotificationContext } from '../contexts/NotificationContext';
 
 type setMaterialProps = {
   name: string,
@@ -22,7 +23,7 @@ type MaterialListType = {
 
 export default function Materials() {
 
-  const { response, setResponseValue } = useContext(ResponseContext);
+  const { message, showToast } = useContext(NotificationContext);
 
   const [materialList, setMaterialList] = useState<MaterialListType[] | undefined>([])
 
@@ -34,33 +35,23 @@ export default function Materials() {
       setMaterialList(material)
     })
 
-    setTimeout(() => {
-      setResponseValue(undefined)
-    }, 3000)
-
-  }, [response])
+  }, [message])
 
   const handleSetMaterial: SubmitHandler<setMaterialProps> = async data => {
-    try {
-      data.price = parseFloat((data.price * 100).toFixed(2))
-      await setMaterials(data).then((response) => {
-        setResponseValue(response)
-      })
-      reset()
-    } catch (error) {
-      console.log(error);
-    }
+    data.price = parseFloat((data.price * 100).toFixed(2))
+
+    await setMaterials(data).then((response) => {
+      showToast(response)
+    })
+
+    reset()
   }
 
   return (
     <>
       <Header />
 
-      {response != undefined ? (
-        <div>
-          {SuccessAlert(response)}
-        </div>
-      ) : null}
+      <ToastContainer />
 
       <div className="container">
 

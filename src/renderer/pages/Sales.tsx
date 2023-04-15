@@ -1,43 +1,36 @@
-import { useContext, useEffect, useState } from 'react'
+import { forwardRef, useContext, useEffect, useState } from 'react';
+import { ToastContainer } from 'react-toastify';
 
 import Header from "../components/Header";
-import SuccessAlert from '../components/SuccessAlert';
 import NewSaleModal from '../components/NewSaleModal';
-import EditSale from '../components/Edit/EditSale';
 import DeletePopUp from '../components/DeletePopUp';
-import { listSales } from '../../database/sales'
-import { ResponseContext } from '../contexts/ResponseContext';
+import EditSale from '../components/Edit/EditSale';
+
+import { listSales } from '../../database/sales';
+
+import { NotificationContext } from '../contexts/NotificationContext';
 
 type listSalesResponse = Awaited<ReturnType<typeof listSales>>
 
 export default function Sales() {
 
-  const { response, setResponseValue } = useContext(ResponseContext);
-
+  const { message } = useContext(NotificationContext);
   // vendas da tabela
   const [sales, setSales] = useState<listSalesResponse>([])
 
   useEffect(() => {
 
-    setTimeout(() => {
-      setResponseValue(undefined)
-    }, 3000);
-
     listSales().then((sales) => {
       setSales(sales)
     })
 
-  }, [response])
+  }, [message])
 
   return (
     <>
       <Header />
 
-      {response != undefined ? (
-        <div>
-          {SuccessAlert(response)}
-        </div>
-      ) : null}
+      <ToastContainer />
 
       <div className="container">
 

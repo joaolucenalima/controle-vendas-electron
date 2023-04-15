@@ -52,10 +52,11 @@ export async function registerProduct(props: productProps) {
       name: props.name,
       priceInCents: props.priceInCents
     })
-    return ("Produto cadastrado com sucesso!")
+    return ({ success: "Produto cadastrado com sucesso!" })
   }
-  catch (error) {
-    console.log(error);
+  catch (err) {
+    console.log(err)
+    return ({ error: "Não foi possível cadastrar o produto." })
   }
 }
 
@@ -63,8 +64,8 @@ export async function listProducts() {
   try {
     return await Products.findAll()
   }
-  catch (error) {
-    console.log(error);
+  catch (err) {
+    console.log(err);
   }
 }
 
@@ -78,10 +79,10 @@ export async function updateProducts(props: updateProductsProps) {
         id: props.id
       }
     })
-    return ("Edição salva com sucesso!")
-  } catch (error) {
-    console.log(error)
-    return "Não foi possível registrar as mudanças. Tente novamente mais tarde"
+    return ({ success: "Edição salva com sucesso!" })
+  } catch (err) {
+    console.log(err)
+    return ({ error: "Não foi possível registrar as mudanças." })
   }
 }
 
@@ -92,10 +93,10 @@ export async function deleteProducts(id: string | number) {
         id
       }
     })
-    return "Registro apagado com sucesso."
-  } catch (error) {
-    console.log(error)
-    return "Não foi possível apagar o registro. Tente novamente mais tarde"
+    return ({ success: "Registro apagado com sucesso." })
+  } catch (err) {
+    console.log(err)
+    return ({ error: "Não foi possível apagar o registro." })
   }
 }
 
@@ -146,8 +147,8 @@ export async function listSales() {
       ]
     })
   }
-  catch (error) {
-    console.log(error);
+  catch (err) {
+    console.log(err);
   }
 }
 
@@ -159,10 +160,11 @@ export async function registerSale(props: salesProps) {
       amountInCents: props.amountInCents,
       createdAt: props.createdAt
     })
-    return ("Venda adicionada com sucesso!")
+    return ({ success: "Venda adicionada com sucesso!" })
   }
-  catch (error) {
-    console.log(error);
+  catch (err) {
+    console.log(err);
+    return ({ error: "Não possível cadastrar a venda." })
   }
 }
 
@@ -178,10 +180,10 @@ export async function updateSales(props: updateSalesProps) {
           id: props.id
         }
       })
-    return ("Edição salva com sucesso!")
-  } catch (error) {
-    console.log(error)
-    return "Não foi possível registrar as mudanças. Tente novamente mais tarde."
+    return ({ success: "Edição salva com sucesso!" })
+  } catch (err) {
+    console.log(err)
+    return ({ error: "Não foi possível registrar as mudanças." })
   }
 }
 
@@ -192,10 +194,10 @@ export async function deleteSales(id: string | number) {
         id
       }
     })
-    return "Registro apagado com sucesso."
-  } catch (error) {
-    console.log(error)
-    return "Não foi possível apagar o registro. Tente novamente mais tarde"
+    return ({ success: "Registro apagado com sucesso." })
+  } catch (err) {
+    console.log(err)
+    return ({ error: "Não foi possível apagar o registro." })
   }
 }
 
@@ -218,8 +220,8 @@ export async function countAndSumSales(firstDay: string, lastDay: string) {
       })
 
     return { salesCount, salesAmount }
-  } catch (error) {
-    console.log(error)
+  } catch (err) {
+    console.log(err)
     return { salesCount: 0, salesAmount: 0 }
   }
 }
@@ -232,8 +234,8 @@ export async function getDateofFirstSale() {
         ['id', 'ASC']
       ]
     })
-  } catch (error) {
-    console.log(error)
+  } catch (err) {
+    console.log(err)
     return undefined
   }
 }
