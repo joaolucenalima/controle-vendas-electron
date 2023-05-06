@@ -46,7 +46,6 @@ Products.init({
 });
 
 export async function registerProduct(props: productProps) {
-  console.log(props.priceInCents)
   try {
     await Products.create({
       name: props.name,

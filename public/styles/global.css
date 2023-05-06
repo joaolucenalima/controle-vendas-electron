@@ -364,3 +364,52 @@ td {
   color: #cf231d;
   cursor: pointer;
 }
+
+/*--------------------LOGIN--------------------*/
+
+.login-screen {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 1.5rem;
+
+  background-color: #505050;
+}
+
+.login-screen>form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 2rem;
+}
+
+.login-screen>form>div>input {
+  font-size: 1.5rem;
+  padding: 1rem;
+  background-color: rgb(156, 156, 156);
+  border-radius: 8px;
+  border: none
+}
+
+.login-screen>form>label {
+  font-size: 3rem;
+  font-weight: 600;
+}
+
+.icone-olho {
+  position: absolute;
+  top: 18px;
+  right: 10px;
+  color: rgb(34, 34, 34);
+  cursor: pointer;
+  font-size: 1.5rem;
+}

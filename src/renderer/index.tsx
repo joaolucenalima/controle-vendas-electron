@@ -1,22 +1,40 @@
-import React from "react"
+import React, { useState } from "react"
 import ReactDOM from "react-dom/client"
-import { ResponseProvider } from "./contexts/NotificationContext"
-import { AppRoutes } from "./routes"
 import { injectStyle } from "react-toastify/dist/inject-style";
+
+import { AppRoutes } from "./routes"
+import { ResponseProvider } from "./contexts/NotificationContext"
+import LoginPage from "./pages/LoginPage";
 
 function App() {
 
+  const [logged, setLogged] = useState(0)
+
+  function setIsLogged() {
+    setLogged(1)
+  }
+
   injectStyle();
 
-  return (
-    <React.StrictMode>
-      <ResponseProvider>
-        <AppRoutes />
-      </ResponseProvider>
-    </React.StrictMode >
-  )
+  if (logged == 1) {
+    return (
+      <React.StrictMode>
+        <ResponseProvider>
+          <AppRoutes />
+        </ResponseProvider>
+      </React.StrictMode >
+    )
+  } else {
+    return (
+      <React.StrictMode>
+        <ResponseProvider>
+          <LoginPage setIsLogged={setIsLogged} />
+        </ResponseProvider>
+      </React.StrictMode >
+    )
+  }
 }
 
-const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <App />
 )

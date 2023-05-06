@@ -1,4 +1,4 @@
-import { forwardRef, useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 
 import Header from "../components/Header";

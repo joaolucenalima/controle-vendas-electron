@@ -4,7 +4,6 @@ import { MdAttachMoney, MdListAlt, MdOutlineLayers, MdOutlineAddBox, MdShoppingC
 export default function Header() {
   return (
     <header>
-
       <Link to={'/'} className="link">
         <span style={{ color: "#CFC5BC" }}><MdListAlt /></span>
         <span>Relatório</span>

@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 
 import Header from "../components/Header";
+
 import { countAndSumShopping, getDateofFirstShopping } from "../../database/shopping";
 import { countAndSumSales, getDateofFirstSale } from "../../database/sales";
+
 import { getMonthsUntilNow } from "../../utils/getMonthsUntilNow";
 import { getMonthRange } from "../../utils/getMonthRange";
 
