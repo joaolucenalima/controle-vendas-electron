@@ -88,23 +88,45 @@ header {
 }
 
 .link {
+  position: relative;
   margin: auto;
+  padding: 0.8rem;
+  width: 6rem;
+
   display: flex;
   flex-direction: column;
   align-items: center;
+
   text-decoration: none;
   font-weight: 700;
-  color: white;
-  padding: 0.8rem
+  color: #CFC5BC;
+  opacity: 60%;
 }
 
 .link:hover {
-  opacity: 60%;
+  opacity: 100%;
 }
 
 .link>span:first-child {
   font-size: 1.5rem;
 }
+
+.active {
+  opacity: 100%;
+}
+
+.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 4px;
+  background-color: #CFC5BC;
+  border-radius: 1px;
+}
+
 
 /*--------------------REPORT--------------------*/
 

@@ -18,8 +18,8 @@ function CreateWindow() {
 
   const mainWindow = new BrowserWindow({
     icon: './build/favicon.ico',
-    width: 800,
-    height: 700,
+    width: 1024,
+    height: 768,
     show: false,
     webPreferences: {
       nodeIntegration: true,

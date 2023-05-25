@@ -1,8 +1,9 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
+import { injectStyle } from "react-toastify/dist/inject-style";
+
 import { ResponseProvider } from "./contexts/NotificationContext"
 import { AppRoutes } from "./routes"
-import { injectStyle } from "react-toastify/dist/inject-style";
 
 function App() {
 

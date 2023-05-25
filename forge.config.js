@@ -18,6 +18,15 @@ module.exports = {
         "setupExe": `controle-estoque-${version}.exe`,
       },
     },
+    {
+      name: '@electron-forge/maker-flatpak',
+      config: {
+        options: {
+          name: 'controle-estoque-${version}',
+          icon: "./build/favicon.ico",
+        },
+      },
+    },
   ],
   publishers: [
     {

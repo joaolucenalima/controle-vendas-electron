@@ -1,34 +1,45 @@
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { MdAttachMoney, MdListAlt, MdOutlineLayers, MdOutlineAddBox, MdShoppingCart } from 'react-icons/md'
 
 export default function Header() {
   return (
     <header>
 
-      <Link to={'/'} className="link">
+      <NavLink to={'/'} className={({ isActive }) =>
+        isActive ? "link active" : "link"
+      }>
         <span style={{ color: "#CFC5BC" }}><MdListAlt /></span>
         <span>Relatório</span>
-      </Link>
+      </NavLink>
 
-      <Link to={'/shopping'} className="link">
+      <NavLink to={'/shopping'} className={({ isActive }) =>
+        isActive ? "link active" : "link"
+      }>
         <span style={{ color: "#ca413c" }}><MdShoppingCart /></span>
         <span>Compras</span>
-      </Link>
+      </NavLink>
 
-      <Link to={'/sales'} className="link">
+      <NavLink to={'/sales'} className={({ isActive }) =>
+        isActive ? "link active" : "link"
+      }>
         <span style={{ color: "#00CF22" }}><MdAttachMoney /></span>
         <span>Vendas</span>
-      </Link>
+      </NavLink>
 
-      <Link to={'/materials'} className="link">
+      <NavLink to={'/materials'} className={({ isActive }) =>
+        isActive ? "link active" : "link"
+      }>
         <span style={{ color: "#FAC100" }}><MdOutlineLayers /></span>
         <span>Materiais</span>
-      </Link>
+      </NavLink>
 
-      <Link to={'/products'} className="link">
+      <NavLink to={'/products'} className={({ isActive }) =>
+        isActive ? "link active" : "link"
+      }>
         <span style={{ color: "#3254FF" }}><MdOutlineAddBox /></span>
         <span>Produtos</span>
-      </Link>
+      </NavLink>
+
     </header>
   )
 }

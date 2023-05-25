@@ -46,7 +46,6 @@ Products.init({
 });
 
 export async function registerProduct(props: productProps) {
-  console.log(props.priceInCents)
   try {
     await Products.create({
       name: props.name,
@@ -135,7 +134,6 @@ Sales.init({
 Sales.belongsTo(Products, {
   foreignKey: 'productID',
   onDelete: 'NO ACTION',
-  onUpdate: 'CASCADE'
 })
 
 export async function listSales() {
