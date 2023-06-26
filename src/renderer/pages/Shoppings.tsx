@@ -1,45 +1,37 @@
-import { useContext, useEffect, useState } from 'react';
-import { ToastContainer } from 'react-toastify';
+import { useContext, useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
 
-import Header from "../components/Header";
-import NewShoppingModal from '../components/NewShoppingModal';
-import EditShopping from '../components/Edit/EditShopping';
-import DeletePopUp from '../components/DeletePopUp';
+import DeletePopUp from "../components/DeletePopUp";
+import EditShopping from "../components/Edit/EditShopping";
+import NewShoppingModal from "../components/NewShoppingModal";
 
-import { getShopping } from '../../database/shopping';
+import { getShopping } from "../../database/shopping";
+import { NotificationContext } from "../contexts/NotificationContext";
 
-import { NotificationContext } from '../contexts/NotificationContext';
-
-type getShoppingProps = Awaited<ReturnType<typeof getShopping>>
+type getShoppingProps = Awaited<ReturnType<typeof getShopping>>;
 
 export default function Shopping() {
-
   const { message } = useContext(NotificationContext);
-  const [purchases, setPurchases] = useState<getShoppingProps>([])
+  const [purchases, setPurchases] = useState<getShoppingProps>([]);
 
   useEffect(() => {
-
     getShopping().then((data) => {
-      setPurchases(data)
-    })
-
-  }, [message])
+      setPurchases(data);
+    });
+  }, [message]);
 
   return (
     <>
-      <Header />
-
       <ToastContainer />
 
-      <div className='container'>
-
+      <div className="container">
         <div>
           <h2>Compras de materiais</h2>
 
           {purchases?.length === 0 ? (
-            <p className='no-register'>Nenhuma compra feita</p>
+            <p className="no-register">Nenhuma compra feita</p>
           ) : (
-            <table className='table-container'>
+            <table className="table-container">
               <thead>
                 <tr>
                   <th>ID</th>
@@ -54,20 +46,26 @@ export default function Shopping() {
               <tbody>
                 {purchases?.map((purchase, index) => {
                   return (
-                    <tr key={index} >
+                    <tr key={index}>
                       <td>{purchase.id}</td>
                       <td>{purchase.Material.name}</td>
                       <td>{purchase.quantity}</td>
                       <td>R$ {purchase.amountInCents / 100}</td>
-                      <td className="textCenter">{new Date(purchase.createdAt).toLocaleDateString()}</td>
                       <td className="textCenter">
-                        <EditShopping id={purchase.id} materialID={purchase.Material.id} quantity={purchase.quantity} />
+                        {new Date(purchase.createdAt).toLocaleDateString()}
                       </td>
                       <td className="textCenter">
-                        <DeletePopUp id={purchase.id} register={'shopping'} />
+                        <EditShopping
+                          id={purchase.id}
+                          materialID={purchase.Material.id}
+                          quantity={purchase.quantity}
+                        />
+                      </td>
+                      <td className="textCenter">
+                        <DeletePopUp id={purchase.id} register={"shopping"} />
                       </td>
                     </tr>
-                  )
+                  );
                 })}
               </tbody>
             </table>
@@ -75,8 +73,7 @@ export default function Shopping() {
         </div>
 
         <NewShoppingModal />
-
       </div>
     </>
-  )
+  );
 }

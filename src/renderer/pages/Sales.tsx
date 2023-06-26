@@ -1,46 +1,38 @@
-import { forwardRef, useContext, useEffect, useState } from 'react';
-import { ToastContainer } from 'react-toastify';
+import { useContext, useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
 
-import Header from "../components/Header";
-import NewSaleModal from '../components/NewSaleModal';
-import DeletePopUp from '../components/DeletePopUp';
-import EditSale from '../components/Edit/EditSale';
+import DeletePopUp from "../components/DeletePopUp";
+import EditSale from "../components/Edit/EditSale";
+import NewSaleModal from "../components/NewSaleModal";
 
-import { listSales } from '../../database/sales';
+import { listSales } from "../../database/sales";
+import { NotificationContext } from "../contexts/NotificationContext";
 
-import { NotificationContext } from '../contexts/NotificationContext';
-
-type listSalesResponse = Awaited<ReturnType<typeof listSales>>
+type listSalesResponse = Awaited<ReturnType<typeof listSales>>;
 
 export default function Sales() {
-
   const { message } = useContext(NotificationContext);
   // vendas da tabela
-  const [sales, setSales] = useState<listSalesResponse>([])
+  const [sales, setSales] = useState<listSalesResponse>([]);
 
   useEffect(() => {
-
     listSales().then((sales) => {
-      setSales(sales)
-    })
-
-  }, [message])
+      setSales(sales);
+    });
+  }, [message]);
 
   return (
     <>
-      <Header />
-
       <ToastContainer />
 
       <div className="container">
-
         <div>
           <h2>Vendas Registradas</h2>
 
           {sales?.length === 0 ? (
-            <p className='no-register'>Nenhuma venda registrada</p>
+            <p className="no-register">Nenhuma venda registrada</p>
           ) : (
-            <table className='table-container'>
+            <table className="table-container">
               <thead>
                 <tr>
                   <th>ID</th>
@@ -55,20 +47,26 @@ export default function Sales() {
               <tbody>
                 {sales?.map((sale, index) => {
                   return (
-                    <tr key={index} >
+                    <tr key={index}>
                       <td>{sale.id}</td>
                       <td>{sale.Product.name}</td>
                       <td>{sale.quantity}</td>
                       <td>R$ {sale.amountInCents / 100}</td>
-                      <td className="textCenter">{new Date(sale.createdAt).toLocaleDateString()}</td>
                       <td className="textCenter">
-                        <EditSale id={sale.id} productID={sale.Product.id} quantity={sale.quantity} />
+                        {new Date(sale.createdAt).toLocaleDateString()}
                       </td>
                       <td className="textCenter">
-                        <DeletePopUp id={sale.id} register={'sale'} />
+                        <EditSale
+                          id={sale.id}
+                          productID={sale.Product.id}
+                          quantity={sale.quantity}
+                        />
+                      </td>
+                      <td className="textCenter">
+                        <DeletePopUp id={sale.id} register={"sale"} />
                       </td>
                     </tr>
-                  )
+                  );
                 })}
               </tbody>
             </table>
@@ -76,9 +74,7 @@ export default function Sales() {
         </div>
 
         <NewSaleModal />
-
       </div>
-
     </>
-  )
+  );
 }
