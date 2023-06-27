@@ -8,7 +8,8 @@ import {
 import { getMonthRange } from "../../utils/getMonthRange";
 import { getMonthsUntilNow } from "../../utils/getMonthsUntilNow";
 
-export default function Report() {
+export default function Dashboard() {
+
   // período escolhido para gerar relatório
   const [selectedDate, setSelectedDate] = useState("");
   // opções de data do select
@@ -25,8 +26,8 @@ export default function Report() {
   });
 
   useEffect(() => {
-    // busca os meses possíveis (options)
 
+    // busca os meses possíveis (options)
     let firstSaleMonth = getDateofFirstSale();
     let firstShoppingMonth = getDateofFirstShopping();
 
@@ -46,8 +47,8 @@ export default function Report() {
   }, []);
 
   useEffect(() => {
-    // faz a busca quando um mês é selecionado
 
+    // faz a busca quando um mês é selecionado
     if (selectedDate != "") {
       const { firstDay, lastDay } = getMonthRange(selectedDate);
 
@@ -70,34 +71,32 @@ export default function Report() {
   const profit = (salesData.salesAmount - shoppingData.shoppingAmount) / 100;
 
   return (
-    <>
-      <div className="dateSelectContainer">
-        <h2>Selecione um mês para gerar o relatório</h2>
+    <div className="dashboard">
 
-        <select
-          name="date"
-          value={selectedDate}
-          onChange={(e) => {
-            setSelectedDate(e.target.value);
-          }}
-          style={{ fontSize: "1.3rem" }}
-        >
-          <option value="" disabled>
-            Escolha um mês
-          </option>
+      <h1>Dashboard</h1>
 
-          {dateOptions.map((dateOption, index) => {
-            return (
-              <option key={index} value={dateOption}>
-                {dateOption}
-              </option>
-            );
-          })}
-        </select>
-      </div>
+      <select
+        name="date"
+        value={selectedDate}
+        onChange={(e) => {
+          setSelectedDate(e.target.value);
+        }}
+      >
+        <option value="" disabled>
+          Selecione um mês
+        </option>
 
-      {selectedDate.length > 0 ? (
-        <div className="flex-records">
+        {dateOptions.map((dateOption, index) => {
+          return (
+            <option key={index} value={dateOption}>
+              {dateOption}
+            </option>
+          );
+        })}
+      </select>
+
+      {selectedDate.length > 0 && (
+        <div>
           <div className="first-line">
             <div className="record">
               <h1>Materiais:</h1>
@@ -127,7 +126,7 @@ export default function Report() {
             </span>
           </div>
         </div>
-      ) : null}
-    </>
+      )}
+    </div>
   );
 }

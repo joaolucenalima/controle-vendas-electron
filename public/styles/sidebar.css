@@ -10,6 +10,12 @@
   flex-direction: column;
   justify-content: space-between;
   background-color: #1d1d1d;
+
+  border-right: #414141 1px solid;
+}
+
+.sidebar svg {
+  font-size: 1.5rem;
 }
 
 .navigation-links {
@@ -18,16 +24,11 @@
   row-gap: 1rem;
 }
 
-svg {
-  font-size: 1.5rem;
-}
-
 .link {
   position: relative;
-  padding: 0.4rem 0.8rem;
+  padding: 0.5rem 0.8rem;
 
   display: flex;
-  flex-direction: column;
   align-items: center;
 
   text-decoration: none;
@@ -36,10 +37,7 @@ svg {
   opacity: 60%;
 }
 
-.link:hover {
-  opacity: 100%;
-}
-
+.link:hover,
 .active {
   opacity: 100%;
 }
@@ -49,9 +47,9 @@ svg {
   position: absolute;
   top: 0;
   bottom: 0;
-  right: 0;
+  left: 0;
   height: 100%;
-  width: 3px;
+  width: 2px;
   background-color: #CFC5BC;
   border-radius: 1px;
 }

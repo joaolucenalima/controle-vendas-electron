@@ -12,62 +12,28 @@ export default function Sidebar() {
   return (
     <div className="sidebar">
       <div className="navigation-links">
-        <NavLink
-          to={"/"}
-          className={({ isActive }) => (isActive ? "link active" : "link")}
-          title="Relatório"
-        >
-          <span style={{ color: "#CFC5BC" }}>
-            <MdListAlt />
-          </span>
+        <NavLink to={"/"} className="link" title="Dashboard">
+          <MdListAlt style={{ color: "#CFC5BC" }} />
         </NavLink>
 
-        <NavLink
-          to={"/shopping"}
-          className={({ isActive }) => (isActive ? "link active" : "link")}
-          title="Compras"
-        >
-          <span style={{ color: "#ca413c" }}>
-            <MdShoppingCart />
-          </span>
+        <NavLink to={"/shopping"} className="link" title="Compras">
+          <MdShoppingCart style={{ color: "#ca413c" }} />
         </NavLink>
 
-        <NavLink
-          to={"/sales"}
-          className={({ isActive }) => (isActive ? "link active" : "link")}
-          title="Vendas"
-        >
-          <span style={{ color: "#00CF22" }}>
-            <MdAttachMoney />
-          </span>
+        <NavLink to={"/sales"} className="link" title="Vendas">
+          <MdAttachMoney style={{ color: "#00CF22" }} />
         </NavLink>
 
-        <NavLink
-          to={"/materials"}
-          className={({ isActive }) => (isActive ? "link active" : "link")}
-          title="Materiais"
-        >
-          <span style={{ color: "#FAC100" }}>
-            <MdOutlineLayers />
-          </span>
+        <NavLink to={"/materials"} className="link" title="Materiais">
+          <MdOutlineLayers style={{ color: "#FAC100" }} />
         </NavLink>
 
-        <NavLink
-          to={"/products"}
-          className={({ isActive }) => (isActive ? "link active" : "link")}
-          title="Produtos"
-        >
-          <span style={{ color: "#3254FF" }}>
-            <TbBox />
-          </span>
+        <NavLink to={"/products"} className="link" title="Produtos">
+          <TbBox style={{ color: "#3254FF" }} />
         </NavLink>
       </div>
 
-      <NavLink
-        to={"/config"}
-        className={({ isActive }) => (isActive ? "link active" : "link")}
-        title="Configurações"
-      >
+      <NavLink to={"/config"} className="link" title="Configurações">
         <GoGear />
       </NavLink>
     </div>

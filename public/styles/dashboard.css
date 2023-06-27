@@ -1,0 +1,42 @@
+.dashboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 2fr 2fr;
+  align-items: center;
+
+  margin: 1rem 2rem;
+}
+
+.dashboard h1 {
+  justify-self: start;
+}
+
+.dashboard select {
+  width: 70%;
+  justify-self: end;
+  text-align: center;
+}
+
+.record {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.3rem;
+  text-align: center;
+  border-radius: 8px;
+  background-color: #424242;
+  box-shadow: 4px 4px 10px #141414;
+}
+
+.record>span {
+  display: block;
+}
+
+.profit {
+  font-size: 1.7rem;
+  color: #00CF66;
+}
+
+.prejudice {
+  font-size: 1.7rem;
+  color: #cf231d;
+}

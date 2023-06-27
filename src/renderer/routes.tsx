@@ -2,9 +2,9 @@ import { Route, HashRouter as Router, Routes } from "react-router-dom";
 
 import Sidebar from "./components/Sidebar";
 
+import Dashboard from "./pages/Dashboard";
 import Materials from "./pages/Materials";
 import Products from "./pages/Products";
-import Report from "./pages/Report";
 import Sales from "./pages/Sales";
 import Shopping from "./pages/Shoppings";
 
@@ -13,9 +13,9 @@ export function AppRoutes() {
     <Router>
       <div className="layout">
         <Sidebar />
-        <div className="container">
+        <div className="content">
           <Routes>
-            <Route path="/" element={<Report />} />
+            <Route path="/" element={<Dashboard />} />
             <Route path="/shopping" element={<Shopping />} />
             <Route path="/sales" element={<Sales />} />
             <Route path="/materials" element={<Materials />} />
