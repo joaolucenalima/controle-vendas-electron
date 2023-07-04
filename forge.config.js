@@ -15,14 +15,14 @@ module.exports = {
       name: '@electron-forge/maker-squirrel',
       config: {
         "setupIcon": "./build/favicon.ico",
-        "setupExe": `controle-estoque-${version}.exe`,
+        "setupExe": `controle-vendas-${version}.exe`,
       },
     },
     {
       name: '@electron-forge/maker-flatpak',
       config: {
         options: {
-          name: 'controle-estoque-${version}',
+          name: `controle-vendas-${version}`,
           icon: "./build/favicon.ico",
         },
       },
@@ -34,7 +34,7 @@ module.exports = {
       config: {
         repository: {
           owner: "joaolucenalima",
-          name: "controle-estoque-electron"
+          name: "controle-vendas-electron"
         },
         prerelease: false,
         draft: true

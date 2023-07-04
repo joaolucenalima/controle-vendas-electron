@@ -1,5 +1,4 @@
-import { DataTypes, Model } from "sequelize";
-import { Op } from "sequelize";
+import { DataTypes, Model, Op } from "sequelize";
 import sequelize from "./connection";
 
 type setMaterialsProps = {
