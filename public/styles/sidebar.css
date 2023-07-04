@@ -5,6 +5,7 @@
   left: 0;
   height: 100vh;
   width: max-content;
+  padding: 5px 0;
 
   display: flex;
   flex-direction: column;
@@ -22,6 +23,7 @@
   display: grid;
   grid-template-rows: repeat(5, 1fr);
   row-gap: 1rem;
+  width: 100%;
 }
 
 .link {
@@ -45,11 +47,10 @@
 .active::after {
   content: "";
   position: absolute;
-  top: 0;
-  bottom: 0;
+  top: auto;
   left: 0;
-  height: 100%;
-  width: 2px;
+  height: 80%;
+  width: 3px;
   background-color: #CFC5BC;
-  border-radius: 1px;
+  border-radius: 0 3px 3px 0;
 }

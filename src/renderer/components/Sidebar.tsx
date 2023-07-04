@@ -3,7 +3,7 @@ import {
   MdAttachMoney,
   MdListAlt,
   MdOutlineLayers,
-  MdShoppingCart,
+  MdOutlineShoppingCart
 } from "react-icons/md";
 import { TbBox } from "react-icons/tb";
 import { NavLink } from "react-router-dom";
@@ -13,23 +13,23 @@ export default function Sidebar() {
     <div className="sidebar">
       <div className="navigation-links">
         <NavLink to={"/"} className="link" title="Dashboard">
-          <MdListAlt style={{ color: "#CFC5BC" }} />
+          <MdListAlt />
         </NavLink>
 
         <NavLink to={"/shopping"} className="link" title="Compras">
-          <MdShoppingCart style={{ color: "#ca413c" }} />
+          <MdOutlineShoppingCart />
         </NavLink>
 
         <NavLink to={"/sales"} className="link" title="Vendas">
-          <MdAttachMoney style={{ color: "#00CF22" }} />
+          <MdAttachMoney />
         </NavLink>
 
         <NavLink to={"/materials"} className="link" title="Materiais">
-          <MdOutlineLayers style={{ color: "#FAC100" }} />
+          <MdOutlineLayers />
         </NavLink>
 
         <NavLink to={"/products"} className="link" title="Produtos">
-          <TbBox style={{ color: "#3254FF" }} />
+          <TbBox />
         </NavLink>
       </div>
 

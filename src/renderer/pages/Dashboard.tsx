@@ -1,17 +1,11 @@
 import { useEffect, useState } from "react";
 
 import { countAndSumSales, getDateofFirstSale } from "../../database/sales";
-import {
-  countAndSumShopping,
-  getDateofFirstShopping,
-} from "../../database/shopping";
+import { countAndSumShopping, getDateofFirstShopping } from "../../database/shopping";
 import { getMonthRange } from "../../utils/getMonthRange";
 import { getMonthsUntilNow } from "../../utils/getMonthsUntilNow";
 
 export default function Dashboard() {
-
-  // período escolhido para gerar relatório
-  const [selectedDate, setSelectedDate] = useState("");
   // opções de data do select
   const [dateOptions, setDateOptions] = useState<string[]>([]);
 
@@ -26,7 +20,6 @@ export default function Dashboard() {
   });
 
   useEffect(() => {
-
     // busca os meses possíveis (options)
     let firstSaleMonth = getDateofFirstSale();
     let firstShoppingMonth = getDateofFirstShopping();
@@ -46,27 +39,23 @@ export default function Dashboard() {
     });
   }, []);
 
-  useEffect(() => {
+  async function takeMonthData(date: string) {
+    const { firstDay, lastDay } = getMonthRange(date);
 
-    // faz a busca quando um mês é selecionado
-    if (selectedDate != "") {
-      const { firstDay, lastDay } = getMonthRange(selectedDate);
-
-      countAndSumSales(firstDay, lastDay).then((data) => {
-        setSalesData({
-          salesCount: data.salesCount,
-          salesAmount: data.salesAmount,
-        });
+    await countAndSumSales(firstDay, lastDay).then((data) => {
+      setSalesData({
+        salesCount: data.salesCount,
+        salesAmount: data.salesAmount,
       });
+    });
 
-      countAndSumShopping(firstDay, lastDay).then((data) => {
-        setShoppingData({
-          shoppingCount: data.shoppingCount,
-          shoppingAmount: data.shoppingAmount,
-        });
+    await countAndSumShopping(firstDay, lastDay).then((data) => {
+      setShoppingData({
+        shoppingCount: data.shoppingCount,
+        shoppingAmount: data.shoppingAmount,
       });
-    }
-  }, [selectedDate]);
+    });
+  }
 
   const profit = (salesData.salesAmount - shoppingData.shoppingAmount) / 100;
 
@@ -77,56 +66,22 @@ export default function Dashboard() {
 
       <select
         name="date"
-        value={selectedDate}
         onChange={(e) => {
-          setSelectedDate(e.target.value);
+          takeMonthData(e.target.value);
         }}
       >
-        <option value="" disabled>
-          Selecione um mês
-        </option>
-
         {dateOptions.map((dateOption, index) => {
           return (
             <option key={index} value={dateOption}>
               {dateOption}
             </option>
-          );
+          )
         })}
       </select>
 
-      {selectedDate.length > 0 && (
-        <div>
-          <div className="first-line">
-            <div className="record">
-              <h1>Materiais:</h1>
-              <span style={{ fontSize: "1.3rem" }}>
-                {shoppingData.shoppingCount}
-              </span>
-              <strong>Gastos totais:</strong>
-              <span style={{ color: "#cf231d", fontSize: "1.3rem" }}>
-                R$ {shoppingData.shoppingAmount / 100}
-              </span>
-            </div>
-
-            <div className="record">
-              <h1>Vendas Totais:</h1>
-              <span style={{ fontSize: "1.3rem" }}>{salesData.salesCount}</span>
-              <strong>Lucro total:</strong>
-              <span style={{ color: "#00CF22", fontSize: "1.3rem" }}>
-                R$ {salesData.salesAmount / 100}
-              </span>
-            </div>
-          </div>
-
-          <div className="second-line record">
-            <h1>Lucro final:</h1>
-            <span className={profit > 0 ? "profit" : "prejudice"}>
-              R$ {profit}
-            </span>
-          </div>
-        </div>
-      )}
+      <div className="no-info-text">
+        Não há informações correspondentes a esse mês.
+      </div>
     </div>
-  );
+  )
 }

@@ -1,6 +1,6 @@
 import { app, BrowserWindow } from 'electron'
-import path from 'path'
 import fs from 'fs'
+import path from 'path'
 
 require("./main-events")
 
@@ -17,7 +17,7 @@ function verifyDatabaseDir() {
 function CreateWindow() {
 
   const mainWindow = new BrowserWindow({
-    icon: './build/favicon.ico',
+    icon: './assets/icon.png',
     width: 1024,
     height: 768,
     show: false,
