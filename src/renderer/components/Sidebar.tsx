@@ -12,29 +12,35 @@ export default function Sidebar() {
   return (
     <div className="sidebar">
       <div className="navigation-links">
-        <NavLink to={"/"} className="link" title="Dashboard">
+        <NavLink to={"/"} className="link">
           <MdListAlt />
+          Dashboard
         </NavLink>
 
-        <NavLink to={"/shopping"} className="link" title="Compras">
+        <NavLink to={"/shopping"} className="link">
           <MdOutlineShoppingCart />
+          Compras
         </NavLink>
 
-        <NavLink to={"/sales"} className="link" title="Vendas">
+        <NavLink to={"/sales"} className="link">
           <MdAttachMoney />
+          Vendas
         </NavLink>
 
-        <NavLink to={"/materials"} className="link" title="Materiais">
+        <NavLink to={"/materials"} className="link">
           <MdOutlineLayers />
+          Materiais
         </NavLink>
 
-        <NavLink to={"/products"} className="link" title="Produtos">
+        <NavLink to={"/products"} className="link">
           <TbBox />
+          Produtos
         </NavLink>
       </div>
 
-      <NavLink to={"/config"} className="link" title="Configurações">
+      <NavLink to={"/config"} className="link">
         <GoGear />
+        Configurações
       </NavLink>
     </div>
   );
