@@ -22,9 +22,7 @@ type ProductListType = {
 export default function Products() {
   const { message, showToast } = useContext(NotificationContext);
 
-  const [productList, setProductList] = useState<ProductListType[] | undefined>(
-    []
-  );
+  const [productList, setProductList] = useState<ProductListType[] | undefined>([]);
 
   const {
     register,

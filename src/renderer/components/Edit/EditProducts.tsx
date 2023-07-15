@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { MdEdit } from 'react-icons/md';
 import * as Dialog from '@radix-ui/react-dialog';
@@ -110,6 +110,5 @@ export default function EditProducts(props: EditProductsProps) {
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root >
-
   )
 }

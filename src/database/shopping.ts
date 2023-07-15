@@ -143,7 +143,6 @@ Shopping.init({
 
 Shopping.belongsTo(Materials, {
   foreignKey: 'materialID',
-  onDelete: 'NO ACTION',
 })
 
 // busca informações para a tabela

@@ -98,7 +98,6 @@ export async function deleteProducts(id: string | number) {
   }
 }
 
-
 class Sales extends Model {
   declare id: number;
   declare productID: string;
@@ -132,7 +131,6 @@ Sales.init({
 
 Sales.belongsTo(Products, {
   foreignKey: 'productID',
-  onDelete: 'NO ACTION',
 })
 
 export async function listSales() {

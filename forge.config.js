@@ -14,8 +14,8 @@ module.exports = {
     {
       name: '@electron-forge/maker-squirrel',
       config: {
-        "setupIcon": "./build/favicon.ico",
-        "setupExe": `controle-vendas-${version}.exe`,
+        setupIcon: "./build/favicon.ico",
+        setupExe: `controle-vendas-${version}.exe`,
       },
     },
     {
@@ -27,18 +27,5 @@ module.exports = {
         },
       },
     },
-  ],
-  publishers: [
-    {
-      name: "@electron-forge/publisher-github",
-      config: {
-        repository: {
-          owner: "joaolucenalima",
-          name: "controle-vendas-electron"
-        },
-        prerelease: false,
-        draft: true
-      }
-    }
-  ],
+  ]
 };
