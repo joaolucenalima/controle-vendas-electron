@@ -5,7 +5,7 @@ import DeletePopUp from "../components/DeletePopUp";
 import EditShopping from "../components/Edit/EditShopping";
 import NewShoppingModal from "../components/NewShoppingModal";
 
-import { getShopping } from "../../database/shopping";
+import { getShopping } from "../../database/controllers/Shopping";
 import { NotificationContext } from "../contexts/NotificationContext";
 
 type getShoppingProps = Awaited<ReturnType<typeof getShopping>>;

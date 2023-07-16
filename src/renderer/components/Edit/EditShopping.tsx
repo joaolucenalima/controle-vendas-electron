@@ -1,9 +1,10 @@
-import { useContext, useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { MdEdit } from 'react-icons/md';
 import * as Dialog from '@radix-ui/react-dialog';
+import { useContext, useEffect, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { MdEdit } from 'react-icons/md';
 
-import { getMaterials, updateShopping } from '../../../database/shopping';
+import { getMaterials } from '../../../database/controllers/Material';
+import { updateShopping } from '../../../database/controllers/Shopping';
 import { NotificationContext } from '../../contexts/NotificationContext';
 
 type EditShoppingProps = {

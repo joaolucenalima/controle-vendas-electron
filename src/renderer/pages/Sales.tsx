@@ -5,7 +5,7 @@ import DeletePopUp from "../components/DeletePopUp";
 import EditSale from "../components/Edit/EditSale";
 import NewSaleModal from "../components/NewSaleModal";
 
-import { listSales } from "../../database/sales";
+import { listSales } from "../../database/controllers/Sales";
 import { NotificationContext } from "../contexts/NotificationContext";
 
 type listSalesResponse = Awaited<ReturnType<typeof listSales>>;

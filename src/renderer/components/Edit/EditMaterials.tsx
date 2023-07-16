@@ -1,10 +1,10 @@
-import { useContext, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { MdEdit } from 'react-icons/md';
 import * as Dialog from '@radix-ui/react-dialog';
+import { useContext, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { MdEdit } from 'react-icons/md';
 
+import { updateMaterials } from '../../../database/controllers/Material';
 import { NotificationContext } from '../../contexts/NotificationContext';
-import { updateMaterials } from '../../../database/shopping';
 
 type EditMaterialsProps = {
   id: string,

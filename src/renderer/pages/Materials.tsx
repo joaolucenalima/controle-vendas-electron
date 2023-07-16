@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify";
 import DeletePopUp from "../components/DeletePopUp";
 import EditMaterials from "../components/Edit/EditMaterials";
 
-import { getMaterials, setMaterials } from "../../database/shopping";
+import { getMaterials, setMaterials } from "../../database/controllers/Material";
 import { NotificationContext } from "../contexts/NotificationContext";
 
 type setMaterialProps = {

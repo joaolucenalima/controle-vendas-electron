@@ -1,9 +1,11 @@
+import * as AlertDialog from '@radix-ui/react-alert-dialog';
 import { useContext } from 'react';
 import { MdDelete } from 'react-icons/md';
-import * as AlertDialog from '@radix-ui/react-alert-dialog';
 
-import { deleteMaterials, deleteShopping } from '../../database/shopping'
-import { deleteProducts, deleteSales } from '../../database/sales'
+import { deleteMaterials } from '../../database/controllers/Material';
+import { deleteProducts } from '../../database/controllers/Products';
+import { deleteSales } from '../../database/controllers/Sales';
+import { deleteShopping } from '../../database/controllers/Shopping';
 import { NotificationContext } from '../contexts/NotificationContext';
 
 type DeleteProps = {

@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify";
 import DeletePopUp from "../components/DeletePopUp";
 import EditProducts from "../components/Edit/EditProducts";
 
-import { listProducts, registerProduct } from "../../database/sales";
+import { listProducts, registerProduct } from "../../database/controllers/Products";
 import { NotificationContext } from "../contexts/NotificationContext";
 
 type Inputs = {

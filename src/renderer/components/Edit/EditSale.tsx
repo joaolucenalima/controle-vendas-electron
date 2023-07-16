@@ -1,9 +1,10 @@
-import { useContext, useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { MdEdit } from 'react-icons/md';
 import * as Dialog from '@radix-ui/react-dialog';
+import { useContext, useEffect, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { MdEdit } from 'react-icons/md';
 
-import { listProducts, updateSales } from '../../../database/sales';
+import { listProducts } from '../../../database/controllers/Products';
+import { updateSales } from '../../../database/controllers/Sales';
 import { NotificationContext } from '../../contexts/NotificationContext';
 
 type EditSaleProps = {

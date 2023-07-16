@@ -1,11 +1,12 @@
-import { useContext, useEffect, useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { MdAdd } from 'react-icons/md';
+import { zodResolver } from "@hookform/resolvers/zod";
 import * as Dialog from '@radix-ui/react-dialog';
+import { useContext, useEffect, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { MdAdd } from 'react-icons/md';
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod"
 
-import { getMaterials, setShopping } from '../../database/shopping';
+import { getMaterials } from "../../database/controllers/Material";
+import { setShopping } from "../../database/controllers/Shopping";
 import { NotificationContext } from '../contexts/NotificationContext';
 
 const shoppingPropsSchema = z.object({

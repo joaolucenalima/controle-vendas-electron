@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-import { countAndSumSales, getDateofFirstSale } from "../../database/sales";
-import { countAndSumShopping, getDateofFirstShopping } from "../../database/shopping";
+import { countAndSumSales, getDateofFirstSale } from "../../database/controllers/Sales";
+import { countAndSumShopping, getDateofFirstShopping } from "../../database/controllers/Shopping";
 import { getMonthRange } from "../../utils/getMonthRange";
 import { getMonthsUntilNow } from "../../utils/getMonthsUntilNow";
 
