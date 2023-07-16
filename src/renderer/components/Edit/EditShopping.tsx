@@ -49,11 +49,11 @@ export default function EditShopping(props: EditShoppingProps) {
 
     data.id = props.id
 
-    setOpen(false)
-
     await updateShopping(data).then(response => {
       showToast(response)
     })
+
+    setOpen(false)
   }
 
   return (

@@ -22,18 +22,16 @@ export default function EditMaterials(props: EditMaterialsProps) {
   const { register, handleSubmit, formState: { errors } } = useForm<EditMaterialsProps>();
 
   const handleEdit: SubmitHandler<EditMaterialsProps> = async data => {
-
     // registrando o id no data para ser usado no where do bd
     data.id = props.id
 
     data.priceInCents = parseFloat((data.priceInCents * 100).toFixed(2))
 
-    setOpen(false)
-
     await updateMaterials(data).then(response => {
       showToast(response)
     })
 
+    setOpen(false)
   }
 
   return (
@@ -104,7 +102,6 @@ export default function EditMaterials(props: EditMaterialsProps) {
             />
 
           </form>
-
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root >

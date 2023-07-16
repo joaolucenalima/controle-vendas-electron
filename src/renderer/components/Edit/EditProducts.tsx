@@ -27,11 +27,11 @@ export default function EditProducts(props: EditProductsProps) {
 
     data.priceInCents = parseFloat((data.priceInCents * 100).toFixed(2))
 
-    setOpen(false)
-
     await updateProducts(data).then(response => {
       showToast(response)
     })
+
+    setOpen(false)
   }
 
   return (
