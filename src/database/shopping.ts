@@ -16,7 +16,6 @@ type setShoppingProps = {
   materialID: string,
   quantity: number,
   amount: number,
-  createdAt: string
 }
 
 type updateShoppingProps = {
@@ -167,7 +166,6 @@ export async function setShopping(data: setShoppingProps) {
       materialID: data.materialID,
       quantity: data.quantity,
       amountInCents: data.amount,
-      createdAt: data.createdAt
     })
     return ({ success: "Compra registrada com sucesso!" })
   } catch (err) {

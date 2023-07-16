@@ -22,7 +22,6 @@ export default function EditProducts(props: EditProductsProps) {
   const { register, handleSubmit, formState: { errors } } = useForm<EditProductsProps>();
 
   const handleEdit: SubmitHandler<EditProductsProps> = async data => {
-
     // registrando o id no data para ser usado no where do bd
     data.id = props.id
 
@@ -33,7 +32,6 @@ export default function EditProducts(props: EditProductsProps) {
     await updateProducts(data).then(response => {
       showToast(response)
     })
-
   }
 
   return (
@@ -70,7 +68,6 @@ export default function EditProducts(props: EditProductsProps) {
                   required: true,
                 })}
                 type="text"
-                name="name"
                 defaultValue={props.name}
               />
             </div>
@@ -87,7 +84,6 @@ export default function EditProducts(props: EditProductsProps) {
                   required: true,
                 })}
                 type="number"
-                name="priceInCents"
                 step="0.01"
                 placeholder="0.00"
                 min={0.01}
@@ -106,7 +102,6 @@ export default function EditProducts(props: EditProductsProps) {
             />
 
           </form>
-
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root >

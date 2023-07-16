@@ -2,16 +2,19 @@ import { useContext, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { MdAdd } from 'react-icons/md';
 import * as Dialog from '@radix-ui/react-dialog';
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod"
 
 import { getMaterials, setShopping } from '../../database/shopping';
 import { NotificationContext } from '../contexts/NotificationContext';
 
-type shoppingProps = {
-  materialID: string,
-  quantity: number,
-  amount: number,
-  createdAt: string
-}
+const shoppingPropsSchema = z.object({
+  amount: z.number(),
+  materialID: z.string().uuid(),
+  quantity: z.number().int().min(1)
+})
+
+type shoppingProps = z.infer<typeof shoppingPropsSchema>
 
 type materialsProps = {
   id: string,
@@ -27,20 +30,25 @@ export default function NewShoppingModal() {
   // controlar se o modal está aberto / fechar ele após submissão
   const [open, setOpen] = useState(false);
 
-  const { register, handleSubmit, formState: { errors } } = useForm<shoppingProps>();
+  const { register, handleSubmit, formState: { errors } } = useForm<shoppingProps>({
+    resolver: zodResolver(shoppingPropsSchema),
+    defaultValues: {
+      amount: 0
+    }
+  });
 
   useEffect(() => {
-
     getMaterials().then((data) => {
       setMaterials(data)
     })
-
   }, [])
 
-  const handleSetPurchase: SubmitHandler<shoppingProps> = async data => {
+  const handleSetPurchase: SubmitHandler<shoppingProps> = async (data) => {
 
     materials?.map((material) => {
-      data.materialID == material.id ? data.amount = material.priceInCents * data.quantity : null
+      if (data.materialID == material.id) {
+        data.amount = material.priceInCents * data.quantity
+      }
     })
 
     await setShopping(data).then((response) => {
@@ -86,15 +94,12 @@ export default function NewShoppingModal() {
                     {...register('materialID', {
                       required: true,
                     })}
-                    name="materialID"
                     defaultValue=''
                   >
                     <option value='' disabled>Selecione o material</option>
-                    {materials?.map((material) => {
-                      return (
-                        <option key={material.id} value={material.id}>{material.name}</option>
-                      )
-                    })}
+                    {materials?.map((material) => (
+                      <option key={material.id} value={material.id}>{material.name}</option>
+                    ))}
                   </select>
                 )}
             </div>
@@ -102,29 +107,28 @@ export default function NewShoppingModal() {
             <div className="form-field">
               <label htmlFor="quantity">Quantidade:</label>
               <input
+                type="number"
                 {...register('quantity', {
                   required: true,
+                  valueAsNumber: true
                 })}
-                type="number"
-                name="quantity"
                 min={1}
+                defaultValue={0}
                 disabled={materials?.length === 0}
               />
             </div>
 
-            {errors?.quantity?.type === "required" && (
-              <span className="error" style={{ textAlign: "end" }}>Digite a quantidade comprada</span>
+            {errors?.quantity && (
+              <span className="error" style={{ textAlign: "end" }}>{errors.quantity.message}</span>
             )}
 
-            <input
-              type="submit"
-              value="Cadastrar compra"
+            <button
               disabled={materials?.length === 0}
-              style={{ backgroundColor: '#a8312d', color: '#ebebeb' }}
-            />
+              style={{ backgroundColor: '#a8312d', color: '#ebebeb' }}>
+              Cadastrar compra
+            </button>
 
           </form>
-
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root >

@@ -20,6 +20,7 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.1.1",
     "@radix-ui/react-alert-dialog": "^1.0.3",
     "@radix-ui/react-dialog": "^1.0.3",
     "dayjs": "^1.11.7",
@@ -31,6 +32,7 @@
     "react-router-dom": "^6.8.1",
     "react-toastify": "^9.1.2",
     "sequelize": "^6.29.0",
-    "sqlite3": "^5.1.4"
+    "sqlite3": "^5.1.4",
+    "zod": "^3.21.4"
   }
 }

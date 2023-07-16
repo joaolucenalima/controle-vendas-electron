@@ -14,8 +14,7 @@ interface updateProductsProps {
 interface salesProps {
   productID: string,
   quantity: number,
-  amountInCents: number,
-  createdAt: string
+  amountInCents: number
 }
 
 type updateSalesProps = {
@@ -153,7 +152,6 @@ export async function registerSale(props: salesProps) {
       productID: props.productID,
       quantity: props.quantity,
       amountInCents: props.amountInCents,
-      createdAt: props.createdAt
     })
     return ({ success: "Venda adicionada com sucesso!" })
   }

@@ -2,21 +2,24 @@ import { useEffect, useState, useContext } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { MdAdd } from 'react-icons/md';
 import * as Dialog from '@radix-ui/react-dialog';
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod"
 
 import { listProducts, registerSale } from '../../database/sales'
 import { NotificationContext } from '../contexts/NotificationContext';
+
+const salesPropsSchema = z.object({
+  amountInCents: z.number(),
+  productID: z.string().uuid(),
+  quantity: z.number().int().min(1)
+})
+
+type salesProps = z.infer<typeof salesPropsSchema>
 
 type productsType = {
   id: string,
   name: string,
   priceInCents: number
-}
-
-type salesType = {
-  productID: string,
-  quantity: number,
-  amountInCents: number,
-  createdAt: string
 }
 
 export default function NewSaleModal() {
@@ -28,21 +31,25 @@ export default function NewSaleModal() {
   // controlar se o modal está aberto ou não / fechar ele após submissão
   const [open, setOpen] = useState(false);
 
-  const { register, handleSubmit, formState: { errors } } = useForm<salesType>();
+  const { register, handleSubmit, formState: { errors } } = useForm<salesProps>({
+    resolver: zodResolver(salesPropsSchema),
+    defaultValues: {
+      amountInCents: 0
+    }
+  });
 
   useEffect(() => {
-
     listProducts().then((data) => {
       setProducts(data)
     })
-
   }, [])
 
-  const handleRegister: SubmitHandler<salesType> = async data => {
-
+  const handleRegister: SubmitHandler<salesProps> = async (data) => {
     // recuperar informações do produto selecionado pelo id
     products?.map((product) => {
-      data.productID == product.id ? data.amountInCents = product.priceInCents * data.quantity : null
+      if (data.productID == product.id) {
+        data.amountInCents = product.priceInCents * data.quantity
+      }
     })
 
     await registerSale(data).then((response) => {
@@ -88,15 +95,12 @@ export default function NewSaleModal() {
                     {...register('productID', {
                       required: true,
                     })}
-                    name="productID"
                     defaultValue=''
                   >
                     <option value='' disabled>Selecione o produto</option>
-                    {products?.map((product) => {
-                      return (
-                        <option key={product.id} value={product.id}>{product.name}</option>
-                      )
-                    })}
+                    {products?.map((product) =>
+                      <option key={product.id} value={product.id}>{product.name}</option>
+                    )}
                   </select>
                 )}
             </div>
@@ -104,29 +108,29 @@ export default function NewSaleModal() {
             <div className="form-field">
               <label htmlFor="quantity">Quantidade:</label>
               <input
-                {...register('quantity', {
-                  required: true,
-                })}
                 type="number"
-                name="quantity"
+                {...register("quantity", {
+                  required: true,
+                  valueAsNumber: true
+                })}
                 min={1}
+                defaultValue={0}
                 disabled={products?.length === 0}
               />
             </div>
 
-            {errors?.quantity?.type === "required" && (
-              <span className="error">Digite a quantidade vendida</span>
+            {errors?.quantity && (
+              <span className="error">{errors?.quantity.message}</span>
             )}
 
-            <input
-              type="submit"
-              value="Cadastrar venda"
+            <button
               disabled={products?.length === 0}
               style={{ backgroundColor: '#33aa47' }}
-            />
+            >
+              Cadastrar Venda
+            </button>
 
           </form>
-
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root >

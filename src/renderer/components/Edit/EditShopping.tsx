@@ -36,15 +36,12 @@ export default function EditShopping(props: EditShoppingProps) {
   const { register, handleSubmit } = useForm<shoppingType>();
 
   useEffect(() => {
-
     getMaterials().then(data => {
       setMaterials(data)
     })
-
   }, [])
 
   const handleEdit: SubmitHandler<shoppingType> = async data => {
-
     // recuperar informações do material selecionado pelo id
     materials?.map((material) => {
       data.materialID == material.id ? data.amountInCents = material.priceInCents * data.quantity : null
@@ -57,7 +54,6 @@ export default function EditShopping(props: EditShoppingProps) {
     await updateShopping(data).then(response => {
       showToast(response)
     })
-
   }
 
   return (
@@ -97,7 +93,6 @@ export default function EditShopping(props: EditShoppingProps) {
                     {...register('materialID', {
                       required: true,
                     })}
-                    name="materialID"
                     defaultValue={props.materialID}
                   >
                     {materials?.map((material) => {
@@ -116,7 +111,6 @@ export default function EditShopping(props: EditShoppingProps) {
                   required: true,
                 })}
                 type="number"
-                name="quantity"
                 min={1}
                 defaultValue={props.quantity}
               />
@@ -129,7 +123,6 @@ export default function EditShopping(props: EditShoppingProps) {
             />
 
           </form>
-
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root >

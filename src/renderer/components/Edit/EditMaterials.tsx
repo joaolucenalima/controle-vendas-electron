@@ -70,7 +70,6 @@ export default function EditMaterials(props: EditMaterialsProps) {
                   required: true,
                 })}
                 type="text"
-                name="name"
                 defaultValue={props.name}
               />
             </div>
@@ -87,7 +86,6 @@ export default function EditMaterials(props: EditMaterialsProps) {
                   required: true,
                 })}
                 type="number"
-                name="priceInCents"
                 step="0.01"
                 placeholder="0.00"
                 min={0.01}

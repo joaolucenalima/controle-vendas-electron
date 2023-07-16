@@ -94,14 +94,11 @@ export default function EditSale(props: EditSaleProps) {
                     {...register('productID', {
                       required: true,
                     })}
-                    name="productID"
                     defaultValue={props.productID}
                   >
-                    {products?.map((product) => {
-                      return (
-                        <option key={product.id} value={product.id}>{product.name}</option>
-                      )
-                    })}
+                    {products?.map((product) => (
+                      <option key={product.id} value={product.id}>{product.name}</option>
+                    ))}
                   </select>
                 )}
             </div>
@@ -113,7 +110,6 @@ export default function EditSale(props: EditSaleProps) {
                   required: true,
                 })}
                 type="number"
-                name="quantity"
                 min={1}
                 defaultValue={props.quantity}
               />
