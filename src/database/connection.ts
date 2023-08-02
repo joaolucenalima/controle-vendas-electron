@@ -21,6 +21,6 @@ InitMaterials(sequelize);
 InitSales(sequelize);
 InitShopping(sequelize);
 
-(async () => {
-  await sequelize.sync()
-})()
+export async function connectDB() {
+  return await sequelize.sync()
+}
