@@ -1,4 +1,3 @@
-import { Op } from "sequelize";
 import { Products } from "../models/Products";
 import { Sales } from "../models/Sales";
 
@@ -74,44 +73,5 @@ export async function deleteSales(id: string | number) {
   } catch (err) {
     console.log(err)
     return ({ error: "Não foi possível apagar o registro." })
-  }
-}
-
-export async function countAndSumSales(firstDay: string, lastDay: string) {
-  try {
-    const salesCount = await Sales.count({
-      where: {
-        createdAt: {
-          [Op.between]: [firstDay, lastDay]
-        }
-      }
-    })
-    const salesAmount = await Sales.sum('amountInCents',
-      {
-        where: {
-          createdAt: {
-            [Op.between]: [firstDay, lastDay]
-          }
-        }
-      })
-
-    return { salesCount, salesAmount }
-  } catch (err) {
-    console.log(err)
-    return { salesCount: 0, salesAmount: 0 }
-  }
-}
-
-export async function getDateofFirstSale() {
-  try {
-    return await Sales.findOne({
-      attributes: ['createdAt'],
-      order: [
-        ['id', 'ASC']
-      ]
-    })
-  } catch (err) {
-    console.log(err)
-    return undefined
   }
 }

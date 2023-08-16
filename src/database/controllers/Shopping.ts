@@ -1,4 +1,3 @@
-import { Op } from "sequelize";
 import { Materials } from "../models/Materials";
 import { Shopping } from "../models/Shopping";
 
@@ -75,46 +74,5 @@ export async function deleteShopping(id: string | number) {
   } catch (err) {
     console.log(err)
     return ({ error: "Não foi possível apagar o registro." })
-  }
-}
-
-export async function countAndSumShopping(firstDay: string, lastDay: string) {
-
-  try {
-    const shoppingCount = await Shopping.count({
-      where: {
-        createdAt: {
-          [Op.between]: [firstDay, lastDay]
-        }
-      }
-    })
-    const shoppingAmount = await Shopping.sum('amountInCents',
-      {
-        where: {
-          createdAt: {
-            [Op.between]: [firstDay, lastDay]
-          }
-        }
-      }
-    )
-
-    return { shoppingCount, shoppingAmount }
-  } catch (err) {
-    console.log(err)
-    return { shoppingCount: 0, shoppingAmount: 0 }
-  }
-}
-
-export async function getDateofFirstShopping() {
-  try {
-    return await Shopping.findOne({
-      attributes: ['createdAt'],
-      order: [
-        ['id', 'ASC']
-      ]
-    })
-  } catch (err) {
-    console.log(err)
-    return undefined
   }
 }

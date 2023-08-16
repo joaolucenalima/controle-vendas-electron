@@ -1,63 +1,39 @@
-import { useEffect, useState } from "react";
-
-import { countAndSumSales, getDateofFirstSale } from "../../database/controllers/Sales";
-import { countAndSumShopping, getDateofFirstShopping } from "../../database/controllers/Shopping";
+import { useEffect, useMemo, useState } from "react";
+import { DashboardController } from "../../database/controllers/Dashboard";
 import { getMonthRange } from "../../utils/getMonthRange";
-import { getMonthsUntilNow } from "../../utils/getMonthsUntilNow";
 
 export default function Dashboard() {
+
   // opções de data do select
   const [dateOptions, setDateOptions] = useState<string[]>([]);
 
-  const [salesData, setSalesData] = useState({
-    salesCount: 0,
-    salesAmount: 0,
-  });
-
-  const [shoppingData, setShoppingData] = useState({
-    shoppingCount: 0,
-    shoppingAmount: 0,
-  });
+  const [salesData, setSalesData] = useState({})
 
   useEffect(() => {
-    // busca os meses possíveis (options)
-    let firstSaleMonth = getDateofFirstSale();
-    let firstShoppingMonth = getDateofFirstShopping();
-
-    Promise.all([firstSaleMonth, firstShoppingMonth]).then((values) => {
-      if (values[1] !== null && values[0] === null) {
-        setDateOptions(getMonthsUntilNow(values[1]!.createdAt));
-      } else if (values[1] === null && values[0] !== null) {
-        setDateOptions(getMonthsUntilNow(values[0]!.createdAt));
-      } else if (values[1] !== null && values[0] !== null) {
-        if (values[0]!.createdAt < values[1]!.createdAt) {
-          setDateOptions(getMonthsUntilNow(values[0]!.createdAt));
-        } else {
-          setDateOptions(getMonthsUntilNow(values[1]!.createdAt));
-        }
+    DashboardController.getFirstMonth().then(data => {
+      if (data) {
+        setDateOptions(data)
       }
-    });
+    })
   }, []);
 
   async function takeMonthData(date: string) {
     const { firstDay, lastDay } = getMonthRange(date);
 
-    await countAndSumSales(firstDay, lastDay).then((data) => {
-      setSalesData({
-        salesCount: data.salesCount,
-        salesAmount: data.salesAmount,
-      });
-    });
-
-    await countAndSumShopping(firstDay, lastDay).then((data) => {
-      setShoppingData({
-        shoppingCount: data.shoppingCount,
-        shoppingAmount: data.shoppingAmount,
-      });
-    });
+    await DashboardController.
   }
 
-  const profit = (salesData.salesAmount - shoppingData.shoppingAmount) / 100;
+  const options = useMemo(() => {
+    if (!dateOptions.length) {
+      return <option></option>
+    }
+
+    return dateOptions.reverse().map((dateOption, index) => (
+      <option key={index} value={dateOption}>
+        {dateOption}
+      </option>
+    ))
+  }, [dateOptions.length, dateOptions])
 
   return (
     <div className="dashboard">
@@ -65,18 +41,11 @@ export default function Dashboard() {
       <h1>Dashboard</h1>
 
       <select
-        name="date"
         onChange={(e) => {
           takeMonthData(e.target.value);
         }}
       >
-        {dateOptions.map((dateOption, index) => {
-          return (
-            <option key={index} value={dateOption}>
-              {dateOption}
-            </option>
-          )
-        })}
+        {options}
       </select>
 
       <div className="no-info-text">
