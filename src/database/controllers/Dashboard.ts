@@ -5,6 +5,52 @@ import { Shopping } from "../models/Shopping";
 
 export class DashboardController {
 
+  static async getDashboardData(firstDay: string, lastDay: string) {
+
+    const shoppingCount = await Shopping.count({
+      where: {
+        createdAt: {
+          [Op.between]: [firstDay, lastDay]
+        }
+      }
+    })
+
+    const salesCount = await Sales.count({
+      where: {
+        createdAt: {
+          [Op.between]: [firstDay, lastDay]
+        }
+      }
+    })
+
+    const shoppingAmount = await Shopping.sum('amountInCents',
+      {
+        where: {
+          createdAt: {
+            [Op.between]: [firstDay, lastDay]
+          }
+        }
+      }
+    )
+
+    const salesAmount = await Sales.sum('amountInCents',
+      {
+        where: {
+          createdAt: {
+            [Op.between]: [firstDay, lastDay]
+          }
+        }
+      })
+
+    const profit = (salesAmount - shoppingAmount) / 100
+
+    return ({
+      shoppingCount,
+      salesCount,
+      profit
+    })
+  }
+
   static async getFirstMonth() {
     const firstShoppingMonth = await Shopping.findOne({
       attributes: ['createdAt'],
@@ -35,48 +81,5 @@ export class DashboardController {
     }
 
     return getMonthsUntilNow(firstShoppingMonth?.createdAt)
-  }
-
-  static async countShoppings(firstDay: string, lastDay: string) {
-    return await Shopping.count({
-      where: {
-        createdAt: {
-          [Op.between]: [firstDay, lastDay]
-        }
-      }
-    })
-  }
-
-  static async countSales(firstDay: string, lastDay: string) {
-    return await Sales.count({
-      where: {
-        createdAt: {
-          [Op.between]: [firstDay, lastDay]
-        }
-      }
-    })
-  }
-
-  static async countProfit(firstDay: string, lastDay: string) {
-    const shoppingAmount = await Shopping.sum('amountInCents',
-      {
-        where: {
-          createdAt: {
-            [Op.between]: [firstDay, lastDay]
-          }
-        }
-      }
-    )
-
-    const salesAmount = await Sales.sum('amountInCents',
-      {
-        where: {
-          createdAt: {
-            [Op.between]: [firstDay, lastDay]
-          }
-        }
-      })
-
-    return ((salesAmount - shoppingAmount) / 100)
   }
 }

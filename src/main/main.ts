@@ -18,8 +18,8 @@ function CreateWindow() {
 
   const mainWindow = new BrowserWindow({
     icon: './assets/icon.png',
-    width: 1024,
-    height: 768,
+    width: 920,
+    height: 600,
     show: false,
     webPreferences: {
       nodeIntegration: true,
