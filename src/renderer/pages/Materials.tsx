@@ -39,10 +39,10 @@ export default function Materials() {
     });
   }, [message]);
 
-  const handleSetMaterial: SubmitHandler<setMaterialProps> = async (data) => {
+  const handleSetMaterial: SubmitHandler<setMaterialProps> = (data) => {
     data.price = parseFloat((data.price * 100).toFixed(2));
 
-    await setMaterials(data).then((response) => {
+    setMaterials(data).then((response) => {
       showToast(response);
     });
 

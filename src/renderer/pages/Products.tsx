@@ -37,10 +37,10 @@ export default function Products() {
     });
   }, [message]);
 
-  const handleProduct: SubmitHandler<Inputs> = async (data) => {
+  const handleProduct: SubmitHandler<Inputs> = (data) => {
     data.priceInCents = parseFloat((data.priceInCents * 100).toFixed(2));
 
-    await registerProduct(data).then((response) => {
+    registerProduct(data).then((response) => {
       showToast(response);
     });
 

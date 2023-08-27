@@ -4,6 +4,7 @@ import { getMonthRange } from "../../utils/getMonthRange";
 
 import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
+
 interface DashboardData {
   shoppingCount: number,
   salesCount: number,
@@ -31,7 +32,8 @@ export default function Dashboard() {
     })
   }, []);
 
-  async function takeMonthData(date: string) {
+  // buscando dados para mostrar na dashboard
+  function takeMonthData(date: string) {
     const { firstDay, lastDay } = getMonthRange(date);
 
     DashboardController.getDashboardData(firstDay, lastDay).then(data => {
@@ -39,6 +41,7 @@ export default function Dashboard() {
     })
   }
 
+  // opções do select (meses)
   const options = useMemo(() => {
     return dateOptions.map((dateOption, index) => (
       <option key={index} value={dateOption}>

@@ -1,4 +1,3 @@
-import { GoGear } from "react-icons/go";
 import {
   MdAttachMoney,
   MdListAlt,
@@ -38,10 +37,6 @@ export default function Sidebar() {
         </NavLink>
       </div>
 
-      <NavLink to={"/config"} className="link">
-        <GoGear />
-        Configurações
-      </NavLink>
     </div>
   );
 }

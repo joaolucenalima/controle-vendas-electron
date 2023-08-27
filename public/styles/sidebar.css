@@ -5,13 +5,9 @@
   left: 0;
   height: 100vh;
   width: max-content;
-  padding: 15px 0;
+  padding: 15px 10px;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   background-color: #1d1d1d;
-
   border-right: #414141 1px solid;
 }
 
