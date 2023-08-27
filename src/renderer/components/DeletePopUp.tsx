@@ -17,30 +17,30 @@ export default function DeletePopUp(props: DeleteProps) {
 
   const { showToast } = useContext(NotificationContext)
 
-  async function deleteAccepted() {
+  function deleteAccepted() {
 
     switch (props.register) {
 
       case "product":
-        await deleteProducts(props.id).then(data => {
+        deleteProducts(props.id).then(data => {
           showToast(data)
         })
         break;
 
       case "material":
-        await deleteMaterials(props.id).then(data => {
+        deleteMaterials(props.id).then(data => {
           showToast(data)
         })
         break;
 
       case "sale":
-        await deleteSales(props.id).then(data => {
+        deleteSales(props.id).then(data => {
           showToast(data)
         })
         break;
 
       case "shopping":
-        await deleteShopping(props.id).then(data => {
+        deleteShopping(props.id).then(data => {
           showToast(data)
         })
         break;

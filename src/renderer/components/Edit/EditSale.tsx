@@ -42,7 +42,7 @@ export default function EditSale(props: EditSaleProps) {
     })
   }, [])
 
-  const handleEdit: SubmitHandler<salesType> = async data => {
+  const handleEdit: SubmitHandler<salesType> = data => {
     // recuperar informações do produto selecionado pelo id
     products?.map((product) => {
       data.productID == product.id ? data.amountInCents = product.priceInCents * data.quantity : null
@@ -50,7 +50,7 @@ export default function EditSale(props: EditSaleProps) {
 
     data.id = props.id
 
-    await updateSales(data).then(response => {
+    updateSales(data).then(response => {
       showToast(response)
     })
 

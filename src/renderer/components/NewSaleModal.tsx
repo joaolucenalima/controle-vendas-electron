@@ -45,7 +45,7 @@ export default function NewSaleModal() {
     })
   }, [])
 
-  const handleRegister: SubmitHandler<salesProps> = async (data) => {
+  const handleRegister: SubmitHandler<salesProps> = (data) => {
     // recuperar informações do produto selecionado pelo id
     products?.map((product) => {
       if (data.productID == product.id) {
@@ -53,7 +53,7 @@ export default function NewSaleModal() {
       }
     })
 
-    await registerSale(data).then((response) => {
+    registerSale(data).then((response) => {
       showToast(response)
     })
 

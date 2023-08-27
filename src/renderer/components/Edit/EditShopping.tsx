@@ -42,7 +42,7 @@ export default function EditShopping(props: EditShoppingProps) {
     })
   }, [])
 
-  const handleEdit: SubmitHandler<shoppingType> = async data => {
+  const handleEdit: SubmitHandler<shoppingType> = data => {
     // recuperar informações do material selecionado pelo id
     materials?.map((material) => {
       data.materialID == material.id ? data.amountInCents = material.priceInCents * data.quantity : null
@@ -50,7 +50,7 @@ export default function EditShopping(props: EditShoppingProps) {
 
     data.id = props.id
 
-    await updateShopping(data).then(response => {
+    updateShopping(data).then(response => {
       showToast(response)
     })
 

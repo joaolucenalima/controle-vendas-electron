@@ -44,7 +44,7 @@ export default function NewShoppingModal() {
     })
   }, [])
 
-  const handleSetPurchase: SubmitHandler<shoppingProps> = async (data) => {
+  const handleSetPurchase: SubmitHandler<shoppingProps> = (data) => {
 
     materials?.map((material) => {
       if (data.materialID == material.id) {
@@ -52,7 +52,7 @@ export default function NewShoppingModal() {
       }
     })
 
-    await setShopping(data).then((response) => {
+    setShopping(data).then((response) => {
       showToast(response)
     })
 
