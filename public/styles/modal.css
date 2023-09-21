@@ -1,0 +1,99 @@
+.DialogOverlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  inset: 0;
+  animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.DialogContent {
+  background-color: #252525;
+  border-radius: 6px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  max-width: 450px;
+  max-height: 85vh;
+  padding: 25px;
+  animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.DialogDescription {
+  margin: 10px 0 20px;
+  color: #A09FA6;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.CloseButton {
+  font-family: inherit;
+  font-size: 1.3rem;
+  border-radius: 50%;
+  height: 2rem;
+  width: 2rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background-color: #252525;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+}
+
+.CloseButton:hover {
+  background-color: #424242;
+}
+
+@keyframes overlayShow {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes contentShow {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.ModalButton {
+  position: fixed;
+  right: 0.8rem;
+  bottom: 1rem;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.ModalButton:hover {
+  opacity: 80%;
+  transition: 200ms;
+}
+
+.EditButton:hover {
+  color: #00CF66;
+  cursor: pointer;
+}
+
+.DeleteButton:hover {
+  color: #cf231d;
+  cursor: pointer;
+}

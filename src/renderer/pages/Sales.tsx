@@ -6,13 +6,13 @@ import EditSale from "../components/Edit/EditSale";
 import NewSaleModal from "../components/NewSaleModal";
 
 import { listSales } from "../../database/controllers/Sales";
+import { formatDateToLocale } from "../../utils/formatDate";
 import { NotificationContext } from "../contexts/NotificationContext";
 
 type listSalesResponse = Awaited<ReturnType<typeof listSales>>;
 
 export default function Sales() {
   const { message } = useContext(NotificationContext);
-  // vendas da tabela
   const [sales, setSales] = useState<listSalesResponse>([]);
 
   useEffect(() => {
@@ -25,56 +25,52 @@ export default function Sales() {
     <>
       <ToastContainer />
 
-      <div className="container">
-        <div>
-          <h2>Vendas Registradas</h2>
+      <h1>Vendas</h1>
 
-          {sales?.length === 0 ? (
-            <p className="no-register">Nenhuma venda registrada</p>
-          ) : (
-            <table className="table-container">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Produto</th>
-                  <th>Quantidade</th>
-                  <th>Preço</th>
-                  <th className="textCenter">Data da venda</th>
-                  <th className="textCenter">Editar</th>
-                  <th className="textCenter">Excluir</th>
+      {!sales ? (
+        <p className="no-elements-text">Nenhuma venda registrada</p>
+      ) : (
+        <table className="table-container">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Produto</th>
+              <th>Quantidade</th>
+              <th>Preço</th>
+              <th>Data da venda</th>
+              <th>Editar</th>
+              <th>Excluir</th>
+            </tr>
+          </thead>
+          <tbody>
+            {sales.map((sale, index) => {
+              return (
+                <tr key={index}>
+                  <td>{sale.id}</td>
+                  <td>{sale.Product.name}</td>
+                  <td>{sale.quantity}</td>
+                  <td>R$ {sale.amountInCents / 100}</td>
+                  <td>
+                    {formatDateToLocale(sale.createdAt)}
+                  </td>
+                  <td>
+                    <EditSale
+                      id={sale.id}
+                      productID={sale.Product.id}
+                      quantity={sale.quantity}
+                    />
+                  </td>
+                  <td>
+                    <DeletePopUp id={sale.id} register={"Venda"} />
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {sales?.map((sale, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{sale.id}</td>
-                      <td>{sale.Product.name}</td>
-                      <td>{sale.quantity}</td>
-                      <td>R$ {sale.amountInCents / 100}</td>
-                      <td className="textCenter">
-                        {new Date(sale.createdAt).toLocaleDateString()}
-                      </td>
-                      <td className="textCenter">
-                        <EditSale
-                          id={sale.id}
-                          productID={sale.Product.id}
-                          quantity={sale.quantity}
-                        />
-                      </td>
-                      <td className="textCenter">
-                        <DeletePopUp id={sale.id} register={"sale"} />
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          )}
-        </div>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
 
-        <NewSaleModal />
-      </div>
+      <NewSaleModal />
     </>
   );
 }

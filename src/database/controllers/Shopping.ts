@@ -5,16 +5,17 @@ type setShoppingProps = {
   materialID: string,
   quantity: number,
   amount: number,
+  createdAt: string
 }
 
 type updateShoppingProps = {
   id: number,
   materialID: string,
   quantity: number,
-  amountInCents: number
+  amountInCents: number,
+  createdAt: string
 }
 
-// busca informações para a tabela
 export async function getShopping() {
   try {
     return await Shopping.findAll({
@@ -29,18 +30,18 @@ export async function getShopping() {
   }
 }
 
-// registra da compra 
 export async function setShopping(data: setShoppingProps) {
   try {
     await Shopping.create({
       materialID: data.materialID,
       quantity: data.quantity,
       amountInCents: data.amount,
+      createdAt: data.createdAt
     })
     return ({ success: "Compra registrada com sucesso!" })
   } catch (err) {
     console.log(err)
-    return ({ error: "Erro ao registrar compra no banco de dados" })
+    return ({ error: "Erro ao registrar compra." })
   }
 }
 
@@ -50,6 +51,7 @@ export async function updateShopping(props: updateShoppingProps) {
       materialID: props.materialID,
       quantity: props.quantity,
       amountInCents: props.amountInCents,
+      createdAt: props.createdAt,
     },
       {
         where: {

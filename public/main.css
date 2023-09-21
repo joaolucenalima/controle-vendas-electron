@@ -1,14 +1,17 @@
 @import url("./styles/sidebar.css");
 @import url("./styles/dashboard.css");
+@import url("./styles/modal.css");
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  --main-color: #007bff;
 }
 
 *:focus {
-  outline: none;
+  outline: 2px auto #007bff;
+  outline-offset: 2px;
 }
 
 body {
@@ -27,34 +30,39 @@ body {
   padding: 1rem 2rem;
 }
 
-h1,
-h2 {
+.no-elements-text {
+  margin: 2rem auto;
   text-align: center;
+  font-size: 1.2rem;
 }
 
-input[type="submit"],
 button {
   cursor: pointer;
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 4px;
   font-size: 1rem;
+  font-family: 'Lato', sans-serif;
   font-weight: 600;
   color: #1d1d1d;
 }
 
-input[type="submit"]:hover,
 button:hover {
   opacity: 90%;
 }
 
-input[type="text"],
-input[type="number"] {
-  font-size: 0.9rem;
-  padding: 0.3rem 0 0.3rem 0.3rem;
+/* --------------------FORM ELEMENTS--------------------*/
+
+input,
+select {
+  font-size: 1rem;
+  padding: 0 0.3rem;
   background-color: rgb(189, 189, 189);
   border: none;
   border-radius: 4px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  height: 2rem;
 }
 
 input:disabled {
@@ -62,103 +70,80 @@ input:disabled {
   opacity: 90%;
 }
 
-select {
-  font-size: 0.9rem;
-  padding: 0.2rem 0 0.2rem 0.3rem;
-  margin-left: 0.4rem;
-  width: 100%;
-  background-color: rgb(189, 189, 189);
-  border: none;
-  border-radius: 4px;
-}
-
-.textCenter {
-  text-align: center;
-}
-
-.container {
-  margin-top: 1.2rem;
-}
-
 .error {
   font-size: 0.9rem;
-  text-align: end;
+  text-align: start;
   color: tomato;
   display: block;
 }
 
-.no-register {
-  font-size: 1.2rem;
-  text-align: center;
-  margin-top: 3rem;
+.input-error {
+  border: 2px solid rgb(207, 35, 5) !important;
 }
 
-/* --------------------SALES--------------------*/
+.input-error:focus {
+  outline-color: rgb(207, 35, 5) !important;
+}
 
-.form-sales {
-  display: flex;
-  flex-direction: column;
-  row-gap: 1.4rem;
-  width: 90%;
-  margin: 2rem auto;
+/* --------------------MODAL-FORM--------------------*/
+
+.modal-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1.5rem auto;
 }
 
 .form-field {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  row-gap: 0.3rem;
 }
 
-.form-field>input {
-  width: 100%;
-  margin-left: 0.4rem;
+.entire-row {
+  grid-column: 1/3;
+}
+
+.form-buttons {
+  margin-top: 2rem;
+  display: flex;
+  column-gap: 1rem;
+  justify-content: end;
+}
+
+.form-buttons button:not([type="submit"]) {
+  background-color: #252525;
+  color: white;
+}
+
+.form-buttons button:not([type="submit"]):hover {
+  background-color: #3a3a3a;
+  transition: 150ms;
+}
+
+button[type="submit"] {
+  padding: 0.5rem 2rem;
+  background-color: var(--main-color);
+  color: white;
+}
+
+button[type="submit"]:hover {
+  transition: 150ms;
 }
 
 /*--------------------INLINE-FORM--------------------*/
 
 .inline-form {
   width: 80%;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   row-gap: 1rem;
 }
 
-.inline-form>div:first-child {
-  margin-top: 1.5rem;
-}
-
-.inline-form>div {
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-  align-items: center;
-}
-
-.inline-form>div>input {
-  width: 100%;
-}
-
-.inline-form>div>input[type="number"] {
-  padding-left: 2.2rem;
-}
-
-.money-span {
-  display: flex;
-  align-items: center;
-  position: absolute;
-  left: 25%;
-  height: 100%;
-  font-size: 0.9rem;
-  border: 2px solid rgb(155, 155, 155);
-  border-radius: 4px 2px 2px 4px;
-  padding: 0 0.3rem 0 0.3rem;
-  color: black;
-}
-
 /*--------------------TABLE--------------------*/
 
-.table-container {
-  width: 95%;
+table {
+  width: 100%;
   margin: 2rem auto;
   max-height: 70vh;
   overflow-y: auto;
@@ -167,135 +152,11 @@ select {
 }
 
 th {
-  background-color: #3a3a3a;
   padding: 0.5rem;
-}
-
-tbody>tr {
-  border-bottom: 1px solid #3b3b3b;
+  border-bottom: #bdbdbd 2px solid;
 }
 
 td {
-  background-color: #5c5c5c;
+  background-color: #3f3f3f;
   padding: 0.5rem;
-}
-
-/*--------------------POPUP--------------------*/
-
-.popup {
-  position: sticky;
-  left: 0;
-  top: 0.2rem;
-  width: 100%;
-  color: white;
-  padding: 0.5rem;
-}
-
-.popup>strong {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  column-gap: 0.5rem;
-}
-
-/*--------------------MODAL--------------------*/
-
-.DialogOverlay {
-  background-color: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  inset: 0;
-  animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.DialogContent {
-  background-color: #252525;
-  border-radius: 6px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90vw;
-  max-width: 450px;
-  max-height: 85vh;
-  padding: 25px;
-  animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.DialogDescription {
-  margin: 10px 0 20px;
-  color: #A09FA6;
-  font-size: 0.9rem;
-  line-height: 1.5;
-}
-
-.CloseButton {
-  font-family: inherit;
-  font-size: 1.3rem;
-  border-radius: 50%;
-  height: 2rem;
-  width: 2rem;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  background-color: #252525;
-  position: fixed;
-  top: 10px;
-  right: 10px;
-}
-
-.CloseButton:hover {
-  background-color: #424242;
-}
-
-@keyframes overlayShow {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes contentShow {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -48%) scale(0.96);
-  }
-
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
-
-.ModalButton {
-  position: fixed;
-  right: 0.8rem;
-  bottom: 1rem;
-  border-radius: 50%;
-  width: 3rem;
-  height: 3rem;
-  padding: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.ModalButton:hover {
-  opacity: 80%;
-  transition: 200ms;
-}
-
-.EditButton:hover {
-  color: #00CF66;
-  cursor: pointer;
-}
-
-.DeleteButton:hover {
-  color: #cf231d;
-  cursor: pointer;
 }

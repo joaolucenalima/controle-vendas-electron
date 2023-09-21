@@ -4,14 +4,16 @@ import { Sales } from "../models/Sales";
 interface salesProps {
   productID: string,
   quantity: number,
-  amountInCents: number
+  amountInCents: number,
+  createdAt: string
 }
 
 type updateSalesProps = {
   id: number,
   productID: string,
   quantity: number,
-  amountInCents: number
+  amountInCents: number,
+  createdAt: string
 }
 
 export async function listSales() {
@@ -34,6 +36,7 @@ export async function registerSale(props: salesProps) {
       productID: props.productID,
       quantity: props.quantity,
       amountInCents: props.amountInCents,
+      createdAt: props.createdAt
     })
     return ({ success: "Venda adicionada com sucesso!" })
   }
@@ -48,7 +51,8 @@ export async function updateSales(props: updateSalesProps) {
     await Sales.update({
       productID: props.productID,
       quantity: props.quantity,
-      amountInCents: props.amountInCents
+      amountInCents: props.amountInCents,
+      createdAt: props.createdAt
     },
       {
         where: {

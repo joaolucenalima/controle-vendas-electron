@@ -6,13 +6,14 @@ import EditShopping from "../components/Edit/EditShopping";
 import NewShoppingModal from "../components/NewShoppingModal";
 
 import { getShopping } from "../../database/controllers/Shopping";
+import { formatDateToLocale } from "../../utils/formatDate";
 import { NotificationContext } from "../contexts/NotificationContext";
 
-type getShoppingProps = Awaited<ReturnType<typeof getShopping>>;
+export type ShoppingType = Awaited<ReturnType<typeof getShopping>>;
 
 export default function Shopping() {
   const { message } = useContext(NotificationContext);
-  const [purchases, setPurchases] = useState<getShoppingProps>([]);
+  const [purchases, setPurchases] = useState<ShoppingType>([]);
 
   useEffect(() => {
     getShopping().then((data) => {
@@ -24,56 +25,52 @@ export default function Shopping() {
     <>
       <ToastContainer />
 
-      <div className="container">
-        <div>
-          <h2>Compras de materiais</h2>
+      <h1>Compras</h1>
 
-          {purchases?.length === 0 ? (
-            <p className="no-register">Nenhuma compra feita</p>
-          ) : (
-            <table className="table-container">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Material</th>
-                  <th>Quantidade</th>
-                  <th>Preço</th>
-                  <th className="textCenter">Data da compra</th>
-                  <th className="textCenter">Editar</th>
-                  <th className="textCenter">Excluir</th>
+      {!purchases ? (
+        <p className="no-elements-text">Nenhuma compra registrada</p>
+      ) : (
+        <table className="table-container">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Material</th>
+              <th>Quantidade</th>
+              <th>Preço</th>
+              <th>Data da compra</th>
+              <th>Editar</th>
+              <th>Excluir</th>
+            </tr>
+          </thead>
+          <tbody>
+            {purchases.map((purchase, index) => {
+              return (
+                <tr key={index}>
+                  <td>{purchase.id}</td>
+                  <td>{purchase.Material.name}</td>
+                  <td>{purchase.quantity}</td>
+                  <td>R$ {purchase.amountInCents / 100}</td>
+                  <td>
+                    {formatDateToLocale(purchase.createdAt)}
+                  </td>
+                  <td>
+                    <EditShopping
+                      id={purchase.id}
+                      materialID={purchase.Material.id}
+                      quantity={purchase.quantity}
+                      createdAt={purchase.createdAt}
+                    />
+                  </td>
+                  <td>
+                    <DeletePopUp id={purchase.id} register={"Compra"} />
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {purchases?.map((purchase, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{purchase.id}</td>
-                      <td>{purchase.Material.name}</td>
-                      <td>{purchase.quantity}</td>
-                      <td>R$ {purchase.amountInCents / 100}</td>
-                      <td className="textCenter">
-                        {new Date(purchase.createdAt).toLocaleDateString()}
-                      </td>
-                      <td className="textCenter">
-                        <EditShopping
-                          id={purchase.id}
-                          materialID={purchase.Material.id}
-                          quantity={purchase.quantity}
-                        />
-                      </td>
-                      <td className="textCenter">
-                        <DeletePopUp id={purchase.id} register={"shopping"} />
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          )}
-        </div>
-
-        <NewShoppingModal />
-      </div>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
+      <NewShoppingModal />
     </>
   );
 }

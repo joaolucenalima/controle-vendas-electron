@@ -10,7 +10,8 @@ import { NotificationContext } from '../../contexts/NotificationContext';
 type EditShoppingProps = {
   id: number,
   materialID: string,
-  quantity: number
+  quantity: number,
+  createdAt: string
 }
 
 type materialsType = {
@@ -23,7 +24,8 @@ type shoppingType = {
   id: number,
   materialID: string,
   quantity: number,
-  amountInCents: number
+  amountInCents: number,
+  createdAt: string
 }
 
 export default function EditShopping(props: EditShoppingProps) {
@@ -84,7 +86,7 @@ export default function EditShopping(props: EditShoppingProps) {
           <form className="form-sales" onSubmit={handleSubmit(handleEdit)}>
 
             <div className="form-field">
-              <label htmlFor="materialID">Material:</label>
+              <label>Material:</label>
 
               {materials?.length === 0 ?
                 <span className='error'>Deve ter um material cadastrado para poder editar.</span>
@@ -106,7 +108,7 @@ export default function EditShopping(props: EditShoppingProps) {
             </div>
 
             <div className="form-field">
-              <label htmlFor="quantity">Quantidade:</label>
+              <label>Quantidade:</label>
               <input
                 {...register('quantity', {
                   required: true,
@@ -117,11 +119,9 @@ export default function EditShopping(props: EditShoppingProps) {
               />
             </div>
 
-            <input
-              type="submit"
-              value="Salvar alterações"
-              style={{ backgroundColor: '#a8312d', color: '#ebebeb' }}
-            />
+            <button>
+              Salvar alterações
+            </button>
 
           </form>
         </Dialog.Content>

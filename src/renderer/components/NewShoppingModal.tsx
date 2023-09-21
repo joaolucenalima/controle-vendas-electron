@@ -1,21 +1,19 @@
-import { zodResolver } from "@hookform/resolvers/zod";
 import * as Dialog from '@radix-ui/react-dialog';
 import { useContext, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { MdAdd } from 'react-icons/md';
-import { z } from "zod";
 
 import { getMaterials } from "../../database/controllers/Material";
 import { setShopping } from "../../database/controllers/Shopping";
+import { formatDateToISO } from '../../utils/formatDate';
 import { NotificationContext } from '../contexts/NotificationContext';
 
-const shoppingPropsSchema = z.object({
-  amount: z.number(),
-  materialID: z.string().uuid(),
-  quantity: z.number().int().min(1)
-})
-
-type shoppingProps = z.infer<typeof shoppingPropsSchema>
+type shoppingProps = {
+  amount: number,
+  materialID: string,
+  quantity: number,
+  createdAt: string
+}
 
 type materialsProps = {
   id: string,
@@ -28,11 +26,9 @@ export default function NewShoppingModal() {
   const { showToast } = useContext(NotificationContext);
 
   const [materials, setMaterials] = useState<materialsProps[] | undefined>([])
-  // controlar se o modal está aberto / fechar ele após submissão
   const [open, setOpen] = useState(false);
 
-  const { register, handleSubmit, formState: { errors } } = useForm<shoppingProps>({
-    resolver: zodResolver(shoppingPropsSchema),
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<shoppingProps>({
     defaultValues: {
       amount: 0
     }
@@ -45,7 +41,6 @@ export default function NewShoppingModal() {
   }, [])
 
   const handleSetPurchase: SubmitHandler<shoppingProps> = (data) => {
-
     materials?.map((material) => {
       if (data.materialID == material.id) {
         data.amount = material.priceInCents * data.quantity
@@ -57,23 +52,19 @@ export default function NewShoppingModal() {
     })
 
     setOpen(false)
+    reset()
   }
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
-
       <Dialog.Trigger asChild>
         <MdAdd
           title='Cadastrar nova compra'
           className='ModalButton'
-          style={{ backgroundColor: '#ca413c', color: 'white' }}
         />
       </Dialog.Trigger>
-
       <Dialog.Portal>
-
         <Dialog.Overlay className="DialogOverlay" />
-
         <Dialog.Content className="DialogContent">
 
           <Dialog.Title className="DialogTitle">
@@ -84,50 +75,81 @@ export default function NewShoppingModal() {
             &times;
           </Dialog.Close>
 
-          <form className="form-sales" onSubmit={handleSubmit(handleSetPurchase)}>
+          <form onSubmit={handleSubmit(handleSetPurchase)}>
 
-            <div className="form-field">
-              <label htmlFor="materialID">Material:</label>
-
-              {materials?.length === 0 ? <span className='error'>Cadastre um material para registrar a compra</span> :
-                (
-                  <select
-                    {...register('materialID', {
-                      required: true,
-                    })}
-                    defaultValue=''
-                  >
-                    <option value='' disabled>Selecione o material</option>
-                    {materials?.map((material) => (
-                      <option key={material.id} value={material.id}>{material.name}</option>
-                    ))}
-                  </select>
+            <div className='modal-form'>
+              <div className="form-field entire-row">
+                <label>Material</label>
+                {!materials ?
+                  <span className='error'>Nenhum material registrado</span>
+                  : (
+                    <select
+                      {...register('materialID', {
+                        required: "Campo obrigatório",
+                      })}
+                      defaultValue=''
+                      className={errors.materialID && 'input-error'}
+                      autoFocus
+                    >
+                      <option value='' disabled>Selecione o material</option>
+                      {materials.map((material) => (
+                        <option key={material.id} value={material.id}>{material.name}</option>
+                      ))}
+                    </select>
+                  )}
+                {errors?.materialID && (
+                  <span className="error">{errors?.materialID.message}</span>
                 )}
+              </div>
+
+              <div className="form-field">
+                <label>Quantidade</label>
+                <input
+                  type="number"
+                  {...register('quantity', {
+                    required: "Campo obrigatório",
+                    min: { value: 1, message: "Quantidade mínima: 1" },
+                    valueAsNumber: true
+                  })}
+                  disabled={!materials}
+                  className={errors.quantity && 'input-error'}
+                />
+                {errors?.quantity && (
+                  <span className="error">{errors.quantity.message}</span>
+                )}
+              </div>
+
+              <div className='form-field'>
+                <label>Data da Compra</label>
+                <input
+                  type='date'
+                  {...register('createdAt', {
+                    required: "Campo obrigatório",
+                  })}
+                  className={errors.createdAt && 'input-error'}
+                  defaultValue={formatDateToISO(new Date())}
+                />
+                {errors?.createdAt && (
+                  <span className="error">{errors.createdAt.message}</span>
+                )}
+              </div>
             </div>
 
-            <div className="form-field">
-              <label htmlFor="quantity">Quantidade:</label>
-              <input
-                type="number"
-                {...register('quantity', {
-                  required: true,
-                  valueAsNumber: true
-                })}
-                min={1}
-                defaultValue={0}
-                disabled={materials?.length === 0}
-              />
+            <div className='form-buttons'>
+              <button
+                type='button'
+                onClick={() => setOpen(false)}
+              >
+                Cancelar
+              </button>
+
+              <button
+                type='submit'
+                disabled={!materials}
+              >
+                Cadastrar
+              </button>
             </div>
-
-            {errors?.quantity && (
-              <span className="error" style={{ textAlign: "end" }}>{errors.quantity.message}</span>
-            )}
-
-            <button
-              disabled={materials?.length === 0}
-              style={{ backgroundColor: '#a8312d', color: '#ebebeb' }}>
-              Cadastrar compra
-            </button>
 
           </form>
         </Dialog.Content>

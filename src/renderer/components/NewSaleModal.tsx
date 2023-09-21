@@ -1,21 +1,19 @@
-import { zodResolver } from "@hookform/resolvers/zod";
 import * as Dialog from '@radix-ui/react-dialog';
 import { useContext, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { MdAdd } from 'react-icons/md';
-import { z } from "zod";
 
 import { listProducts } from "../../database/controllers/Products";
 import { registerSale } from "../../database/controllers/Sales";
+import { formatDateToISO } from '../../utils/formatDate';
 import { NotificationContext } from '../contexts/NotificationContext';
 
-const salesPropsSchema = z.object({
-  amountInCents: z.number(),
-  productID: z.string().uuid(),
-  quantity: z.number().int().min(1)
-})
-
-type salesProps = z.infer<typeof salesPropsSchema>
+type salesProps = {
+  amountInCents: number,
+  productID: string,
+  quantity: number,
+  createdAt: string
+}
 
 type productsType = {
   id: string,
@@ -29,11 +27,9 @@ export default function NewSaleModal() {
 
   // produtos do select
   const [products, setProducts] = useState<productsType[] | undefined>([])
-  // controlar se o modal está aberto ou não / fechar ele após submissão
   const [open, setOpen] = useState(false);
 
-  const { register, handleSubmit, formState: { errors } } = useForm<salesProps>({
-    resolver: zodResolver(salesPropsSchema),
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<salesProps>({
     defaultValues: {
       amountInCents: 0
     }
@@ -46,6 +42,7 @@ export default function NewSaleModal() {
   }, [])
 
   const handleRegister: SubmitHandler<salesProps> = (data) => {
+    console.log(data.createdAt)
     // recuperar informações do produto selecionado pelo id
     products?.map((product) => {
       if (data.productID == product.id) {
@@ -58,6 +55,7 @@ export default function NewSaleModal() {
     })
 
     setOpen(false)
+    reset()
   }
 
   return (
@@ -67,7 +65,6 @@ export default function NewSaleModal() {
         <MdAdd
           title='Cadastrar nova venda'
           className='ModalButton'
-          style={{ backgroundColor: '#2cd448', color: '#404040' }}
         />
       </Dialog.Trigger>
 
@@ -85,51 +82,79 @@ export default function NewSaleModal() {
             &times;
           </Dialog.Close>
 
-          <form className="form-sales" onSubmit={handleSubmit(handleRegister)}>
+          <form onSubmit={handleSubmit(handleRegister)}>
 
-            <div className="form-field">
-              <label htmlFor="productID">Produto:</label>
-
-              {products?.length === 0 ? <span className='error'>Cadastre um produto para registrar a venda</span> :
-                (
-                  <select
-                    {...register('productID', {
-                      required: true,
-                    })}
-                    defaultValue=''
-                  >
-                    <option value='' disabled>Selecione o produto</option>
-                    {products?.map((product) =>
-                      <option key={product.id} value={product.id}>{product.name}</option>
-                    )}
-                  </select>
+            <div className="modal-form">
+              <div className="form-field entire-row">
+                <label>Produto</label>
+                {!products ?
+                  <span className='error'>Nenhum produto registrado</span>
+                  : (
+                    <select
+                      {...register('productID', {
+                        required: "Campo obrigatório",
+                      })}
+                      defaultValue=''
+                      autoFocus
+                    >
+                      <option value='' disabled>Selecione o produto</option>
+                      {products.map((product) =>
+                        <option key={product.id} value={product.id}>{product.name}</option>
+                      )}
+                    </select>
+                  )}
+                {errors?.productID && (
+                  <span className="error">{errors?.productID.message}</span>
                 )}
+              </div>
+
+              <div className='form-field'>
+                <label>Quantidade</label>
+                <input
+                  type="number"
+                  {...register("quantity", {
+                    required: "Campo obrigatório",
+                    min: { value: 1, message: "Quantidade mínima: 1" },
+                    valueAsNumber: true
+                  })}
+                  disabled={!products}
+                />
+                {errors?.quantity && (
+                  <span className="error">{errors?.quantity.message}</span>
+                )}
+              </div>
+
+              <div className='form-field'>
+                <label>Data da Compra</label>
+                <input
+                  type='date'
+                  {...register('createdAt', {
+                    required: "Campo obrigatório"
+                  })}
+                  className={errors.createdAt && 'input-error'}
+                  defaultValue={formatDateToISO(new Date())}
+                />
+                {errors?.createdAt && (
+                  <span className="error">{errors.createdAt.message}</span>
+                )}
+              </div>
             </div>
 
-            <div className="form-field">
-              <label htmlFor="quantity">Quantidade:</label>
-              <input
-                type="number"
-                {...register("quantity", {
-                  required: true,
-                  valueAsNumber: true
-                })}
-                min={1}
-                defaultValue={0}
-                disabled={products?.length === 0}
-              />
+            <div className='form-buttons'>
+              <button
+                type='button'
+                onClick={() => setOpen(false)}
+              >
+                Cancelar
+              </button>
+
+              <button
+                type='submit'
+                disabled={!products}
+              >
+                Cadastrar
+              </button>
             </div>
-
-            {errors?.quantity && (
-              <span className="error">{errors?.quantity.message}</span>
-            )}
-
-            <button
-              disabled={products?.length === 0}
-              style={{ backgroundColor: '#33aa47' }}
-            >
-              Cadastrar Venda
-            </button>
 
           </form>
         </Dialog.Content>

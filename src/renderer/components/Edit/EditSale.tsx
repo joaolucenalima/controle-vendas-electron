@@ -23,7 +23,8 @@ type salesType = {
   id: number,
   productID: string,
   quantity: number,
-  amountInCents: number
+  amountInCents: number,
+  createdAt: string
 }
 
 export default function EditSale(props: EditSaleProps) {
@@ -84,7 +85,7 @@ export default function EditSale(props: EditSaleProps) {
           <form className="form-sales" onSubmit={handleSubmit(handleEdit)}>
 
             <div className="form-field">
-              <label htmlFor="productID">Produto:</label>
+              <label>Produto:</label>
 
               {products?.length === 0 ? <span className='error'>Deve ter um produto cadastrado para poder editar.</span> :
                 (
@@ -102,7 +103,7 @@ export default function EditSale(props: EditSaleProps) {
             </div>
 
             <div className="form-field">
-              <label htmlFor="quantity">Quantidade:</label>
+              <label>Quantidade:</label>
               <input
                 {...register('quantity', {
                   required: true,
@@ -113,11 +114,9 @@ export default function EditSale(props: EditSaleProps) {
               />
             </div>
 
-            <input
-              type="submit"
-              value="Salvar alterações"
-              style={{ backgroundColor: '#33aa47' }}
-            />
+            <button>
+              Salvar alterações
+            </button>
 
           </form>
 

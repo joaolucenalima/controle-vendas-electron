@@ -10,7 +10,7 @@ import { NotificationContext } from '../contexts/NotificationContext';
 
 type DeleteProps = {
   id: string | number,
-  register: "product" | "material" | "sale" | "shopping"
+  register: string
 }
 
 export default function DeletePopUp(props: DeleteProps) {
@@ -21,25 +21,25 @@ export default function DeletePopUp(props: DeleteProps) {
 
     switch (props.register) {
 
-      case "product":
+      case "Produto":
         deleteProducts(props.id).then(data => {
           showToast(data)
         })
         break;
 
-      case "material":
+      case "Material":
         deleteMaterials(props.id).then(data => {
           showToast(data)
         })
         break;
 
-      case "sale":
+      case "Venda":
         deleteSales(props.id).then(data => {
           showToast(data)
         })
         break;
 
-      case "shopping":
+      case "Compra":
         deleteShopping(props.id).then(data => {
           showToast(data)
         })
