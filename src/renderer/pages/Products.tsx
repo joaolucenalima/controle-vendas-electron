@@ -2,10 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ToastContainer } from "react-toastify";
 
-import DeletePopUp from "../components/DeletePopUp";
-import EditProducts from "../components/Edit/EditProducts";
-
 import { listProducts, registerProduct } from "../../database/controllers/Products";
+import Table from "../components/Table";
 import { NotificationContext } from "../contexts/NotificationContext";
 
 type Inputs = {
@@ -51,102 +49,59 @@ export default function Products() {
     <>
       <ToastContainer />
 
-      <div className="container">
-        <form
-          className="inline-form"
-          autoComplete="off"
-          onSubmit={handleSubmit(handleProduct)}
-        >
-          <h2>Registrar produto</h2>
+      <h1>Produtos</h1>
 
-          <div>
-            <label htmlFor="name">Nome do produto: </label>
-            <input
-              {...register("name", {
-                required: true,
-              })}
-              type="text"
-              name="name"
-            />
-          </div>
+      <form
+        className="inline-form"
+        autoComplete="off"
+        onSubmit={handleSubmit(handleProduct)}
+      >
 
-          {errors?.name?.type === "required" && (
-            <span className="error">O campo Nome é obrigatório</span>
-          )}
-
-          <div style={{ position: "relative" }}>
-            <label htmlFor="priceInCents">Preço unitário: </label>
-            <span className="money-span">R$</span>
-            <input
-              {...register("priceInCents", {
-                required: true,
-              })}
-              type="number"
-              name="priceInCents"
-              step="0.01"
-              placeholder="0.00"
-              min={0.01}
-            />
-          </div>
-
-          {errors?.priceInCents?.type === "required" && (
-            <span className="error">O campo Preço é obrigatório</span>
-          )}
-
+        <div>
+          <label>Nome:</label>
           <input
-            type="submit"
-            value="Registrar produto"
-            style={{ backgroundColor: "#748cab" }}
+            {...register("name", {
+              required: true,
+            })}
+            type="text"
           />
-        </form>
-
-        <div style={{ marginTop: "1.5rem" }}>
-          <h2>Produtos</h2>
-
-          {productList?.length === 0 ? (
-            <p
-              style={{
-                margin: "2rem auto",
-                textAlign: "center",
-                fontSize: "1.2rem",
-              }}
-            >
-              Nenhum produto cadastrado
-            </p>
-          ) : (
-            <table className="table-container">
-              <thead>
-                <tr>
-                  <th>Produto</th>
-                  <th>Preço</th>
-                  <th className="textCenter">Editar</th>
-                  <th className="textCenter">Excluir</th>
-                </tr>
-              </thead>
-              <tbody>
-                {productList?.map((product) => {
-                  return (
-                    <tr key={product.id}>
-                      <td>{product.name}</td>
-                      <td>R$ {product.priceInCents / 100}</td>
-                      <td className="textCenter">
-                        <EditProducts
-                          id={product.id}
-                          name={product.name}
-                          priceInCents={product.priceInCents}
-                        />
-                      </td>
-                      <td className="textCenter">
-                        <DeletePopUp id={product.id} register={"product"} />
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+          {errors?.name && (
+            <span className="error">Campo obrigatório</span>
           )}
         </div>
-      </div>
+
+        <div style={{ position: "relative" }}>
+          <label>Preço unitário:</label>
+          <span className="money-span">R$</span>
+          <input
+            {...register("priceInCents", {
+              required: true,
+            })}
+            type="number"
+            placeholder="0.00"
+            step={0.01}
+            min={0.01}
+          />
+          {errors?.priceInCents?.type === "required" && (
+            <span className="error">Campo obrigatório</span>
+          )}
+        </div>
+
+        <button>
+          Registrar produto
+        </button>
+      </form>
+
+      {!productList ? (
+        <p className="no-elements-text">
+          Nenhum produto cadastrado
+        </p>
+      ) : (
+        <Table
+          title="Produto"
+          elementList={productList}
+        />
+      )}
     </>
   );
 }

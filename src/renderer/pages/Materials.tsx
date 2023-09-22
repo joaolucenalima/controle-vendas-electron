@@ -2,10 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ToastContainer } from "react-toastify";
 
-import DeletePopUp from "../components/DeletePopUp";
-import EditMaterials from "../components/Edit/EditMaterials";
-
 import { getMaterials, setMaterials } from "../../database/controllers/Material";
+import Table from "../components/Table";
 import { NotificationContext } from "../contexts/NotificationContext";
 
 type setMaterialProps = {
@@ -22,9 +20,7 @@ type MaterialListType = {
 export default function Materials() {
   const { message, showToast } = useContext(NotificationContext);
 
-  const [materialList, setMaterialList] = useState<
-    MaterialListType[] | undefined
-  >([]);
+  const [materialList, setMaterialList] = useState<MaterialListType[] | undefined>([]);
 
   const {
     register,
@@ -53,101 +49,59 @@ export default function Materials() {
     <>
       <ToastContainer />
 
-      <div className="container">
-        <form
-          className="inline-form"
-          onSubmit={handleSubmit(handleSetMaterial)}
-        >
-          <h2>Registrar materiais</h2>
+      <h1>Materiais</h1>
 
-          <div>
-            <label htmlFor="name">Material:</label>
-            <input
-              {...register("name", {
-                required: true,
-              })}
-              type="text"
-              name="name"
-            />
-          </div>
+      <form
+        className="inline-form"
+        onSubmit={handleSubmit(handleSetMaterial)}
+      >
 
-          {errors?.name?.type === "required" && (
-            <span className="error">O campo material é obrigatório.</span>
-          )}
-
-          <div style={{ position: "relative" }}>
-            <label htmlFor="price">Preço unitário:</label>
-            <span className="money-span">R$</span>
-            <input
-              {...register("price", {
-                required: true,
-              })}
-              type="number"
-              name="price"
-              step="0.01"
-              placeholder="0.00"
-              min={0.01}
-            />
-          </div>
-
-          {errors?.price?.type === "required" && (
-            <span className="error">O campo preço é obrigatório.</span>
-          )}
-
+        <div>
+          <label>Nome:</label>
           <input
-            type="submit"
-            value="Registrar material"
-            style={{ backgroundColor: "rgb(233, 203, 105)" }}
+            {...register("name", {
+              required: true,
+            })}
+            type="text"
           />
-        </form>
-
-        <div style={{ marginTop: "1.5rem" }}>
-          <h2>Materiais</h2>
-
-          {materialList?.length === 0 ? (
-            <p
-              style={{
-                margin: "2rem auto",
-                textAlign: "center",
-                fontSize: "1.2rem",
-              }}
-            >
-              Nenhum material cadastrado
-            </p>
-          ) : (
-            <table className="table-container">
-              <thead>
-                <tr>
-                  <th>Material</th>
-                  <th>Preço</th>
-                  <th className="textCenter">Editar</th>
-                  <th className="textCenter">Excluir</th>
-                </tr>
-              </thead>
-              <tbody>
-                {materialList?.map((material) => {
-                  return (
-                    <tr key={material.id}>
-                      <td>{material.name}</td>
-                      <td>R$ {material.priceInCents / 100}</td>
-                      <td className="textCenter">
-                        <EditMaterials
-                          id={material.id}
-                          name={material.name}
-                          priceInCents={material.priceInCents}
-                        />
-                      </td>
-                      <td className="textCenter">
-                        <DeletePopUp id={material.id} register={"material"} />
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          )}
         </div>
-      </div>
+
+        {errors?.name?.type === "required" && (
+          <span className="error">O campo material é obrigatório.</span>
+        )}
+
+        <div>
+          <label>Preço unitário:</label>
+          <input
+            {...register("price", {
+              required: true,
+            })}
+            type="number"
+            placeholder="0.00"
+            step={0.01}
+            min={0.01}
+          />
+        </div>
+
+        {errors?.price?.type === "required" && (
+          <span className="error">O campo preço é obrigatório.</span>
+        )}
+
+        <button>
+          Registar material
+        </button>
+      </form>
+
+      {!materialList ? (
+        <p className="no-elements-text">
+          Nenhum material cadastrado
+        </p>
+      ) : (
+        <Table
+          title="Material"
+          elementList={materialList}
+        />
+      )}
     </>
   );
 }
