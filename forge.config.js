@@ -14,34 +14,18 @@ module.exports = {
     {
       name: '@electron-forge/maker-squirrel',
       config: {
-        "setupIcon": "./build/favicon.ico",
-        "setupExe": `controle-estoque-${version}.exe`,
+        setupIcon: "./build/favicon.ico",
+        setupExe: `controle-vendas-${version}.exe`,
       },
     },
     {
-      name: '@electron-forge/maker-zip',
-      platforms: ['darwin'],
-    },
-    {
-      name: '@electron-forge/maker-deb',
-      config: {},
-    },
-    {
-      name: '@electron-forge/maker-rpm',
-      config: {},
-    },
-  ],
-  publishers: [
-    {
-      name: "@electron-forge/publisher-github",
+      name: '@electron-forge/maker-flatpak',
       config: {
-        repository: {
-          owner: "joaolucenalima",
-          name: "controle-estoque-electron"
+        options: {
+          name: `controle-vendas-${version}`,
+          icon: "./build/favicon.ico",
         },
-        prerelease: false,
-        draft: true
-      }
-    }
-  ],
+      },
+    },
+  ]
 };

@@ -1,5 +1,4 @@
-import { DataTypes, Model } from "sequelize";
-import { Op } from "sequelize";
+import { DataTypes, Model, Op } from "sequelize";
 import sequelize from "./connection";
 
 type setMaterialsProps = {
@@ -17,7 +16,6 @@ type setShoppingProps = {
   materialID: string,
   quantity: number,
   amount: number,
-  createdAt: string
 }
 
 type updateShoppingProps = {
@@ -144,7 +142,6 @@ Shopping.init({
 
 Shopping.belongsTo(Materials, {
   foreignKey: 'materialID',
-  onDelete: 'NO ACTION',
 })
 
 // busca informações para a tabela
@@ -169,7 +166,6 @@ export async function setShopping(data: setShoppingProps) {
       materialID: data.materialID,
       quantity: data.quantity,
       amountInCents: data.amount,
-      createdAt: data.createdAt
     })
     return ({ success: "Compra registrada com sucesso!" })
   } catch (err) {

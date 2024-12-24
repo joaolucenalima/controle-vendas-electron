@@ -36,15 +36,12 @@ export default function EditSale(props: EditSaleProps) {
   const { register, handleSubmit } = useForm<salesType>();
 
   useEffect(() => {
-
     listProducts().then(data => {
       setProducts(data)
     })
-
   }, [])
 
   const handleEdit: SubmitHandler<salesType> = async data => {
-
     // recuperar informações do produto selecionado pelo id
     products?.map((product) => {
       data.productID == product.id ? data.amountInCents = product.priceInCents * data.quantity : null
@@ -52,11 +49,11 @@ export default function EditSale(props: EditSaleProps) {
 
     data.id = props.id
 
-    setOpen(false)
-
     await updateSales(data).then(response => {
       showToast(response)
     })
+
+    setOpen(false)
   }
 
   return (
@@ -94,14 +91,11 @@ export default function EditSale(props: EditSaleProps) {
                     {...register('productID', {
                       required: true,
                     })}
-                    name="productID"
                     defaultValue={props.productID}
                   >
-                    {products?.map((product) => {
-                      return (
-                        <option key={product.id} value={product.id}>{product.name}</option>
-                      )
-                    })}
+                    {products?.map((product) => (
+                      <option key={product.id} value={product.id}>{product.name}</option>
+                    ))}
                   </select>
                 )}
             </div>
@@ -113,7 +107,6 @@ export default function EditSale(props: EditSaleProps) {
                   required: true,
                 })}
                 type="number"
-                name="quantity"
                 min={1}
                 defaultValue={props.quantity}
               />

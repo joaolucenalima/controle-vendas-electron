@@ -1,6 +1,12 @@
 import React, { useState } from "react"
 import ReactDOM from "react-dom/client"
 import { injectStyle } from "react-toastify/dist/inject-style";
+<<<<<<< HEAD
+=======
+
+import { ResponseProvider } from "./contexts/NotificationContext"
+import { AppRoutes } from "./routes"
+>>>>>>> main
 
 import { AppRoutes } from "./routes"
 import { ResponseProvider } from "./contexts/NotificationContext"

@@ -1,0 +1,48 @@
+.dashboard {
+  height: 100%;
+ 
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 6% 47% 47%;
+  align-items: center;
+}
+
+.dashboard h1 {
+  justify-self: start;
+}
+
+.dashboard select {
+  width: 70%;
+  justify-self: end;
+  text-align: center;
+}
+
+.no-info-text {
+  grid-column: 1/3;
+  grid-row: 2/4;
+  text-align: center;
+}
+
+.record {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.3rem;
+  text-align: center;
+  border-radius: 8px;
+  background-color: #424242;
+  box-shadow: 4px 4px 10px #141414;
+}
+
+.record>span {
+  display: block;
+}
+
+.profit {
+  font-size: 1.7rem;
+  color: #00CF66;
+}
+
+.prejudice {
+  font-size: 1.7rem;
+  color: #cf231d;
+}

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { MdEdit } from 'react-icons/md';
 import * as Dialog from '@radix-ui/react-dialog';
@@ -22,18 +22,16 @@ export default function EditMaterials(props: EditMaterialsProps) {
   const { register, handleSubmit, formState: { errors } } = useForm<EditMaterialsProps>();
 
   const handleEdit: SubmitHandler<EditMaterialsProps> = async data => {
-
     // registrando o id no data para ser usado no where do bd
     data.id = props.id
 
     data.priceInCents = parseFloat((data.priceInCents * 100).toFixed(2))
 
-    setOpen(false)
-
     await updateMaterials(data).then(response => {
       showToast(response)
     })
 
+    setOpen(false)
   }
 
   return (
@@ -70,7 +68,6 @@ export default function EditMaterials(props: EditMaterialsProps) {
                   required: true,
                 })}
                 type="text"
-                name="name"
                 defaultValue={props.name}
               />
             </div>
@@ -87,7 +84,6 @@ export default function EditMaterials(props: EditMaterialsProps) {
                   required: true,
                 })}
                 type="number"
-                name="priceInCents"
                 step="0.01"
                 placeholder="0.00"
                 min={0.01}
@@ -106,7 +102,6 @@ export default function EditMaterials(props: EditMaterialsProps) {
             />
 
           </form>
-
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root >

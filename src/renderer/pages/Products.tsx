@@ -1,66 +1,68 @@
-import { useState, useEffect, useContext } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { useContext, useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { ToastContainer } from "react-toastify";
 
-import Header from "../components/Header";
-import EditProducts from '../components/Edit/EditProducts';
-import DeletePopUp from '../components/DeletePopUp';
-import { listProducts, registerProduct } from '../../database/sales';
-import { NotificationContext } from '../contexts/NotificationContext';
-import { ToastContainer } from 'react-toastify';
+import DeletePopUp from "../components/DeletePopUp";
+import EditProducts from "../components/Edit/EditProducts";
+
+import { listProducts, registerProduct } from "../../database/sales";
+import { NotificationContext } from "../contexts/NotificationContext";
 
 type Inputs = {
-  name: string,
-  priceInCents: number
-}
+  name: string;
+  priceInCents: number;
+};
 
 type ProductListType = {
-  id: string,
-  name: string,
-  priceInCents: number
-}
+  id: string;
+  name: string;
+  priceInCents: number;
+};
 
 export default function Products() {
-
   const { message, showToast } = useContext(NotificationContext);
 
-  const [productList, setProductList] = useState<ProductListType[] | undefined>([])
+  const [productList, setProductList] = useState<ProductListType[] | undefined>([]);
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<Inputs>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<Inputs>();
 
   useEffect(() => {
-
     listProducts().then((product) => {
-      setProductList(product)
-    })
+      setProductList(product);
+    });
+  }, [message]);
 
-  }, [message])
-
-  const handleProduct: SubmitHandler<Inputs> = async data => {
-    data.priceInCents = parseFloat((data.priceInCents * 100).toFixed(2))
+  const handleProduct: SubmitHandler<Inputs> = async (data) => {
+    data.priceInCents = parseFloat((data.priceInCents * 100).toFixed(2));
 
     await registerProduct(data).then((response) => {
-      showToast(response)
-    })
+      showToast(response);
+    });
 
-    reset()
-  }
+    reset();
+  };
 
   return (
     <>
-      <Header />
-
       <ToastContainer />
 
       <div className="container">
-
-        <form className="inline-form" autoComplete="off" onSubmit={handleSubmit(handleProduct)}>
-
+        <form
+          className="inline-form"
+          autoComplete="off"
+          onSubmit={handleSubmit(handleProduct)}
+        >
           <h2>Registrar produto</h2>
 
           <div>
             <label htmlFor="name">Nome do produto: </label>
             <input
-              {...register('name', {
+              {...register("name", {
                 required: true,
               })}
               type="text"
@@ -74,9 +76,9 @@ export default function Products() {
 
           <div style={{ position: "relative" }}>
             <label htmlFor="priceInCents">Preço unitário: </label>
-            <span className='money-span'>R$</span>
+            <span className="money-span">R$</span>
             <input
-              {...register('priceInCents', {
+              {...register("priceInCents", {
                 required: true,
               })}
               type="number"
@@ -96,16 +98,23 @@ export default function Products() {
             value="Registrar produto"
             style={{ backgroundColor: "#748cab" }}
           />
-
         </form>
 
-        <div style={{ marginTop: '1.5rem' }}>
+        <div style={{ marginTop: "1.5rem" }}>
           <h2>Produtos</h2>
 
           {productList?.length === 0 ? (
-            <p style={{ margin: "2rem auto", textAlign: "center", fontSize: "1.2rem" }}>Nenhum produto cadastrado</p>
+            <p
+              style={{
+                margin: "2rem auto",
+                textAlign: "center",
+                fontSize: "1.2rem",
+              }}
+            >
+              Nenhum produto cadastrado
+            </p>
           ) : (
-            <table className='table-container'>
+            <table className="table-container">
               <thead>
                 <tr>
                   <th>Produto</th>
@@ -121,20 +130,23 @@ export default function Products() {
                       <td>{product.name}</td>
                       <td>R$ {product.priceInCents / 100}</td>
                       <td className="textCenter">
-                        <EditProducts id={product.id} name={product.name} priceInCents={product.priceInCents} />
+                        <EditProducts
+                          id={product.id}
+                          name={product.name}
+                          priceInCents={product.priceInCents}
+                        />
                       </td>
                       <td className="textCenter">
-                        <DeletePopUp id={product.id} register={'product'} />
+                        <DeletePopUp id={product.id} register={"product"} />
                       </td>
                     </tr>
-                  )
+                  );
                 })}
               </tbody>
             </table>
           )}
         </div>
-
-      </div >
+      </div>
     </>
-  )
+  );
 }

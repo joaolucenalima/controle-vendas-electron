@@ -1,9 +1,9 @@
-import * as AlertDialog from '@radix-ui/react-alert-dialog';
+import { useContext } from 'react';
 import { MdDelete } from 'react-icons/md';
+import * as AlertDialog from '@radix-ui/react-alert-dialog';
 
 import { deleteMaterials, deleteShopping } from '../../database/shopping'
 import { deleteProducts, deleteSales } from '../../database/sales'
-import { useContext } from 'react';
 import { NotificationContext } from '../contexts/NotificationContext';
 
 type DeleteProps = {
@@ -83,7 +83,7 @@ export default function DeletePopUp(props: DeleteProps) {
                 style={{ backgroundColor: '#822025', color: '#ebebeb', fontWeight: '600' }}
                 onClick={deleteAccepted}
               >
-                Sim, apagar registro
+                Sim, apagar registro.
               </button>
             </AlertDialog.Action>
 

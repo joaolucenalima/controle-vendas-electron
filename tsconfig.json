@@ -9,10 +9,5 @@
     "skipLibCheck": true,
     "jsx": "react-jsx"
   },
-  "exclude": [
-    "node_modules",
-    "dist",
-    "public",
-    "out"
-  ]
+  "exclude": ["node_modules", "dist", "public", "out"]
 }

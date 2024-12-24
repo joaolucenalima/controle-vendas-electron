@@ -1,5 +1,4 @@
-import { DataTypes, Model } from "sequelize";
-import { Op } from "sequelize";
+import { DataTypes, Model, Op } from "sequelize";
 import sequelize from "./connection";
 
 interface productProps {
@@ -15,8 +14,7 @@ interface updateProductsProps {
 interface salesProps {
   productID: string,
   quantity: number,
-  amountInCents: number,
-  createdAt: string
+  amountInCents: number
 }
 
 type updateSalesProps = {
@@ -99,7 +97,6 @@ export async function deleteProducts(id: string | number) {
   }
 }
 
-
 class Sales extends Model {
   declare id: number;
   declare productID: string;
@@ -133,8 +130,6 @@ Sales.init({
 
 Sales.belongsTo(Products, {
   foreignKey: 'productID',
-  onDelete: 'NO ACTION',
-  onUpdate: 'CASCADE'
 })
 
 export async function listSales() {
@@ -157,7 +152,6 @@ export async function registerSale(props: salesProps) {
       productID: props.productID,
       quantity: props.quantity,
       amountInCents: props.amountInCents,
-      createdAt: props.createdAt
     })
     return ({ success: "Venda adicionada com sucesso!" })
   }
