@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 
-import Header from "../components/Header";
-import NewSaleModal from '../components/NewSaleModal';
 import DeletePopUp from '../components/DeletePopUp';
 import EditSale from '../components/Edit/EditSale';
+import Header from "../components/Header";
+import NewSaleModal from '../components/NewSaleModal';
 
 import { listSales } from '../../database/sales';
 
@@ -44,7 +44,6 @@ export default function Sales() {
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Produto</th>
                   <th>Quantidade</th>
                   <th>Preço</th>
                   <th className="textCenter">Data da venda</th>
@@ -57,12 +56,11 @@ export default function Sales() {
                   return (
                     <tr key={index} >
                       <td>{sale.id}</td>
-                      <td>{sale.Product.name}</td>
                       <td>{sale.quantity}</td>
                       <td>R$ {sale.amountInCents / 100}</td>
                       <td className="textCenter">{new Date(sale.createdAt).toLocaleDateString()}</td>
                       <td className="textCenter">
-                        <EditSale id={sale.id} productID={sale.Product.id} quantity={sale.quantity} />
+                        <EditSale id={sale.id} productID={"dasd"} quantity={sale.quantity} />
                       </td>
                       <td className="textCenter">
                         <DeletePopUp id={sale.id} register={'sale'} />

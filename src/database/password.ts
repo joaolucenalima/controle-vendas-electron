@@ -1,5 +1,5 @@
 import { DataTypes, Model } from "sequelize";
-import sequelize from "./connection";
+import sequelize from "./config";
 
 class Password extends Model {
   declare pass: string;
