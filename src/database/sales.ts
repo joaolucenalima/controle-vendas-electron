@@ -1,6 +1,6 @@
-import { DataTypes, Model } from "sequelize";
 import { Op } from "sequelize";
-import sequelize from "./connection";
+import Products from "./models/products";
+import Sales from "./models/sales";
 
 interface productProps {
   name: string,
@@ -25,25 +25,6 @@ type updateSalesProps = {
   quantity: number,
   amountInCents: number
 }
-
-class Products extends Model {
-  declare id: string;
-  declare name: string;
-  declare priceInCents: number
-}
-
-Products.init({
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true
-  },
-  name: DataTypes.STRING,
-  priceInCents: DataTypes.DOUBLE
-}, {
-  sequelize,
-  timestamps: false
-});
 
 export async function registerProduct(props: productProps) {
   try {
@@ -98,44 +79,6 @@ export async function deleteProducts(id: string | number) {
     return ({ error: "Não foi possível apagar o registro." })
   }
 }
-
-
-class Sales extends Model {
-  declare id: number;
-  declare productID: string;
-  declare quantity: number;
-  declare amountInCents: number;
-  declare createdAt: string;
-  declare Product: {
-    id: string,
-    name: string,
-    priceInCents: number
-  };
-}
-
-Sales.init({
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true
-  },
-  productID: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  quantity: DataTypes.INTEGER,
-  amountInCents: DataTypes.DOUBLE,
-}, {
-  sequelize,
-  timestamps: true,
-  updatedAt: false
-});
-
-Sales.belongsTo(Products, {
-  foreignKey: 'productID',
-  onDelete: 'NO ACTION',
-  onUpdate: 'CASCADE'
-})
 
 export async function listSales() {
   try {

@@ -1,7 +1,7 @@
 {
-  "name": "controle-de-estoque",
-  "version": "2.0.0",
-  "description": "App para controle de estoque",
+  "name": "controle-de-vendas",
+  "version": "2.0.1",
+  "description": "Sistema para controle de vendas e gastos",
   "main": "./dist/main/main.js",
   "scripts": {
     "start": "electron .",
@@ -13,10 +13,7 @@
   "devDependencies": {
     "@electron-forge/cli": "^6.0.5",
     "@electron-forge/maker-deb": "^6.0.5",
-    "@electron-forge/maker-rpm": "^6.0.5",
     "@electron-forge/maker-squirrel": "^6.0.5",
-    "@electron-forge/maker-zip": "^6.0.5",
-    "@types/bcrypt": "^5.0.0",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "electron": "^19.0.0",
@@ -25,7 +22,6 @@
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.0.3",
     "@radix-ui/react-dialog": "^1.0.3",
-    "bcrypt": "^5.1.0",
     "dayjs": "^1.11.7",
     "electron-squirrel-startup": "^1.0.0",
     "react": "^18.2.0",

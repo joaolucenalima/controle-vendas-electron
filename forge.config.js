@@ -16,7 +16,7 @@ module.exports = {
       name: '@electron-forge/maker-squirrel',
       config: {
         "setupIcon": "./build/favicon.ico",
-        "setupExe": `controle-estoque-${version}-win32.exe`,
+        "setupExe": `controle-vendas-${version}-win32.exe`,
         "arch": "ia32"
       },
     },
@@ -24,7 +24,7 @@ module.exports = {
       name: '@electron-forge/maker-squirrel',
       config: {
         "setupIcon": "./build/favicon.ico",
-        "setupExe": `controle-estoque-${version}-win64.exe`,
+        "setupExe": `controle-vendas-${version}-win64.exe`,
         "arch": "x64"
       },
     },
@@ -39,7 +39,7 @@ module.exports = {
       config: {
         repository: {
           owner: "joaolucenalima",
-          name: "controle-estoque-electron"
+          name: "controle-vendas-electron"
         },
         prerelease: false,
         draft: true
