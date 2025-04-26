@@ -25,7 +25,7 @@ jobs:
 
       - name: Install
         run: |
-          npm ci
+          npm i
 
       - name: Compile TypeScript
         run: |
@@ -33,7 +33,7 @@ jobs:
 
       - name: Build for ${{ matrix.arch }}
         run: |
-          npx electron-forge make --arch=${{ matrix.arch }}
+          npx electron-forge make --arch="${{ matrix.arch }}"
 
       - name: Publish
         run: |
