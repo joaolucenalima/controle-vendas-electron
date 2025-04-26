@@ -35,6 +35,15 @@ jobs:
         run: |
           npx electron-forge make --arch="${{ matrix.arch }}"
 
+      - name: Rename Executable
+        run: |
+          for /r out %%F in (*.exe) do (
+            echo Encontrado: %%F
+            set "original=%%~nF"
+            ren "%%F" "%%~nF-${{ matrix.arch }}%%~xF"
+          )
+        shell: cmd
+
       - name: Publish
         run: |
           npm run publish

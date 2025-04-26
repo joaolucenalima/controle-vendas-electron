@@ -7,8 +7,7 @@ module.exports = {
       "\\.git",
       "\\.ts",
       "\\.tsx",
-    ],
-    arch: 'ia32,x64'
+    ]
   },
   rebuildConfig: {},
   makers: [
@@ -16,16 +15,7 @@ module.exports = {
       name: '@electron-forge/maker-squirrel',
       config: {
         "setupIcon": "./build/favicon.ico",
-        "setupExe": `controle-vendas-${version}-win32.exe`,
-        "arch": "ia32"
-      },
-    },
-    {
-      name: '@electron-forge/maker-squirrel',
-      config: {
-        "setupIcon": "./build/favicon.ico",
-        "setupExe": `controle-vendas-${version}-win64.exe`,
-        "arch": "x64"
+        "setupExe": `controle-vendas-${version}.exe`
       },
     },
     {
