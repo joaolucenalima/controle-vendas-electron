@@ -1,5 +1,7 @@
 const { version } = require("./package.json");
 
+const arch = process.arch
+
 module.exports = {
   packagerConfig: {
     icon: './build/favicon',
@@ -15,7 +17,7 @@ module.exports = {
       name: '@electron-forge/maker-squirrel',
       config: {
         "setupIcon": "./build/favicon.ico",
-        "setupExe": `controle-vendas-${version}.exe`
+        "setupExe": `controle-vendas-${version}-${arch}.exe`
       },
     },
     {
