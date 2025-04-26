@@ -1,7 +1,7 @@
 {
-  "name": "controle-de-estoque",
-  "version": "2.0.0",
-  "description": "App para controle de estoque",
+  "name": "controle-de-vendas",
+  "version": "2.0.1",
+  "description": "Sistema para controle de vendas e gastos",
   "main": "./dist/main/main.js",
   "scripts": {
     "start": "electron .",
