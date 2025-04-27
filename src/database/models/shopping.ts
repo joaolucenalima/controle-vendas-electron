@@ -1,5 +1,5 @@
 import { DataTypes, Model } from "sequelize";
-import sequelize from "../config";
+import sequelize from "../connection";
 import Materials from "./materials";
 
 class Shopping extends Model {
