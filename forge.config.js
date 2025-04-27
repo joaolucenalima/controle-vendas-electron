@@ -1,15 +1,5 @@
 const { version } = require("./package.json");
 
-const args = process.argv.slice(2);
-const params = {};
-
-args.forEach(arg => {
-  const [key, value] = arg.split('=');
-  if (key.startsWith('--')) {
-    params[key.slice(2)] = value || true;
-  }
-});
-
 module.exports = {
   packagerConfig: {
     icon: './build/favicon',
@@ -25,7 +15,7 @@ module.exports = {
       name: '@electron-forge/maker-squirrel',
       config: {
         "setupIcon": "./build/favicon.ico",
-        "setupExe": `controle-vendas-${version}-${params.arch}.exe`
+        "setupExe": `controle-vendas-${version}.exe`
       },
     },
     {
