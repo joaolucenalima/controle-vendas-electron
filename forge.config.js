@@ -20,7 +20,10 @@ module.exports = {
     },
     {
       name: '@electron-forge/maker-deb',
-      config: {},
+      config: {
+        "setupIcon": "./build/favicon.ico",
+        "setupExe": `controle-vendas-${version}.deb`
+      },
     }
   ],
   publishers: [

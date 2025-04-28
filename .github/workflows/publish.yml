@@ -37,7 +37,7 @@ jobs:
 
       - name: Rename generated executable
         run: |
-          node ./src/utils/renameGeneratedExe.js
+          node ./dist/utils/renameGeneratedExe.js
 
       - name: Publish
         run: |
