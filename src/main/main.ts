@@ -1,24 +1,21 @@
 import { app, BrowserWindow } from 'electron'
-import path from 'path'
 import fs from 'fs'
+import path from 'path'
 
 require("./main-events")
 
 function verifyDatabaseDir() {
-  //Definindo o diretório do banco de dados
   const database_dir = path.resolve(app.getPath("userData"), "database")
 
-  //Se a pasta não existir, ela é criada
   if (!fs.existsSync(database_dir)) {
     fs.mkdirSync(database_dir)
   }
 }
 
 function CreateWindow() {
-
   const mainWindow = new BrowserWindow({
     icon: './build/favicon.ico',
-    width: 800,
+    width: 1200,
     height: 700,
     show: false,
     webPreferences: {
@@ -29,7 +26,7 @@ function CreateWindow() {
 
   mainWindow.setMenuBarVisibility(false);
 
-  mainWindow.loadFile(path.resolve(app.getAppPath(), './public/index.html'))
+  mainWindow.loadFile("dist/renderer/index.html")
 
   mainWindow.once('ready-to-show', () => {
     mainWindow.show()

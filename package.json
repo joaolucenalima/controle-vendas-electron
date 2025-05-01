@@ -2,15 +2,19 @@
   "name": "controle-de-vendas",
   "version": "2.0.1",
   "description": "Sistema para controle de vendas e gastos",
-  "main": "./dist/main/main.js",
+  "main": "dist/main/main.js",
   "scripts": {
+    "install": "cd renderer && npm i",
     "start": "electron .",
     "package": "electron-forge package",
     "make:32": "electron-forge make --arch=ia32",
     "make:64": "electron-forge make --arch=x64",
     "publish": "electron-forge publish"
   },
-  "author": "João Vitor Lucena",
+  "author": {
+    "name": "joaolucenalima",
+    "email": "joaovitorlucena000@gmail.com"
+  },
   "license": "ISC",
   "devDependencies": {
     "@electron-forge/cli": "^6.0.5",
