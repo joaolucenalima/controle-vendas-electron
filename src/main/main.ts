@@ -19,8 +19,7 @@ function CreateWindow() {
     height: 700,
     show: false,
     webPreferences: {
-      nodeIntegration: true,
-      preload: path.join(__dirname, 'preload.js')
+      nodeIntegration: true
     }
   })
 

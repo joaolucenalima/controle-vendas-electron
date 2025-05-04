@@ -28,7 +28,7 @@ export function Header() {
   return (
     <header className="flex items-center px-4 gap-16">
       <div>
-        <h1 className="text-2xl font-bold">Oficina de arte</h1>
+        <h1 className="text-2xl font-extrabold">Oficina de arte</h1>
       </div>
 
       <nav className="relative flex-1 flex items-center gap-6">
@@ -49,7 +49,7 @@ export function Header() {
 
         <span 
           id="active-link-bottom-line"
-          className="absolute top-full left-0 h-1 bg-green-700 rounded transition-all"
+          className="absolute top-[calc(100%-2px)] left-0 h-1 bg-green-700 rounded transition-all"
         />
       </nav>
 

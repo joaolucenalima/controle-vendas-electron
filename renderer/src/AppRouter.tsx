@@ -1,18 +1,18 @@
-import { BrowserRouter, Route, Routes } from "react-router"
+import { MemoryRouter, Route, Routes } from "react-router"
 import { Header } from "./components/header"
 import { Report } from "./pages/Report"
 
 function AppRouter() {
   return (
     <>
-      <BrowserRouter>
+      <MemoryRouter>
 
         <Header />
 
         <Routes>
           <Route index element={<Report />} />
         </Routes>
-      </BrowserRouter>
+      </MemoryRouter>
     </>
   )
 }
