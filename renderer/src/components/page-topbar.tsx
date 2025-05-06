@@ -6,7 +6,7 @@ type PageTopbarProps = React.HTMLAttributes<HTMLDivElement> & {
 
 export function PageTopbar({ children, className, ...props }: PageTopbarProps) {
   return (
-    <div className={`bg-[#fafafa] border-y border-zinc-300 px-4 py-2 ${className}`} {...props}>
+    <div className={`bg-[#fafafa] border-y border-zinc-300 px-4 h-12 ${className}`} {...props}>
       {children}
     </div>
   );
