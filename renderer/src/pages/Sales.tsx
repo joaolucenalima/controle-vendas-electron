@@ -1,14 +1,21 @@
 import { ChevronLeft, ChevronRight, Pencil, Plus, Search, Trash2 } from "lucide-react";
 import { PageTopbar } from "../components/page-topbar";
 import { PrimaryButton } from "../components/primary-button";
+import { useModal } from "../contexts/ModalContext";
 
 export function Sales() {
+  const { openModal } = useModal()
+
   return (
     <div className="flex flex-col">
       <PageTopbar className="flex items-center justify-between">
         <h1 className="text-lg font-medium">Vendas</h1>
 
-        <PrimaryButton>
+        <PrimaryButton handleClick={() => openModal({ 
+          title: 'Adicionar venda',
+          modalElement: <h1>teste</h1>
+        })}
+        >
           <Plus size={18} />
           Novo
         </PrimaryButton>
