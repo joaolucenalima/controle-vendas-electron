@@ -9,8 +9,8 @@ export default {
         }
       },
       animation: {
-        "overlayShow": "overlayShow 0.3s ease-out forwards",
-        "contentShow": "contentShow 0.3s ease-out forwards"
+        "overlayShow": "overlayShow 0.2s ease-out forwards",
+        "contentShow": "contentShow 0.2s ease-out forwards"
       },
       keyframes: {
         overlayShow: {

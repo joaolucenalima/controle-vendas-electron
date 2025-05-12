@@ -1,4 +1,5 @@
 import { ChevronLeft, ChevronRight, Pencil, Plus, Search, Trash2 } from "lucide-react";
+import { NewSaleForm } from "../components/new-sale-form";
 import { PageTopbar } from "../components/page-topbar";
 import { PrimaryButton } from "../components/primary-button";
 import { useModal } from "../contexts/ModalContext";
@@ -11,9 +12,9 @@ export function Sales() {
       <PageTopbar className="flex items-center justify-between">
         <h1 className="text-lg font-medium">Vendas</h1>
 
-        <PrimaryButton handleClick={() => openModal({ 
+        <PrimaryButton handleClick={() => openModal({
           title: 'Adicionar venda',
-          modalElement: <h1>teste</h1>
+          modalElement: <NewSaleForm />
         })}
         >
           <Plus size={18} />
@@ -21,23 +22,23 @@ export function Sales() {
         </PrimaryButton>
       </PageTopbar>
 
-      <main className="px-4 py-6 flex-1 grid grid-cols-3 grid-rows-[auto 1fr] gap-y-4">
+      <main className="px-4 py-6 max-h-full grid grid-cols-3 grid-rows-[auto 1fr] gap-y-4">
         <table className="w-full border border-zinc-300 border-collapse rounded col-span-3">
           <thead>
-            <tr className="bg-[#fafafa] *:border *:border-zinc-300 *:font-normal *:py-3 *:px-4 *:rounded *:text-left">
-              <th>Detalhes</th>
-              <th>N°</th>
-              <th>Data da venda</th>
-              <th>Total de produtos</th>
-              <th>Produtos vendidos</th>
-              <th>Preço total</th>
-              <th>Ações</th>
+            <tr className="bg-[#fafafa] *:border *:border-zinc-300 *:font-normal *:py-3 *:px-4 *:rounded">
+              <th className="text-center">Detalhes</th>
+              <th className="text-left">ID</th>
+              <th className="text-left">Data da venda</th>
+              <th className="text-left">Total de produtos</th>
+              <th className="text-left">Produtos vendidos</th>
+              <th className="text-left">Preço total</th>
+              <th className="text-center">Ações</th>
             </tr>
           </thead>
 
           <tbody>
             <tr className="*:border *:border-zinc-300 *:py-2 *:px-4">
-              <td>
+              <td className="text-center">
                 <button
                   className="rounded bg-white h-8 w-8 border border-zinc-300 inline-flex items-center justify-center transition-colors hover:border-zinc-400"
                   title="Ver detalhes"
@@ -47,16 +48,16 @@ export function Sales() {
               </td>
               <td>1</td>
               <td>04/05/2025</td>
-              <td>
+              <td className="whitespace-nowrap">
                 150
                 <span className="italic text-sm"> (4 diferentes)</span>
               </td>
-              <td>
+              <td className="overflow-ellipsis whitespace-nowrap">
                 Arandela, Redondinha, Redondinha com pé
               </td>
               <td>R$ 2000</td>
               <td>
-                <div>
+                <div className="text-center">
                   <button
                     className="inline-flex items-center justify-center w-6 h-6 transition-colors hover:text-gray-400"
                     title="Editar"
@@ -95,17 +96,17 @@ export function Sales() {
           <button className="h-8 w-10 inline-flex items-center justify-center bg-white border border-zinc-300 rounded hover:border-zinc-400">
             1
           </button>
-          
+
           <button className="h-8 w-10 inline-flex items-center justify-center bg-white border border-zinc-300 rounded hover:border-zinc-400">
             2
           </button>
-          
+
           <button className="h-8 w-10 inline-flex items-center justify-center bg-white border border-zinc-300 rounded hover:border-zinc-400">
             3
           </button>
 
           <span className="text-xl">...</span>
-          
+
           <button className="h-8 w-10 inline-flex items-center justify-center bg-white border border-zinc-300 rounded hover:border-zinc-400">
             9
           </button>
