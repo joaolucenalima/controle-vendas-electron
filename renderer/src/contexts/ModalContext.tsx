@@ -30,8 +30,12 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
       const firstElement = focusableElements[0];      
       const lastElement = focusableElements[focusableElements.length - 1];
 
+      firstElement.focus()
+
       const handleTabKeyPress = (event: KeyboardEvent) => {
         if (event.key === "Tab") {
+          if (focusableElements.length === 0) return;
+          
           if (event.shiftKey && document.activeElement === firstElement) {
             event.preventDefault();
             lastElement.focus();
@@ -45,18 +49,10 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
         }
       };
 
-      const handleEscapeKeyPress = (event: KeyboardEvent) => {
-        if (event.key === "Escape") {
-          setModal(null);
-        }
-      };
-
-      modalElement.addEventListener("keydown", handleTabKeyPress);
-      modalElement.addEventListener("keydown", handleEscapeKeyPress);
+      document.addEventListener("keydown", handleTabKeyPress);
 
       return () => {
-        modalElement.removeEventListener("keydown", handleTabKeyPress);
-        modalElement.removeEventListener("keydown", handleEscapeKeyPress);
+        document.removeEventListener("keydown", handleTabKeyPress);
       };
     }
   }, [modal])

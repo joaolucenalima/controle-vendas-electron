@@ -13,3 +13,21 @@
 button {
   cursor: pointer;
 }
+
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.react-datepicker__day--outside-month {
+  opacity: 0.5;
+}
+
+.datepicker-clear-button {
+  right: 2.5rem !important;
+
+  &::after {
+    background-color: transparent !important;
+    color: black !important;
+    font-size: 1.25rem !important
+  }
+}

@@ -27,7 +27,7 @@ export function Sales() {
           <thead>
             <tr className="bg-[#fafafa] *:border *:border-zinc-300 *:font-normal *:py-3 *:px-4 *:rounded">
               <th className="text-center">Detalhes</th>
-              <th className="text-left">ID</th>
+              <th className="text-center">ID</th>
               <th className="text-left">Data da venda</th>
               <th className="text-left">Total de produtos</th>
               <th className="text-left">Produtos vendidos</th>
@@ -46,7 +46,7 @@ export function Sales() {
                   <Search size={16} />
                 </button>
               </td>
-              <td>1</td>
+              <td className="text-center">1</td>
               <td>04/05/2025</td>
               <td className="whitespace-nowrap">
                 150
