@@ -1,4 +1,4 @@
-import { CreditCard, LayoutDashboard, ShoppingCart } from "lucide-react";
+import { Box, CreditCard, LayoutDashboard, ShoppingCart } from "lucide-react";
 import { useEffect } from "react";
 import { NavLink } from "react-router";
 
@@ -45,6 +45,11 @@ export function Header() {
         <NavLink to="/expenses" className="py-3 flex items-center gap-1 [&.active]:*:text-green-700">
           <CreditCard size={18}/>
           <span>Gastos</span>
+        </NavLink>
+
+        <NavLink to="/products" className="py-3 flex items-center gap-1 [&.active]:*:text-green-700">
+          <Box size={18}/>
+          <span>Produtos</span>
         </NavLink>
 
         <span 
