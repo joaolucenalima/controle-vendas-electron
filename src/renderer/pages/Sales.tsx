@@ -44,6 +44,7 @@ export default function Sales() {
               <thead>
                 <tr>
                   <th>ID</th>
+                  <th>Nome</th>
                   <th>Quantidade</th>
                   <th>Preço</th>
                   <th className="textCenter">Data da venda</th>
@@ -56,6 +57,7 @@ export default function Sales() {
                   return (
                     <tr key={index} >
                       <td>{sale.id}</td>
+                      <td>{sale.Product.name}</td>
                       <td>{sale.quantity}</td>
                       <td>R$ {sale.amountInCents / 100}</td>
                       <td className="textCenter">{new Date(sale.createdAt).toLocaleDateString()}</td>

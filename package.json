@@ -1,6 +1,6 @@
 {
   "name": "controle-de-vendas",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Sistema para controle de vendas e gastos",
   "main": "./dist/main/main.js",
   "scripts": {
