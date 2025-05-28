@@ -8,14 +8,12 @@ jobs:
     runs-on: windows-latest
     permissions: 
       contents: write
-      
-    strategy:
-      matrix:
-        arch: [ia32, x64]
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -27,20 +25,36 @@ jobs:
         run: |
           npm i
 
+      - name: Get version from package.json
+        id: version
+        run: echo "VERSION=v$(node -p "require('./package.json').version")" >> $GITHUB_ENV
+
+      - name: Create Git Tag
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git tag ${{ env.VERSION }}
+          git push origin ${{ env.VERSION }}
+
       - name: Compile TypeScript
         run: |
           npx tsc
 
-      - name: Build for ${{ matrix.arch }}
+      - name: Make app
         run: |
-          npx electron-forge make --arch="${{ matrix.arch }}"
+          npm run make -- --arch="ia32,x64"
 
       - name: Rename generated executable
         run: |
           node ./dist/utils/renameGeneratedExe.js
 
-      - name: Publish
-        run: |
-          npx electron-forge publish --make=false
+      - name: Create GitHub Release and Upload
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ env.VERSION }}
+          name: Release ${{ env.VERSION }}
+          files: |
+            out/make/**/x64/*.{exe,deb}
+            out/make/**/ia32/*.{exe,deb}
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

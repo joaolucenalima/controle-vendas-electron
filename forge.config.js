@@ -26,17 +26,4 @@ module.exports = {
       },
     }
   ],
-  publishers: [
-    {
-      name: "@electron-forge/publisher-github",
-      config: {
-        repository: {
-          owner: "joaolucenalima",
-          name: "controle-vendas-electron"
-        },
-        prerelease: false,
-        draft: true
-      }
-    }
-  ],
 };

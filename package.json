@@ -6,9 +6,7 @@
   "scripts": {
     "start": "electron .",
     "package": "electron-forge package",
-    "make:32": "electron-forge make --arch=ia32",
-    "make:64": "electron-forge make --arch=x64",
-    "publish": "electron-forge publish"
+    "make": "electron-forge make"
   },
   "author": "João Vitor Lucena",
   "license": "ISC",
@@ -16,7 +14,6 @@
     "@electron-forge/cli": "^6.0.5",
     "@electron-forge/maker-deb": "^6.0.5",
     "@electron-forge/maker-squirrel": "^6.0.5",
-    "@electron-forge/publisher-github": "^7.8.0",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "electron": "^19.0.0",
