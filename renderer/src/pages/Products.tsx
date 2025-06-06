@@ -1,7 +1,7 @@
 import { Plus } from "lucide-react";
 import { PageTopbar } from "../components/page-topbar";
 import { PrimaryButton } from "../components/primary-button";
-import { ProductForm } from "../components/product-form";
+import { ProductForm } from "../components/products/product-form";
 import { useModal } from "../contexts/ModalContext";
 
 export function Products() {

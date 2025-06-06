@@ -1,7 +1,7 @@
 import { ChevronLeft, ChevronRight, Pencil, Plus, Search, Trash2 } from "lucide-react";
-import { NewSaleForm } from "../components/new-sale-form";
 import { PageTopbar } from "../components/page-topbar";
 import { PrimaryButton } from "../components/primary-button";
+import { NewSaleForm } from "../components/sales/new-sale-form";
 import { useModal } from "../contexts/ModalContext";
 
 export function Sales() {
