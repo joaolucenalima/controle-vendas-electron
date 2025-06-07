@@ -1,6 +1,7 @@
 import { Upload } from "lucide-react";
 import { ChangeEvent, useRef, useState } from "react";
 import ReactCrop, { type Crop } from "react-image-crop";
+import "../../../node_modules/react-image-crop/dist/ReactCrop.css";
 import { useModal } from "../../contexts/ModalContext";
 import { maskCurrency } from "../../utils/mask-inputs";
 import { TextInput } from "../text-input";
@@ -16,8 +17,8 @@ export function ProductForm({ id }: { id?: string }) {
     unit: "%",
     x: 0,
     y: 0,
-    width: 80,
-    height: 64
+    width: 50,
+    height: 50
   })
 
   const { closeModal } = useModal();
@@ -50,29 +51,43 @@ export function ProductForm({ id }: { id?: string }) {
         />
       </div>
 
-      <div>
-        <p className="block mb-2 mt-2">Imagem</p>
+      <div className="flex flex-col">
+        <p className="block my-2">Imagem</p>
         {uploadedImage ? (
-          <ReactCrop
-            crop={crop}
-            onChange={c => setCrop(c)}
-            aspect={1}
-            keepSelection
-          >
-            <img src={uploadedImage.src} ref={imageRef} draggable={false} />
-          </ReactCrop>
-        ) : (
           <>
+            <ReactCrop
+              crop={crop}
+              onChange={c => setCrop(c)}
+              keepSelection
+              aspect={1}
+              className="self-center overflow-hidden rounded mb-4 max-h-[300px]"
+            >
+              <img src={uploadedImage.src} ref={imageRef} draggable={false} />
+            </ReactCrop>
 
+            <div className="flex items-center justify-between gap-3">
+              <span className="block text-ellipsis whitespace-nowrap overflow-hidden" title={uploadedImage.fileName}>
+                <strong>Imagem:</strong> {uploadedImage.fileName}
+              </span>
+
+              <label
+                htmlFor="image"
+                className="cursor-pointer whitespace-nowrap text-blue-700 transition-colors hover:text-blue-600 hover:underline"
+              >
+                Escolher outra
+              </label>
+            </div>
           </>
+        ) : (
+          <label
+            htmlFor="image"
+            className="flex flex-col items-center justify-center gap-2 min-h-24 w-full border-2 border-dashed border-gray-400 rounded cursor-pointer group hover:bg-gray-100 hover:border-gray-600 transition-colors"
+          >
+            <Upload className="w-8 h-8 text-gray-500 transition-colors group-hover:text-gray-600" />
+            <span>Faça upload de uma imagem para o produto</span>
+          </label>
         )}
-        <label
-          htmlFor="image"
-          className="flex flex-col items-center justify-center gap-2 min-h-24 w-full border-2 border-dashed border-gray-400 rounded cursor-pointer group hover:bg-gray-100 hover:border-gray-600 transition-colors"
-        >
-          <Upload className="w-8 h-8 text-gray-500 transition-colors group-hover:text-gray-600" />
-          <span>Faça upload de uma imagem para o produto</span>
-        </label>
+
         <input
           onChange={onMediaSelected}
           type="file"
