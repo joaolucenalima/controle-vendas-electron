@@ -14,11 +14,11 @@ type UploadedImageType = {
 export function ProductForm({ id }: { id?: string }) {
   const [uploadedImage, setUploadedImage] = useState<UploadedImageType | null>(null)
   const [crop, setCrop] = useState<Crop>({
-    unit: "%",
+    unit: "px",
     x: 0,
     y: 0,
-    width: 50,
-    height: 50
+    width: 150,
+    height: 150
   })
 
   const { closeModal } = useModal();
