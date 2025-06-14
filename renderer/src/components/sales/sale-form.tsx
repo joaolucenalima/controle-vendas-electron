@@ -1,30 +1,29 @@
-import { useParams } from "react-router"
-import { useModal } from "../../contexts/ModalContext"
-import { Datepicker } from "../datepicker"
-import { StyledSelect } from "../styled-select"
+import { useModal } from "../../contexts/ModalContext";
+import { Datepicker } from "../datepicker";
+import { StyledSelect } from "../styled-select";
 
-export function NewSaleForm() {
-  const { id } = useParams()
-  const { closeModal } = useModal()
+export function SaleForm({ id }: { id?: number }) {
+  const { closeModal } = useModal();
 
   const options = [
     { value: 1, label: "Arandela" },
     { value: 2, label: "Redondinha" },
-    { value: 3, label: "Cúpula" }
-  ]
+    { value: 3, label: "Cúpula" },
+  ];
 
   return (
     <form className="flex flex-col gap-2">
       <div>
-        <label htmlFor="" className="block mb-1">Data da venda *</label>
-        <Datepicker
-          placeholderText="Selecione a data"
-          initialDate={new Date()}
-        />
+        <label htmlFor="" className="block mb-1">
+          Data da venda *
+        </label>
+        <Datepicker placeholderText="Selecione a data" initialDate={new Date()} />
       </div>
 
       <div>
-        <label htmlFor="" className="block mb-1">Produtos *</label>
+        <label htmlFor="" className="block mb-1">
+          Produtos *
+        </label>
         <StyledSelect
           options={options}
           isMulti
@@ -50,5 +49,5 @@ export function NewSaleForm() {
         </button>
       </div>
     </form>
-  )
+  );
 }
