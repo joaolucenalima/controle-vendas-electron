@@ -12,35 +12,35 @@ export function Sales() {
   const sales = [
     {
       id: 1,
-      createdAt: "04/05/2025",
+      createdAt: "2025-05-04",
       totalProducts: 150,
       soldProducts: "Arandela, Redondinha, Redondinha com pé",
       amount_in_cents: 200000,
     },
     {
       id: 2,
-      createdAt: "10/05/2025",
+      createdAt: "2025-05-10",
       totalProducts: 80,
       soldProducts: "Plafon, Luminária de mesa",
       amount_in_cents: 120000,
     },
     {
       id: 3,
-      createdAt: "12/05/2025",
+      createdAt: "2025-05-12",
       totalProducts: 60,
       soldProducts: "Abajur, Spot LED",
       amount_in_cents: 95000,
     },
     {
       id: 4,
-      createdAt: "15/05/2025",
+      createdAt: "2025-05-15",
       totalProducts: 200,
       soldProducts: "Pendente, Trilho, Plafon",
       amount_in_cents: 350000,
     },
     {
       id: 5,
-      createdAt: "18/05/2025",
+      createdAt: "2025-05-18",
       totalProducts: 40,
       soldProducts: "Lustre, Luminária de chão",
       amount_in_cents: 80000,
@@ -51,6 +51,7 @@ export function Sales() {
     {
       key: "details",
       label: "Detalhes",
+      align: "center",
       render: () => (
         <button
           className="rounded bg-white h-8 w-8 border border-zinc-300 inline-flex items-center justify-center transition-colors hover:border-zinc-400"
@@ -76,7 +77,6 @@ export function Sales() {
       label: "Total de produtos",
       dataIndex: "totalProducts",
       key: "totalProducts",
-      align: "left",
       render: (value, row) => (
         <>
           {value}

@@ -1,14 +1,40 @@
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { StyledSelect } from "../styled-select";
 import { PaginationProps, TableProps } from "./types";
 
-export default function Table<T extends Record<string, any>>({ data, columns, onChange }: TableProps<T>) {
+export default function Table<T extends Record<string, any>>({
+  data,
+  columns,
+  onChange,
+}: TableProps<T>) {
   const [pagination, setPagination] = useState<PaginationProps>({
     page: 1,
     pageSize: 10,
     totalItems: data.length,
   });
+
+  const paginationStart = (pagination.page - 1) * pagination.pageSize + 1;
+  const paginationEnd = Math.min(pagination.page * pagination.pageSize, pagination.totalItems);
+  const totalPages = Math.ceil(pagination.totalItems / pagination.pageSize);
+
+  const generatePaginationButtons = () => {
+    const currentPage = pagination.page;
+
+    if (totalPages <= 5) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+
+    if (currentPage <= 3) {
+      return [1, 2, 3, 4, 5];
+    }
+
+    if (currentPage >= totalPages - 2) {
+      return [totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+    }
+
+    return [currentPage - 2, currentPage - 1, currentPage, currentPage + 1, currentPage + 2];
+  };
 
   useEffect(() => {
     if (onChange) {
@@ -71,43 +97,83 @@ export default function Table<T extends Record<string, any>>({ data, columns, on
         isSearchable={false}
         defaultValue={{ value: 10, label: "10 resultados por página" }}
         className="max-w-72"
+        onChange={(option) => {
+          setPagination((prev) => ({
+            ...prev,
+            pageSize: option?.value ?? 10,
+          }));
+        }}
       />
 
       <div className="self-center justify-self-center flex items-center gap-3">
-        <button className="h-6 w-6 inline-flex items-center justify-center">
+        <button
+          className="h-6 w-6 inline-flex items-center justify-center disabled:cursor-not-allowed disabled:text-gray-400"
+          onClick={() => setPagination((prev) => ({ ...prev, page: 1 }))}
+          title="Ir para a primeira página"
+          disabled={pagination.page == 1}
+        >
+          <ChevronsLeft size={18} />
+        </button>
+
+        <button
+          className="h-6 w-6 inline-flex items-center justify-center disabled:cursor-not-allowed disabled:text-gray-400"
+          onClick={() => setPagination((prev) => ({ ...prev, page: prev.page - 1 }))}
+          title="Ir para a página anterior"
+          disabled={pagination.page <= 1}
+        >
           <ChevronLeft size={18} />
         </button>
 
-        <button className="h-8 w-10 inline-flex items-center justify-center bg-green-600 text-white border border-gray-400 rounded hover:border-gray-500">
-          1
-        </button>
+        {generatePaginationButtons().map((page, index) => {
+          if (typeof page === "string") {
+            return (
+              <span
+                className="h-8 w-10 inline-flex items-center justify-center text-xl"
+                key={"ellipsis_" + index}
+              >
+                {page}
+              </span>
+            );
+          }
 
-        <button className="h-8 w-10 inline-flex items-center justify-center bg-white border border-gray-400 rounded hover:border-gray-500">
-          2
-        </button>
+          const isActualPage = pagination.page === page;
 
-        <button className="h-8 w-10 inline-flex items-center justify-center bg-white border border-gray-400 rounded hover:border-gray-500">
-          3
-        </button>
+          return (
+            <button
+              className={`h-8 w-10 inline-flex items-center justify-center ${
+                isActualPage ? "bg-green-600 text-white" : "bg-white"
+              } border border-gray-400 rounded hover:border-gray-500`}
+              disabled={isActualPage}
+              onClick={() => setPagination((prev) => ({ ...prev, page }))}
+              key={page}
+            >
+              {page}
+            </button>
+          );
+        })}
 
-        <span className="text-xl">...</span>
-
-        <button className="h-8 w-10 inline-flex items-center justify-center bg-white border border-gray-400 rounded hover:border-gray-500">
-          9
-        </button>
-
-        <button className="h-8 w-10 inline-flex items-center justify-center bg-white border border-gray-400 rounded hover:border-gray-500">
-          10
-        </button>
-
-        <button className="h-6 w-6 inline-flex items-center justify-center">
+        <button
+          className="h-6 w-6 inline-flex items-center justify-center disabled:cursor-not-allowed disabled:text-gray-400"
+          onClick={() => setPagination((prev) => ({ ...prev, page: prev.page + 1 }))}
+          title="Ir para a próxima página"
+          disabled={pagination.page >= totalPages}
+        >
           <ChevronRight size={18} />
+        </button>
+
+        <button
+          className="h-6 w-6 inline-flex items-center justify-center disabled:cursor-not-allowed disabled:text-gray-400"
+          onClick={() => setPagination((prev) => ({ ...prev, page: totalPages }))}
+          title="Ir para a última página"
+          disabled={pagination.page == totalPages}
+        >
+          <ChevronsRight size={18} />
         </button>
       </div>
 
       <span className="self-center justify-self-end">
         <strong>
-          {pagination.page + pagination.pageSize} - {pagination.page * pagination.pageSize}
+          {paginationStart} - {paginationEnd}
         </strong>{" "}
         / {pagination.totalItems} resultados
       </span>
