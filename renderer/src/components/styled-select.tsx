@@ -15,6 +15,7 @@ export function StyledSelect<Option, IsMulti extends boolean = false>(
       "&:hover": {
         borderColor: state.isFocused ? "#000" : "#9ca3af",
       },
+      cursor: "pointer",
     }),
     menu: (base) => ({
       ...base,
@@ -57,7 +58,6 @@ export function StyledSelect<Option, IsMulti extends boolean = false>(
       color: "#000",
       transition: "all 200ms ease-in",
       transform: state.selectProps.menuIsOpen ? "rotate(180deg)" : "rotate(0deg)",
-      cursor: "pointer",
       "&:hover": {
         color: "#000",
       },
