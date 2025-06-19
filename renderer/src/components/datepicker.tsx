@@ -40,7 +40,7 @@ export function Datepicker(props: DatePickerProps) {
       {!value ? (
         <span className="text-gray-400 select-none">{props.placeholderText}</span>
       ) : (
-        <span className="elect-text">{value}</span>
+        <span className="select-text">{value}</span>
       )}
       <Calendar size={20} className="cursor-pointer" />
     </div>
