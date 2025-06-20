@@ -32,22 +32,22 @@ export function Header() {
       </div>
 
       <nav className="relative flex-1 flex items-center gap-6">
-        <NavLink to="/" className="py-3 flex items-center gap-1 [&.active]:*:text-green-700">
+        <NavLink to="/" className="py-3 flex items-center gap-1">
           <LayoutDashboard size={18}/>
           <span>Relatório</span>
         </NavLink>
 
-        <NavLink to="/sales" className="py-3 flex items-center gap-1 [&.active]:*:text-green-700">
+        <NavLink to="/sales" className="py-3 flex items-center gap-1">
           <ShoppingCart size={18}/>
           <span>Vendas</span>
         </NavLink>
 
-        <NavLink to="/expenses" className="py-3 flex items-center gap-1 [&.active]:*:text-green-700">
+        <NavLink to="/expenses" className="py-3 flex items-center gap-1">
           <CreditCard size={18}/>
           <span>Gastos</span>
         </NavLink>
 
-        <NavLink to="/products" className="py-3 flex items-center gap-1 [&.active]:*:text-green-700">
+        <NavLink to="/products" className="py-3 flex items-center gap-1">
           <Box size={18}/>
           <span>Produtos</span>
         </NavLink>
