@@ -2,6 +2,7 @@ import { Pencil, Plus, Search, Trash2 } from "lucide-react";
 import { ConfirmDeletePopup } from "../components/confirm-delete-popup";
 import { PageTopbar } from "../components/page-topbar";
 import { PrimaryButton } from "../components/primary-button";
+import { SaleDetails } from "../components/sales/sale-details";
 import { SaleForm } from "../components/sales/sale-form";
 import Table from "../components/table/table";
 import { ColumnType } from "../components/table/types";
@@ -52,10 +53,16 @@ export function Sales() {
       key: "details",
       label: "Detalhes",
       align: "center",
-      render: () => (
+      render: (_, row) => (
         <button
           className="rounded bg-white h-8 w-8 border border-zinc-300 inline-flex items-center justify-center transition-colors hover:border-zinc-400"
           title="Ver detalhes"
+          onClick={() =>
+            openModal({
+              title: "Venda: #" + row.id,
+              modalElement: <SaleDetails id={row.id} />,
+            })
+          }
         >
           <Search size={16} />
         </button>
