@@ -74,7 +74,7 @@ export function SaleForm({ id }: { id?: number }) {
         <label htmlFor="" className="block mb-1">
           Data da venda *
         </label>
-        <Datepicker placeholderText="Selecione a data" initialDate={new Date()} />
+        <Datepicker placeholderText="Selecione a data" selected={new Date()} />
       </div>
 
       <div>

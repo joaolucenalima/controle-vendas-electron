@@ -65,7 +65,7 @@ export default function Table<T extends Record<string, any>>({
               {columns.map((column) => (
                 <td
                   key={column.key + "_" + index}
-                  className={`text-${column.align || "left"} ${
+                  className={`text-${column.align || "left"}${
                     column.textOverflow ? "overflow-ellipsis whitespace-nowrap" : ""
                   }`}
                 >

@@ -59,7 +59,7 @@ export function Sales() {
           title="Ver detalhes"
           onClick={() =>
             openModal({
-              title: "Venda: #" + row.id,
+              title: "Detalhes da venda n° " + row.id,
               modalElement: <SaleDetails id={row.id} />,
             })
           }
