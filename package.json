@@ -19,28 +19,17 @@
     "email": "joaovitorlucena000@gmail.com"
   },
   "license": "ISC",
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0",
+    "sequelize": "^6.29.0",
+    "sqlite3": "^5.1.4"
+  },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.5",
     "@electron-forge/maker-deb": "^6.0.5",
     "@electron-forge/maker-squirrel": "^6.0.5",
     "@electron-forge/publisher-github": "^7.8.0",
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
-    "electron": "^19.0.0",
+    "electron": "22.0.0",
     "typescript": "^4.9.5"
-  },
-  "dependencies": {
-    "@radix-ui/react-alert-dialog": "^1.0.3",
-    "@radix-ui/react-dialog": "^1.0.3",
-    "dayjs": "^1.11.7",
-    "electron-squirrel-startup": "^1.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-hook-form": "^7.43.4",
-    "react-icons": "^4.7.1",
-    "react-router-dom": "^6.8.1",
-    "react-toastify": "^9.1.2",
-    "sequelize": "^6.29.0",
-    "sqlite3": "^5.1.4"
   }
 }
