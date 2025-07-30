@@ -20,16 +20,18 @@
   },
   "license": "ISC",
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0",
-    "sequelize": "^6.29.0",
-    "sqlite3": "^5.1.4"
+    "electron-squirrel-startup": "1.0.0",
+    "reflect-metadata": "0.2.2",
+    "sqlite3": "5.1.7",
+    "typeorm": "0.3.25"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.5",
-    "@electron-forge/maker-deb": "^6.0.5",
-    "@electron-forge/maker-squirrel": "^6.0.5",
-    "@electron-forge/publisher-github": "^7.8.0",
+    "@electron-forge/cli": "6.0.5",
+    "@electron-forge/maker-deb": "7.8.2",
+    "@electron-forge/maker-squirrel": "6.0.5",
+    "@electron-forge/publisher-github": "7.8.2",
+    "@types/node": "^24.1.0",
     "electron": "22.0.0",
-    "typescript": "^4.9.5"
+    "typescript": "4.9.5"
   }
 }
