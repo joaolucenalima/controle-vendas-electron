@@ -1,8 +1,7 @@
 import { app, BrowserWindow } from "electron";
 import fs from "fs";
 import path from "path";
-
-import "./ipc/index";
+import { registerHandlers } from "./ipc/index";
 
 function verifyDatabaseDir() {
 	const database_dir = path.resolve(app.getPath("userData"), "database");
@@ -20,6 +19,7 @@ function CreateWindow() {
 		show: false,
 		webPreferences: {
 			nodeIntegration: true,
+			preload: path.join(__dirname, "preload.js"),
 		},
 	});
 
@@ -50,6 +50,7 @@ if (!isUnicWindow) {
 	app.quit();
 } else {
 	app.whenReady().then(() => {
+		registerHandlers();
 		verifyDatabaseDir();
 		CreateWindow();
 	});

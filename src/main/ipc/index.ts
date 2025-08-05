@@ -1,5 +1,5 @@
-import { ipcMain, app } from "electron";
+import { registerProductHandlers } from "./product";
 
-ipcMain.on("get-data-path", (event) => {
-	event.returnValue = app.getPath("userData");
-});
+export function registerHandlers() {
+	registerProductHandlers()
+}
