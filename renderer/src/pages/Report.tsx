@@ -169,10 +169,6 @@ export function Report() {
                   name: "Vendas",
                   data: [20, 30, 40, 50, 60],
                 },
-                {
-                  name: "Lucro",
-                  data: [20, 30, 40, 50, 60],
-                },
               ]}
             />
           </Card>
@@ -188,6 +184,34 @@ export function Report() {
           </Card>
 
           <Card className="col-span-2">
+            <Chart
+              options={{
+                chart: {
+                  toolbar: {
+                    show: false,
+                  },
+                },
+                title: {
+                  align: "center",
+                  text: "Porcentagem de receita",
+                  style: {
+                    fontSize: "20px",
+                    fontWeight: 600,
+                  },
+                },
+                labels: ["Arandela", "Cúpula", "Redondinha", "Lustre", "Luminária Cilíndrica"],
+                legend: {
+                  position: 'bottom'
+                }
+              }}
+              type="pie"
+              height={300}
+              width={"100%"}
+              series={[2000, 2405, 1405, 543, 1804]}
+            />
+          </Card>
+
+          <Card className="col-span-3">
             <Chart
               options={{
                 chart: {
