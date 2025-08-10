@@ -1,12 +1,14 @@
 import { ReactNode } from "react";
 
 type PageTopbarProps = React.HTMLAttributes<HTMLDivElement> & {
-  children: ReactNode;
+  children?: ReactNode;
+  title: string;
 };
 
-export function PageTopbar({ children, className, ...props }: PageTopbarProps) {
+export function PageTopbar({ children, className = '', title, ...props }: PageTopbarProps) {
   return (
-    <div className={`bg-[#fafafa] border-y border-zinc-300 px-4 h-12 ${className}`} {...props}>
+    <div className={`flex items-center justify-between mt-2 px-4 h-max ${className}`} {...props}>
+      <h1 className="text-2xl font-medium">{title}</h1>
       {children}
     </div>
   );

@@ -5,14 +5,12 @@ import { PrimaryButton } from "../components/primary-button";
 export function Expenses() {
   return (
     <>
-      <PageTopbar className="flex items-center justify-between">
-        <h1 className="text-lg font-medium">Gastos</h1>
-
+      <PageTopbar title="Gastos">
         <PrimaryButton>
           <Plus size={18} />
           Novo
         </PrimaryButton>
       </PageTopbar>
     </>
-  )
+  );
 }

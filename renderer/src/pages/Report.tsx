@@ -48,14 +48,22 @@ export function Report() {
   const [filters, setFilters] = useState<ReportFiltersType>(
     filterByPeriods(DEFAULT_PERIOD_OPTION.value)
   );
+  const [periodFilter, setPeriodFilter] = useState<(typeof filterPeriodOptions)[0] | null>(
+    DEFAULT_PERIOD_OPTION
+  );
+
+  function handleChangeDate(date: Date | null, dateIndex: string) {
+    setFilters((prev) => ({
+      ...prev,
+      [dateIndex]: date,
+    }));
+
+    setPeriodFilter(filterPeriodOptions.find((item) => item.value == "custom") || null);
+  }
 
   return (
     <div className="grid grid-rows-[auto_1fr] h-full">
-      <PageTopbar className="flex items-center justify-between">
-        <h1 className="text-lg font-medium">Relatórios</h1>
-      </PageTopbar>
-
-      <main className="p-4">
+      <PageTopbar title="Relatórios">
         <div className="flex gap-4 items-end">
           <div className="w-48">
             <label htmlFor="initialDate" className="block mb-1">
@@ -65,12 +73,7 @@ export function Report() {
               placeholderText="Insira a data inicial"
               id="initialDate"
               selected={filters.initialDate}
-              onChange={(date) =>
-                setFilters((prev) => ({
-                  ...prev,
-                  initialDate: date,
-                }))
-              }
+              onChange={(date) => handleChangeDate(date, "initialDate")}
             />
           </div>
 
@@ -82,31 +85,29 @@ export function Report() {
               placeholderText="Insira a data final"
               id="endDate"
               selected={filters.endDate}
-              onChange={(date) =>
-                setFilters((prev) => ({
-                  ...prev,
-                  endDate: date,
-                }))
-              }
+              onChange={(date) => handleChangeDate(date, "endDate")}
             />
           </div>
 
           <div className="h-9 border-l border-gray-300 mx-1" />
 
-          <div>
+          <div className="w-44">
             <p className="mb-1">Período:</p>
             <StyledSelect
+              value={periodFilter}
               options={filterPeriodOptions}
               onChange={(selected) => {
+                setPeriodFilter(selected);
                 if (selected?.value == "custom") return;
                 setFilters(filterByPeriods(selected?.value));
               }}
               defaultValue={DEFAULT_PERIOD_OPTION}
-              className="w-44"
             />
           </div>
         </div>
+      </PageTopbar>
 
+      <main className="p-4">
         <section className="mt-4 grid gap-4 grid-cols-5">
           <Card>
             <h1 className="text-center text-3xl font-semibold">Lucro total</h1>
@@ -114,11 +115,11 @@ export function Report() {
           </Card>
 
           <Card>
-            <h1 className="text-center text-3xl font-semibold">Gastos planejados</h1>
+            <h1 className="text-center text-3xl font-semibold">Gastos</h1>
             <h2 className="text-center text-2xl mt-4">R$ 3000</h2>
           </Card>
 
-          <Card className="col-span-3">
+          <Card className="col-span-3 row-span-2">
             <Chart
               options={{
                 chart: {
@@ -161,7 +162,7 @@ export function Report() {
                 },
               }}
               type="bar"
-              height={400}
+              height={350}
               width={"100%"}
               series={[
                 {
@@ -174,6 +175,16 @@ export function Report() {
                 },
               ]}
             />
+          </Card>
+
+          <Card>
+            <h1 className="text-center text-3xl font-semibold">Vendas</h1>
+            <h2 className="text-center text-2xl mt-4">R$ 3000</h2>
+          </Card>
+
+          <Card>
+            <h1 className="text-center text-3xl font-semibold">Gastos planejados</h1>
+            <h2 className="text-center text-2xl mt-4">R$ 3000</h2>
           </Card>
 
           <Card className="col-span-2">
