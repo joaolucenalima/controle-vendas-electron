@@ -37,9 +37,7 @@ export function Products() {
 
   return (
     <div className="grid grid-rows-[auto_1fr] h-full">
-      <PageTopbar className="flex items-center justify-between">
-        <h1 className="text-lg font-medium">Produtos</h1>
-
+      <PageTopbar title="Produtos">
         <PrimaryButton handleClick={() => openProductModal()}>
           <Plus size={18} />
           Novo

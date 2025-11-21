@@ -146,9 +146,7 @@ export function Sales() {
 
   return (
     <div className="flex flex-col">
-      <PageTopbar className="flex items-center justify-between">
-        <h1 className="text-lg font-medium">Vendas</h1>
-
+      <PageTopbar title="Vendas">
         <PrimaryButton
           handleClick={() =>
             openModal({

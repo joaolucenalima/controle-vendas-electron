@@ -26,7 +26,7 @@ export function Header() {
   }, []);
 
   return (
-    <header className="flex items-center px-4 gap-16">
+    <header className="flex items-center px-4 gap-16 border-b border-zinc-300">
       <div>
         <h1 className="text-2xl font-extrabold">Oficina de arte</h1>
       </div>
