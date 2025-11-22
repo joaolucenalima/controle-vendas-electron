@@ -1,53 +1,106 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Upload } from "lucide-react";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
 import ReactCrop, { type Crop } from "react-image-crop";
-import "../../../node_modules/react-image-crop/dist/ReactCrop.css";
+import { z } from "zod";
 import { useModal } from "../../contexts/ModalContext";
 import { maskCurrency } from "../../utils/mask-inputs";
 import { TextInput } from "../text-input";
 
+import "./react-crop.css";
+
 type UploadedImageType = {
   src: string;
   fileName: string;
-}
+};
 
-export function ProductForm({ id }: { id?: string }) {
-  const [uploadedImage, setUploadedImage] = useState<UploadedImageType | null>(null)
+const productFormSchema = z.object({
+  name: z.string().nonoptional("Campo obrigatório"),
+  price: z.string().nonoptional("Campo obrigatório"),
+});
+
+type ProductFormType = z.infer<typeof productFormSchema>;
+
+export function ProductForm({ id, fetchProducts }: { id?: string; fetchProducts: () => void }) {
+  const { closeModal } = useModal();
+
+  const [uploadedImage, setUploadedImage] = useState<UploadedImageType | null>(null);
   const [crop, setCrop] = useState<Crop>({
     unit: "px",
     x: 0,
     y: 0,
     width: 150,
-    height: 150
-  })
+    height: 150,
+  });
 
-  const { closeModal } = useModal();
-  const imageRef = useRef<HTMLImageElement>(null)
+  const imageRef = useRef<HTMLImageElement>(null);
+
+  const {
+    register,
+    reset,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<ProductFormType>({
+    resolver: zodResolver(productFormSchema),
+  });
 
   function onMediaSelected(event: ChangeEvent<HTMLInputElement>) {
-    const { files } = event.target
-    if (!files) return
+    const { files } = event.target;
+    if (!files) return;
 
     setUploadedImage({
       src: URL.createObjectURL(files[0]),
-      fileName: files[0].name
-    })
+      fileName: files[0].name,
+    });
   }
 
+  function submitForm(data: ProductFormType) {
+    window.api.product
+      .upsert({
+        id,
+        data: {
+          ...data,
+          priceInCents: Number(data.price.split(' ')[1]) * 100
+        },
+      })
+      .then(() => {
+        fetchProducts();
+        closeModal();
+      });
+  }
+
+  useEffect(() => {
+    if (!id) return;
+
+    window.api.product.getById(id).then((response) =>
+      reset({
+        name: response.name,
+        price: String(response.priceInCents / 100),
+      })
+    );
+  }, [id]);
+
   return (
-    <form className="flex flex-col gap-2">
+    <form className="flex flex-col gap-2" onSubmit={handleSubmit(submitForm)}>
       <div>
-        <label htmlFor="name" className="block mb-1">Nome *</label>
-        <TextInput id="name" name="name" />
+        <label htmlFor="name" className="block mb-1">
+          Nome *
+        </label>
+        <TextInput {...register("name")} id="name" />
       </div>
 
       <div>
-        <label htmlFor="price" className="block mb-1">Preço *</label>
+        <label htmlFor="price" className="block mb-1">
+          Preço *
+        </label>
         <TextInput
+          {...register("price")}
           id="price"
-          name="price"
-          onChange={maskCurrency}
-          defaultValue="R$ 0,00"
+          onChange={(e) => {
+            maskCurrency(e);
+            register("price").onChange(e);
+          }}
         />
       </div>
 
@@ -57,7 +110,7 @@ export function ProductForm({ id }: { id?: string }) {
           <>
             <ReactCrop
               crop={crop}
-              onChange={c => setCrop(c)}
+              onChange={(c) => setCrop(c)}
               keepSelection
               aspect={1}
               className="self-center overflow-hidden rounded mb-4 max-h-[300px]"
@@ -66,7 +119,10 @@ export function ProductForm({ id }: { id?: string }) {
             </ReactCrop>
 
             <div className="flex items-center justify-between gap-3">
-              <span className="block text-ellipsis whitespace-nowrap overflow-hidden" title={uploadedImage.fileName}>
+              <span
+                className="block text-ellipsis whitespace-nowrap overflow-hidden"
+                title={uploadedImage.fileName}
+              >
                 <strong>Imagem:</strong> {uploadedImage.fileName}
               </span>
 
@@ -107,12 +163,12 @@ export function ProductForm({ id }: { id?: string }) {
         </button>
 
         <button
-          className="bg-green-500 text-white font-semibold rounded px-6 py-2 hover:bg-green-600 transition-colors"
           type="submit"
+          className="bg-green-500 text-white font-semibold rounded px-6 py-2 hover:bg-green-600 transition-colors"
         >
           Salvar
         </button>
       </div>
     </form>
-  )
+  );
 }
