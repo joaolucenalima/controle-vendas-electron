@@ -1,20 +1,29 @@
-import { app } from "electron";
+import { Expense, Product, Sale, SaleItem } from "@entities";
 import path from "path";
+import "reflect-metadata";
 import { DataSource } from "typeorm";
-import { Sale, Expense, Product, SaleItem } from "./entities";
 
-const database_path = path.resolve(
-	app.getPath("userData"),
-	"database",
-	"database.sqlite"
-);
+const isElectron = !!process.versions.electron;
+
+let databasePath: string;
+
+if (isElectron) {
+  const { app } = require("electron");
+
+  databasePath = path.resolve(
+    app.getPath("userData", "database"),
+    app.isPackaged ? "database.sqlite" : "database.dev.sqlite"
+  );
+} else {
+  databasePath = path.resolve(__dirname, "database.dev.sqlite");
+}
 
 export const AppDataSource = new DataSource({
-	type: "sqlite",
-	database: database_path,
-	synchronize: false,
-	logging: true,
-	entities: [Sale, Expense, Product, SaleItem],
-	subscribers: [],
-	migrations: [path.join(__dirname, "database", "/migrations/*.{js,ts}")],
+  type: "sqlite",
+  database: databasePath,
+  synchronize: true,
+  logging: true,
+  entities: [Sale, Expense, Product, SaleItem],
+  subscribers: [],
+  migrations: [path.resolve(__dirname, "database", "migrations", "*.{js,ts}")],
 });

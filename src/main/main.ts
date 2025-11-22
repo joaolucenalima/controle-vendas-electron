@@ -1,7 +1,8 @@
+import { AppDataSource } from "@database";
+import { registerHandlers } from "@ipc";
 import { app, BrowserWindow } from "electron";
 import fs from "fs";
 import path from "path";
-import { registerHandlers } from "./ipc/index";
 
 function verifyDatabaseDir() {
 	const database_dir = path.resolve(app.getPath("userData"), "database");
@@ -11,7 +12,23 @@ function verifyDatabaseDir() {
 	}
 }
 
-function CreateWindow() {
+const setupDatabase = async () => {
+  try {
+    await AppDataSource.initialize();
+    console.info("Database initialized");
+    const pendingMigrations = await AppDataSource.showMigrations();
+    console.info("Pending migrations:", pendingMigrations);
+    if (pendingMigrations) {
+      console.info("Running migrations...");
+      await AppDataSource.runMigrations();
+      console.info("Migrations completed");
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+function createWindow() {
 	const mainWindow = new BrowserWindow({
 		icon: "./build/favicon.ico",
 		width: 1200,
@@ -32,29 +49,24 @@ function CreateWindow() {
 	});
 }
 
-app.on("window-all-closed", () => {
-	if (process.platform !== "darwin") {
-		app.quit();
-	}
-});
-
-app.on("activate", () => {
-	if (BrowserWindow.getAllWindows().length === 0) {
-		CreateWindow();
-	}
-});
-
 const isUnicWindow = app.requestSingleInstanceLock();
 
 if (!isUnicWindow) {
 	app.quit();
 } else {
-	app.whenReady().then(() => {
-		registerHandlers();
+	app.whenReady().then(async () => {
 		verifyDatabaseDir();
-		CreateWindow();
+		createWindow();
+		await setupDatabase();
+		registerHandlers();
 	});
 }
+
+app.on("activate", () => {
+	if (BrowserWindow.getAllWindows().length === 0) {
+		createWindow();
+	}
+});
 
 app.on("second-instance", () => {
 	const win = BrowserWindow.getAllWindows()[0];

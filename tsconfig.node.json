@@ -9,12 +9,17 @@
     "strict": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
     "paths": {
-      "@shared/*": ["shared/*"]
+      "@main/*": ["main/*"],
+      "@shared/*": ["shared/*"],
+      "@ipc": ["main/ipc/index"],
+      "@database": ["database/datasource"],
+      "@entities": ["database/entities/index"]
     }
   },
   "include": ["src"],
