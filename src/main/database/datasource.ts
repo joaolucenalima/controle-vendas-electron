@@ -1,7 +1,7 @@
-import { Expense, Product, Sale, SaleItem } from "@entities";
 import path from "path";
 import "reflect-metadata";
 import { DataSource } from "typeorm";
+import { Expense, Product, Sale, SaleItem } from "../database/entities";
 
 const isElectron = !!process.versions.electron;
 
