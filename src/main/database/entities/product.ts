@@ -12,7 +12,9 @@ export class Product {
 	@Column()
 	priceInCents: number
 
-	@Column()
+	@Column({
+		nullable: true
+	})
 	imgUrl: string
 
 	@OneToMany(() => SaleItem, (item) => item.saleId)

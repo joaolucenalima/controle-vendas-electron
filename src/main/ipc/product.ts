@@ -6,12 +6,12 @@ import { Product } from "../database/entities";
 export function registerProductHandlers() {
   ipcMain.handle(IPC_CHANNELS.GET_ALL_PRODUCTS, async () => {
     const repo = AppDataSource.getRepository(Product);
-    return repo.find();
+    return await repo.find();
   });
 
   ipcMain.handle(IPC_CHANNELS.GET_PRODUCT_BY_ID, async (_event, id: number) => {
     const repo = AppDataSource.getRepository(Product);
-    return repo.findOneBy({ id });
+    return await repo.findOneBy({ id });
   });
 
   ipcMain.handle(
@@ -23,11 +23,11 @@ export function registerProductHandlers() {
         const existing = await repo.findOneBy({ id });
         if (!existing) throw new Error("Product not found");
         const merged = repo.merge(existing, data);
-        return repo.save(merged);
+        return await repo.save(merged);
       }
 
       const created = repo.create(data);
-      return repo.save(created);
+      return await repo.save(created);
     }
   );
 

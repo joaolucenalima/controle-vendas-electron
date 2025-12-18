@@ -25,5 +25,5 @@ export const AppDataSource = new DataSource({
   logging: true,
   entities: [Sale, Expense, Product, SaleItem],
   subscribers: [],
-  migrations: [path.resolve(__dirname, "database", "migrations", "*.{js,ts}")],
+  migrations: [path.resolve(__dirname, "main", "database", "migrations", "*.{js,ts}")],
 });

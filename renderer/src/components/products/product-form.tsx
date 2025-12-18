@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import ReactCrop, { type Crop } from "react-image-crop";
 import { z } from "zod";
 import { useModal } from "../../contexts/ModalContext";
-import { maskCurrency } from "../../utils/mask-inputs";
 import { TextInput } from "../text-input";
 
 import "./react-crop.css";
@@ -16,8 +15,8 @@ type UploadedImageType = {
 };
 
 const productFormSchema = z.object({
-  name: z.string().nonoptional("Campo obrigatório"),
-  price: z.string().nonoptional("Campo obrigatório"),
+  name: z.string("Campo obrigatório"),
+  price: z.number("Campo obrigatório").min(0, "Valor mínimo: 0"),
 });
 
 type ProductFormType = z.infer<typeof productFormSchema>;
@@ -30,8 +29,8 @@ export function ProductForm({ id, fetchProducts }: { id?: string; fetchProducts:
     unit: "px",
     x: 0,
     y: 0,
-    width: 150,
-    height: 150,
+    width: 250,
+    height: 250,
   });
 
   const imageRef = useRef<HTMLImageElement>(null);
@@ -55,13 +54,13 @@ export function ProductForm({ id, fetchProducts }: { id?: string; fetchProducts:
     });
   }
 
-  function submitForm(data: ProductFormType) {
+  function submitForm(formData: ProductFormType) {
     window.api.product
       .upsert({
         id,
         data: {
-          ...data,
-          priceInCents: Number(data.price.split(' ')[1]) * 100
+          ...formData,
+          priceInCents: formData.price * 100,
         },
       })
       .then(() => {
@@ -72,11 +71,11 @@ export function ProductForm({ id, fetchProducts }: { id?: string; fetchProducts:
 
   useEffect(() => {
     if (!id) return;
-
+    
     window.api.product.getById(id).then((response) =>
       reset({
         name: response.name,
-        price: String(response.priceInCents / 100),
+        price: response.priceInCents / 100,
       })
     );
   }, [id]);
@@ -95,12 +94,12 @@ export function ProductForm({ id, fetchProducts }: { id?: string; fetchProducts:
           Preço *
         </label>
         <TextInput
-          {...register("price")}
+          {...register("price", {
+            valueAsNumber: true
+          })}
           id="price"
-          onChange={(e) => {
-            maskCurrency(e);
-            register("price").onChange(e);
-          }}
+          type="number"
+          step="any"
         />
       </div>
 

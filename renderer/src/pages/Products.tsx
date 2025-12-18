@@ -30,7 +30,7 @@ export function Products() {
   return (
     <div className="grid grid-rows-[auto_1fr] h-full">
       <PageTopbar title="Produtos">
-        <PrimaryButton handleClick={openProductModal}>
+        <PrimaryButton handleClick={() => openProductModal()}>
           <Plus size={18} />
           Novo
         </PrimaryButton>
