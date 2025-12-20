@@ -4,6 +4,8 @@ import path from "path";
 import { AppDataSource } from "./database/datasource";
 import { registerHandlers } from "./ipc";
 
+const IS_DEV = !app.isPackaged;
+
 function verifyDatabaseDir() {
   const database_dir = path.resolve(app.getPath("userData"), "database");
 
@@ -42,8 +44,6 @@ function createWindow() {
 
   mainWindow.setMenuBarVisibility(false);
 
-  const IS_DEV = !app.isPackaged;
-
   if (IS_DEV) {
     mainWindow.loadURL("http://localhost:5173");
   } else {
@@ -61,7 +61,7 @@ if (!isUnicWindow) {
   app.quit();
 } else {
   app.whenReady().then(async () => {
-    verifyDatabaseDir();
+    if (!IS_DEV) verifyDatabaseDir();
     createWindow();
     await setupDatabase();
     registerHandlers();
