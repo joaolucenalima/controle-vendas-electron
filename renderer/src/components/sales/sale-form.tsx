@@ -1,6 +1,7 @@
-import { X } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useModal } from "../../contexts/ModalContext";
+import { Button } from "../button";
 import { Datepicker } from "../datepicker";
 import { StyledSelect } from "../styled-select";
 
@@ -125,9 +126,9 @@ export function SaleForm({ id }: { id?: number }) {
                 }}
                 title="Remover produto"
               >
-                <X size={14} strokeWidth={2.5} />
+                <Trash2 size={16} strokeWidth={2.5} className="text-red-600" />
               </button>
-              
+
               <input
                 type="number"
                 className="border border-gray-400 rounded px-2 w-12 text-center focus:outline-none focus:border-gray-600 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-inner-spin-button]:m-0"
@@ -145,20 +146,11 @@ export function SaleForm({ id }: { id?: number }) {
       )}
 
       <div className="flex items-center justify-between mt-3">
-        <button
-          type="button"
-          className="border border-gray-400 rounded px-4 py-2 text-black hover:bg-gray-200 transition-colors"
-          onClick={() => closeModal()}
-        >
+        <Button type="button" variant="secondary" onClick={() => closeModal()}>
           Cancelar
-        </button>
+        </Button>
 
-        <button
-          className="bg-green-500 text-white font-semibold rounded px-4 py-2 hover:bg-green-600 transition-colors"
-          type="submit"
-        >
-          Salvar
-        </button>
+        <Button type="submit">Salvar</Button>
       </div>
     </form>
   );

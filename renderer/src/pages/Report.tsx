@@ -62,7 +62,7 @@ export function Report() {
   }
 
   return (
-    <div className="grid grid-rows-[auto_1fr] h-full">
+    <div className="grid grid-rows-[auto_1fr]">
       <PageTopbar title="Relatórios">
         <div className="flex gap-4 items-end">
           <div className="w-48">

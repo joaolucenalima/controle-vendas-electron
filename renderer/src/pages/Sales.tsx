@@ -1,7 +1,7 @@
 import { Pencil, Plus, Search, Trash2 } from "lucide-react";
+import { Button } from "../components/button";
 import { ConfirmDeletePopup } from "../components/confirm-delete-popup";
 import { PageTopbar } from "../components/page-topbar";
-import { PrimaryButton } from "../components/primary-button";
 import { SaleDetails } from "../components/sales/sale-details";
 import { SaleForm } from "../components/sales/sale-form";
 import Table from "../components/table/table";
@@ -147,8 +147,8 @@ export function Sales() {
   return (
     <div className="flex flex-col">
       <PageTopbar title="Vendas">
-        <PrimaryButton
-          handleClick={() =>
+        <Button
+          onClick={() =>
             openModal({
               title: "Adicionar venda",
               modalElement: <SaleForm />,
@@ -157,7 +157,7 @@ export function Sales() {
         >
           <Plus size={18} />
           Novo
-        </PrimaryButton>
+        </Button>
       </PageTopbar>
 
       <main className="px-4 py-6">

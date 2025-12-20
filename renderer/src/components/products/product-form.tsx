@@ -7,6 +7,7 @@ import { z } from "zod";
 import { useModal } from "../../contexts/ModalContext";
 import { TextInput } from "../text-input";
 
+import { Button } from "../button";
 import "./react-crop.css";
 
 type UploadedImageType = {
@@ -71,7 +72,7 @@ export function ProductForm({ id, fetchProducts }: { id?: string; fetchProducts:
 
   useEffect(() => {
     if (!id) return;
-    
+
     window.api.product.getById(id).then((response) =>
       reset({
         name: response.name,
@@ -95,7 +96,7 @@ export function ProductForm({ id, fetchProducts }: { id?: string; fetchProducts:
         </label>
         <TextInput
           {...register("price", {
-            valueAsNumber: true
+            valueAsNumber: true,
           })}
           id="price"
           type="number"
@@ -153,20 +154,15 @@ export function ProductForm({ id, fetchProducts }: { id?: string; fetchProducts:
       </div>
 
       <div className="flex items-center justify-between mt-4">
-        <button
+        <Button
           type="button"
-          className="border border-gray-400 rounded px-4 py-2 text-black hover:bg-gray-200 transition-colors"
+          variant="secondary"
           onClick={() => closeModal()}
         >
           Cancelar
-        </button>
+        </Button>
 
-        <button
-          type="submit"
-          className="bg-green-500 text-white font-semibold rounded px-6 py-2 hover:bg-green-600 transition-colors"
-        >
-          Salvar
-        </button>
+        <Button type="submit">Salvar</Button>
       </div>
     </form>
   );

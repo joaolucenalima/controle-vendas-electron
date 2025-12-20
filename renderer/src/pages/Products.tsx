@@ -1,8 +1,9 @@
-import { Plus } from "lucide-react";
+import { Pencil, Plus, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Product } from "../api/product";
+import NoImgAvailable from '../assets/imagem-nao-disponivel.jpg';
+import { Button } from "../components/button";
 import { PageTopbar } from "../components/page-topbar";
-import { PrimaryButton } from "../components/primary-button";
 import { ProductForm } from "../components/products/product-form";
 import { useModal } from "../contexts/ModalContext";
 
@@ -28,40 +29,52 @@ export function Products() {
   }, []);
 
   return (
-    <div className="grid grid-rows-[auto_1fr] h-full">
+    <div>
       <PageTopbar title="Produtos">
-        <PrimaryButton handleClick={() => openProductModal()}>
-          <Plus size={18} />
-          Novo
-        </PrimaryButton>
+        <Button onClick={() => openProductModal()}>
+          Adicionar
+          <Plus size={20} />
+        </Button>
       </PageTopbar>
 
-      <div className="grid grid-cols-6 p-4 gap-4 overflow-auto">
+      <div className="flex flex-wrap p-4 gap-4">
         {products.map((product) => (
           <div
             key={product.id}
-            className="h-max flex flex-col overflow-hidden rounded-lg border border-gray-400 hover:shadow-lg transition-shadow"
+            className="flex flex-col gap-1 w-60 p-3 rounded-lg bg-white border border-gray-400"
           >
             <img
-              src={product.imgUrl}
-              className="w-full h-60 object-contain border-b border-gray-400 shadow-sm cursor-pointer"
+              src={product.imgUrl || NoImgAvailable}
+              className="min-h-48 aspect-square object-contain bg-zinc-200 rounded-lg border-2 border-zinc-200"
               alt={product.name}
-              onClick={() => openProductModal(product.id.toString())}
             />
-            <div className="px-3 py-2 bg-white">
-              <h2
-                className="w-max font-semibold hover:text-sky-700 hover:underline cursor-pointer"
-                title="Ver detalhes"
-                onClick={() => openProductModal(product.id.toString())}
-              >
-                {product.name}
-              </h2>
+
+            <h2
+              className="mt-2 font-semibold text-xl"
+              title="Ver detalhes"
+            >
+              {product.name}
+            </h2>
+
+            <div className="flex justify-between items-center gap-2">
+              <p>Preço</p>
+
               <p className="text-gray-600">
                 {(product.priceInCents / 100).toLocaleString("pt-BR", {
                   style: "currency",
                   currency: "BRL",
                 })}
               </p>
+            </div>
+
+            <div className="flex items-center gap-2 mt-1">
+              <Button variant="danger">
+                  <Trash2 size={20} />
+              </Button>
+
+              <Button onClick={() => openProductModal(product.id)} className="flex-1">
+                Editar <Pencil size={18} />
+              </Button>
             </div>
           </div>
         ))}

@@ -1,15 +1,15 @@
 import { Plus } from "lucide-react";
+import { Button } from "../components/button";
 import { PageTopbar } from "../components/page-topbar";
-import { PrimaryButton } from "../components/primary-button";
 
 export function Expenses() {
   return (
     <>
       <PageTopbar title="Gastos">
-        <PrimaryButton>
+        <Button>
           <Plus size={18} />
           Novo
-        </PrimaryButton>
+        </Button>
       </PageTopbar>
     </>
   );
