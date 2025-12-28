@@ -1,11 +1,14 @@
 export type ColumnType<T> = {
   key: string;
   label: string;
-  align?: "left" | "center" | "right";
+  align?: 'left' | 'center' | 'right';
   textOverflow?: boolean;
+  width?: string;
+  minWidth?: string;
+  hoverText?: string;
 } & (
   | {
-      dataIndex: keyof T;
+      dataIndex: keyof T | string[];
       render?: (value: any, row: T) => React.ReactNode;
     }
   | {
