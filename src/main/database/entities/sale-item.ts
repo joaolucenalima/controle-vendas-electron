@@ -1,14 +1,11 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Sale } from "./sale";
 import { Product } from "./product";
+import { Sale } from "./sale";
 
 @Entity()
 export class SaleItem {
 	@PrimaryGeneratedColumn("uuid")
 	id: number;
-
-	@Column()
-	amountInCents: number
 
 	@Column()
 	quantity: number

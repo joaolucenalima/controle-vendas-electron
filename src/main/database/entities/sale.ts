@@ -10,7 +10,7 @@ export class Sale {
 	amountInCents: number
 	
 	@CreateDateColumn()
-	createdAt: Date;
+	date: Date;
 
 	@OneToMany(() => SaleItem, (item) => item.saleId)
 	salesItems: SaleItem[]

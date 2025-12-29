@@ -4,7 +4,7 @@ import { SaleItem } from "./sale-item";
 @Entity()
 export class Product {
 	@PrimaryGeneratedColumn("uuid")
-	id: number;
+	id: string;
 
 	@Column()
 	name: string
