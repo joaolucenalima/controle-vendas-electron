@@ -83,8 +83,8 @@ export default function Table<T extends Record<string, any>>({
           <TableHead>
             <TableRow>
               {columns.map((column) => (
-                <TableHeadCell key={column.key}>
-                  <span className={`text-${column.align || "left"} text-sm`}>{column.label}</span>
+                <TableHeadCell key={column.key} align={column.align}>
+                  <span className="text-sm">{column.label}</span>
                 </TableHeadCell>
               ))}
             </TableRow>
@@ -96,7 +96,8 @@ export default function Table<T extends Record<string, any>>({
                 {columns.map((column) => (
                   <TableCell
                     key={column.key + "_" + index}
-                    className={`text-${column.align || "left"}${
+                    align={column.align}
+                    className={`${
                       column.textOverflow ? "overflow-ellipsis whitespace-nowrap" : ""
                     }`}
                   >

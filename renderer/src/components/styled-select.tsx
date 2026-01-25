@@ -16,11 +16,14 @@ export function StyledSelect<Option, IsMulti extends boolean = false>(
         borderColor: state.isFocused ? "#22c55e" : "#d1d5db",
       },
       cursor: "pointer",
+      padding: "0.125rem 0 0.125rem 0.75rem",
+      fontSize: "0.875rem"
     }),
     menu: (base) => ({
       ...base,
       marginTop: "4px",
       borderRadius: "0.5rem",
+      overflowY: "auto",
       boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
       border: "1px solid #d1d5db",
     }),
@@ -30,9 +33,14 @@ export function StyledSelect<Option, IsMulti extends boolean = false>(
       color: "#000",
       padding: "0.5rem 0.75rem",
       cursor: "pointer",
+      fontSize: "0.875rem",
       "&:active": {
         backgroundColor: "#e5e7eb",
       },
+    }),
+    valueContainer: (base) => ({
+      ...base,
+      padding: 0
     }),
     singleValue: (base) => ({
       ...base,
@@ -81,5 +89,5 @@ export function StyledSelect<Option, IsMulti extends boolean = false>(
     }),
   };
 
-  return <Select {...props} styles={customStyles} />;
+  return <Select {...props} styles={customStyles} noOptionsMessage={() => <p>Sem opções</p>} />;
 }
