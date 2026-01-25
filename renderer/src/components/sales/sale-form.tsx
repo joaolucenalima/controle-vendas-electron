@@ -1,38 +1,48 @@
+import { Product } from "@api/product";
+import { Sale } from "@api/sale";
+import { Datepicker } from "@components/datepicker";
+import { StyledSelect } from "@components/styled-select";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useModal } from "@hooks/use-modal";
+import { Button } from "flowbite-react";
 import { Trash2 } from "lucide-react";
-import { useState } from "react";
-import { useModal } from "../../contexts/ModalContext";
-import { Button } from "../button";
-import { Datepicker } from "../datepicker";
-import { StyledSelect } from "../styled-select";
+import { useEffect, useMemo, useState } from "react";
+import { useForm } from "react-hook-form";
+import z from "zod";
 
-type SelectedProducts = {
-  id: string;
-  product: string;
-  quantity: number;
-  priceInCents: number;
-};
+const saleFormSchema = z.object({
+  date: z.string("Campo obrigatório"),
+});
+
+type SaleFormType = z.infer<typeof saleFormSchema>;
 
 export function SaleForm({ id }: { id?: number }) {
   const { closeModal } = useModal();
-  const [selectedProducts, setSelectedProducts] = useState<SelectedProducts[]>([]);
 
-  const products = [
-    {
-      id: 1,
-      name: "Arandela",
-      priceInCents: 2000,
-    },
-    {
-      id: 2,
-      name: "Redondinha",
-      priceInCents: 1800,
-    },
-    {
-      id: 3,
-      name: "Cúpula",
-      priceInCents: 2200,
-    },
-  ];
+  const [sale, setSale] = useState<Sale | undefined>();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [selectedProducts, setSelectedProducts] = useState<Sale["products"]>([]);
+
+  const {
+    handleSubmit,
+    register,
+    control,
+    formState: { errors },
+  } = useForm<SaleFormType>({
+    resolver: zodResolver(saleFormSchema),
+  });
+
+  const totalFormatted = useMemo(() => {
+    const totalInCents = selectedProducts.reduce(
+      (sum, product) => sum + product.quantity * product.priceInCents,
+      0,
+    );
+
+    return (totalInCents / 100).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+  }, [selectedProducts]);
 
   function handleChangeProductQuantity(id: string, e: React.ChangeEvent<HTMLInputElement>) {
     let value = Number(e.currentTarget.value);
@@ -59,50 +69,78 @@ export function SaleForm({ id }: { id?: number }) {
     });
   }
 
-  const totalInCents = selectedProducts.reduce(
-    (sum, product) => sum + product.quantity * product.priceInCents,
-    0
-  );
+  function submitSale(data: SaleFormType) {
+    const saleDataPayload = {
+      date: new Date(data.date),
+      products: selectedProducts,
+    };
 
-  const totalFormatted = (totalInCents / 100).toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  });
+    if (id) {
+      window.api.sale.update({
+        id,
+        data: saleDataPayload,
+      });
+
+      return;
+    }
+
+    window.api.sale.create(saleDataPayload);
+  }
+
+  useEffect(() => {
+    window.api.product.getAll().then((response) => {
+      setProducts(response);
+    });
+
+    if (id) {
+      window.api.sale.getById(id).then((response) => {
+        setSale(response);
+        setSelectedProducts(response.products);
+      });
+    }
+  }, []);
 
   return (
-    <form className="flex flex-col gap-2">
+    <form onSubmit={handleSubmit(submitSale)} className="flex flex-col gap-2">
       <div>
-        <label htmlFor="" className="block mb-1">
+        <label htmlFor="sale-date" className="block mb-1">
           Data da venda *
         </label>
-        <Datepicker placeholderText="Selecione a data" selected={new Date()} />
+        <Datepicker
+          name="date"
+          id="sale-date"
+          placeholder="Selecione a data"
+        />
       </div>
 
       <div>
-        <label htmlFor="" className="block mb-1">
+        <label htmlFor="sale-products" className="block mb-1">
           Produtos *
         </label>
         <StyledSelect
+          id="sale-products"
           options={products.map((product) => ({ value: product.id, label: product.name }))}
           isMulti
           placeholder="Selecione os produtos"
           closeMenuOnSelect={false}
           onChange={(selected) => {
-            setSelectedProducts(
+            setSelectedProducts((prev) =>
               selected.map((item) => {
                 const productData = products.find((p) => p.id === item.value);
+                const prevQuantity = prev.find((product) => product.id === item.value)?.quantity;
+
                 return {
-                  id: String(item.value),
-                  product: item.label,
-                  quantity: 1,
+                  id: item.value,
+                  name: item.label,
+                  quantity: prevQuantity || 1,
                   priceInCents: productData?.priceInCents ?? 0,
                 };
-              })
+              }),
             );
           }}
           value={selectedProducts.map((item) => ({
-            value: Number(item.id),
-            label: item.product,
+            value: item.id,
+            label: item.name,
           }))}
         />
       </div>
@@ -113,7 +151,7 @@ export function SaleForm({ id }: { id?: number }) {
 
           {selectedProducts.map((item) => (
             <div key={item.id} className="flex items-center gap-3">
-              <p>{item.product}</p>
+              <p>{item.name}</p>
               <span className="flex-1 font-semibold text-sm text-gray-500">
                 R$ {item.priceInCents / 100}
               </span>
@@ -146,11 +184,11 @@ export function SaleForm({ id }: { id?: number }) {
       )}
 
       <div className="flex items-center justify-between mt-3">
-        <Button type="button" variant="secondary" onClick={() => closeModal()}>
+        <Button type="button" color="alternative" onClick={closeModal}>
           Cancelar
         </Button>
 
-        <Button type="submit">Salvar</Button>
+        <Button type="submit">Salvar venda</Button>
       </div>
     </form>
   );

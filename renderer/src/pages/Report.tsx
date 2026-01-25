@@ -1,6 +1,6 @@
+import { Datepicker } from "@components/datepicker";
 import { useState } from "react";
 import Chart from "react-apexcharts";
-import { Datepicker } from "../components/datepicker";
 import { PageTopbar } from "../components/page-topbar";
 import { Card } from "../components/report/card";
 import { StyledSelect } from "../components/styled-select";
@@ -70,9 +70,9 @@ export function Report() {
               Data inicial
             </label>
             <Datepicker
-              placeholderText="Insira a data inicial"
+              placeholder="Insira a data inicial"
               id="initialDate"
-              selected={filters.initialDate}
+              value={filters.initialDate}
               onChange={(date) => handleChangeDate(date, "initialDate")}
             />
           </div>
@@ -82,9 +82,9 @@ export function Report() {
               Data final
             </label>
             <Datepicker
-              placeholderText="Insira a data final"
+              placeholder="Insira a data final"
               id="endDate"
-              selected={filters.endDate}
+              value={filters.endDate}
               onChange={(date) => handleChangeDate(date, "endDate")}
             />
           </div>

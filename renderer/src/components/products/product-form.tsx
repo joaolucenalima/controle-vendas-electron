@@ -1,13 +1,12 @@
+import { TextInput } from "@components/text-input";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useModal } from "@hooks/use-modal";
+import { Button } from "flowbite-react";
 import { Upload } from "lucide-react";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import ReactCrop, { type Crop } from "react-image-crop";
 import { z } from "zod";
-import { useModal } from "../../contexts/ModalContext";
-import { TextInput } from "../text-input";
-
-import { Button } from "../button";
 import "./react-crop.css";
 
 type UploadedImageType = {
@@ -77,7 +76,7 @@ export function ProductForm({ id, fetchProducts }: { id?: string; fetchProducts:
       reset({
         name: response.name,
         price: response.priceInCents / 100,
-      })
+      }),
     );
   }, [id]);
 
@@ -113,7 +112,7 @@ export function ProductForm({ id, fetchProducts }: { id?: string; fetchProducts:
               onChange={(c) => setCrop(c)}
               keepSelection
               aspect={1}
-              className="self-center overflow-hidden rounded mb-4 max-h-[300px]"
+              className="overflow-hidden rounded mb-4 max-h-[300px]"
             >
               <img src={uploadedImage.src} ref={imageRef} draggable={false} />
             </ReactCrop>
@@ -154,15 +153,11 @@ export function ProductForm({ id, fetchProducts }: { id?: string; fetchProducts:
       </div>
 
       <div className="flex items-center justify-between mt-4">
-        <Button
-          type="button"
-          variant="secondary"
-          onClick={() => closeModal()}
-        >
+        <Button type="button" color="alternative" onClick={() => closeModal()}>
           Cancelar
         </Button>
 
-        <Button type="submit">Salvar</Button>
+        <Button type="submit">Salvar produto</Button>
       </div>
     </form>
   );

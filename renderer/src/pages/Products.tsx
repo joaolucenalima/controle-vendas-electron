@@ -1,11 +1,11 @@
+import { Product } from "@api/product";
+import NoImgAvailable from "@assets/imagem-nao-disponivel.jpg";
+import { PageTopbar } from "@components/page-topbar";
+import { ProductForm } from "@components/products/product-form";
+import { useModal } from "@hooks/use-modal";
+import { Button } from "flowbite-react";
 import { Pencil, Plus, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Product } from "../api/product";
-import NoImgAvailable from '../assets/imagem-nao-disponivel.jpg';
-import { Button } from "../components/button";
-import { PageTopbar } from "../components/page-topbar";
-import { ProductForm } from "../components/products/product-form";
-import { useModal } from "../contexts/ModalContext";
 
 export function Products() {
   const { openModal } = useModal();
@@ -33,7 +33,7 @@ export function Products() {
       <PageTopbar title="Produtos">
         <Button onClick={() => openProductModal()}>
           Adicionar
-          <Plus size={20} />
+          <Plus size={20} className="ml-2" />
         </Button>
       </PageTopbar>
 
@@ -49,10 +49,7 @@ export function Products() {
               alt={product.name}
             />
 
-            <h2
-              className="mt-2 font-semibold text-xl"
-              title="Ver detalhes"
-            >
+            <h2 className="mt-2 font-semibold text-xl" title="Ver detalhes">
               {product.name}
             </h2>
 
@@ -68,12 +65,12 @@ export function Products() {
             </div>
 
             <div className="flex items-center gap-2 mt-1">
-              <Button variant="danger">
-                  <Trash2 size={20} />
+              <Button color="red">
+                <Trash2 size={20} />
               </Button>
 
               <Button onClick={() => openProductModal(product.id)} className="flex-1">
-                Editar <Pencil size={18} />
+                Editar <Pencil size={18} className="ml-2" />
               </Button>
             </div>
           </div>

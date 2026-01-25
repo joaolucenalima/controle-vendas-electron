@@ -9,14 +9,14 @@ export function registerProductHandlers() {
     return await repo.find();
   });
 
-  ipcMain.handle(IPC_CHANNELS.GET_PRODUCT_BY_ID, async (_event, id: number) => {
+  ipcMain.handle(IPC_CHANNELS.GET_PRODUCT_BY_ID, async (_event, id: string) => {
     const repo = AppDataSource.getRepository(Product);
     return await repo.findOneBy({ id });
   });
 
   ipcMain.handle(
     IPC_CHANNELS.UPSERT_PRODUCT,
-    async (_event, { id, data }: { id?: number; data: Partial<Product> }) => {
+    async (_event, { id, data }: { id?: string; data: Partial<Product> }) => {
       const repo = AppDataSource.getRepository(Product);
 
       if (id) {

@@ -1,10 +1,6 @@
-import { useModal } from "../contexts/ModalContext";
+import { useModal } from "@hooks/use-modal";
 
-type DeletePopupProps = {
-  onDelete: () => void;
-};
-
-export function ConfirmDeletePopup({ onDelete }: DeletePopupProps) {
+export function ConfirmDeletePopup({ onDelete }: { onDelete: () => void }) {
   const { closeModal } = useModal();
 
   return (
@@ -19,7 +15,8 @@ export function ConfirmDeletePopup({ onDelete }: DeletePopupProps) {
         >
           Cancelar
         </button>
-        <button className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+        <button
+          className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
           onClick={() => {
             onDelete();
             closeModal();

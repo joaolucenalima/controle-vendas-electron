@@ -1,54 +1,21 @@
+import { Sale } from "@api/sale";
+import { ConfirmDeletePopup } from "@components/confirm-delete-popup";
+import { PageTopbar } from "@components/page-topbar";
+import { SaleDetails } from "@components/sales/sale-details";
+import { SaleForm } from "@components/sales/sale-form";
+import Table from "@components/table/table";
+import { ColumnType } from "@components/table/types";
+import { useModal } from "@hooks/use-modal";
+import { Button } from "flowbite-react";
 import { Pencil, Plus, Search, Trash2 } from "lucide-react";
-import { Button } from "../components/button";
-import { ConfirmDeletePopup } from "../components/confirm-delete-popup";
-import { PageTopbar } from "../components/page-topbar";
-import { SaleDetails } from "../components/sales/sale-details";
-import { SaleForm } from "../components/sales/sale-form";
-import Table from "../components/table/table";
-import { ColumnType } from "../components/table/types";
-import { useModal } from "../contexts/ModalContext";
+import { useState } from "react";
 
 export function Sales() {
   const { openModal } = useModal();
-  const sales = [
-    {
-      id: 1,
-      createdAt: "2025-05-04",
-      totalProducts: 150,
-      soldProducts: "Arandela, Redondinha, Redondinha com pé",
-      amount_in_cents: 200000,
-    },
-    {
-      id: 2,
-      createdAt: "2025-05-10",
-      totalProducts: 80,
-      soldProducts: "Plafon, Luminária de mesa",
-      amount_in_cents: 120000,
-    },
-    {
-      id: 3,
-      createdAt: "2025-05-12",
-      totalProducts: 60,
-      soldProducts: "Abajur, Spot LED",
-      amount_in_cents: 95000,
-    },
-    {
-      id: 4,
-      createdAt: "2025-05-15",
-      totalProducts: 200,
-      soldProducts: "Pendente, Trilho, Plafon",
-      amount_in_cents: 350000,
-    },
-    {
-      id: 5,
-      createdAt: "2025-05-18",
-      totalProducts: 40,
-      soldProducts: "Lustre, Luminária de chão",
-      amount_in_cents: 80000,
-    },
-  ];
 
-  const tableColumns: ColumnType<typeof sales[0]>[] = [
+  const [sales, setSales] = useState<Sale[]>([]);
+
+  const tableColumns: ColumnType<Sale>[] = [
     {
       key: "details",
       label: "Detalhes",
@@ -72,38 +39,40 @@ export function Sales() {
       key: "id",
       dataIndex: "id",
       label: "ID",
-      align: "center"
+      align: "center",
     },
     {
       key: "createdAt",
       dataIndex: "createdAt",
       label: "Data da venda",
+      align: "center",
       render: (value) => new Date(value).toLocaleDateString("pt-BR"),
     },
     {
       label: "Total de produtos",
-      dataIndex: "totalProducts",
       key: "totalProducts",
-      render: (value, row) => (
+      render: (_, row) => (
         <>
-          {value}
-          <span className="italic text-sm"> ({row.soldProducts.split(", ").length} diferentes)</span>
+          {row.products.reduce((acc, product) => acc + product.quantity, 0)}
+          <span className="italic text-sm"> ({row.products.length} diferentes)</span>
         </>
       ),
     },
     {
       key: "soldProducts",
-      dataIndex: "soldProducts",
       label: "Produtos vendidos",
       align: "left",
       textOverflow: true,
+      render: (_, row) => row.products.map((product) => product.name).join(", "),
     },
     {
-      key: "amount_in_cents",
-      dataIndex: "amount_in_cents",
+      key: "amountInCents",
       label: "Preço total",
-      render: (value) =>
-        (value / 100).toLocaleString("pt-BR", {
+      render: (_, row) =>
+        (
+          row.products.reduce((acc, product) => acc + product.quantity * product.priceInCents, 0) /
+          100
+        ).toLocaleString("pt-BR", {
           style: "currency",
           currency: "BRL",
         }),
@@ -115,7 +84,7 @@ export function Sales() {
       render: (_, row) => (
         <div className="text-center">
           <button
-            className="inline-flex items-center justify-center w-6 h-6 transition-colors hover:text-gray-400"
+            className="inline-flex items-center justify-center w-6 h-6 transition-all hover:scale-125"
             title="Editar"
             onClick={() =>
               openModal({
@@ -124,25 +93,25 @@ export function Sales() {
               })
             }
           >
-            <Pencil size={16} />
+            <Pencil size={18} />
           </button>
 
           <button
-            className="ml-2 w-6 h-6 inline-flex items-center justify-center transition-colors hover:text-red-500"
+            className="ml-2 w-6 h-6 inline-flex items-center justify-center transition-all hover:scale-125"
             title="Excluir"
             onClick={() =>
               openModal({
                 title: "Confirmar exclusão",
-                modalElement: <ConfirmDeletePopup onDelete={() => {}}/>,
+                modalElement: <ConfirmDeletePopup onDelete={() => {}} />,
               })
             }
           >
-            <Trash2 size={16} />
+            <Trash2 size={18} className="text-red-600" />
           </button>
         </div>
-      )
-    }
-  ]
+      ),
+    },
+  ];
 
   return (
     <div className="flex flex-col">
@@ -155,16 +124,13 @@ export function Sales() {
             })
           }
         >
-          <Plus size={18} />
+          <Plus size={18} className="mr-2" />
           Novo
         </Button>
       </PageTopbar>
 
       <main className="px-4 py-6">
-        <Table<typeof sales[0]>
-          columns={tableColumns}
-          data={sales}
-        />
+        <Table<(typeof sales)[0]> columns={tableColumns} data={sales} />
       </main>
     </div>
   );

@@ -1,70 +1,46 @@
-import { ptBR } from "date-fns/locale/pt-BR";
-import { Calendar } from "lucide-react";
-import { forwardRef, useEffect, useState } from "react";
-import DatePicker, { registerLocale } from "react-datepicker";
+import {
+  createTheme,
+  DatepickerProps,
+  Datepicker as FlowbiteDatepicker,
+  ThemeProvider,
+} from "flowbite-react";
 
-import "react-datepicker/dist/react-datepicker.css";
-
-interface CustomInputProps {
-  value?: string;
-  onClick?: () => void;
-}
-
-interface DatePickerProps {
-  selected?: Date | null;
-  id?: string;
-  name?: string;
-  placeholderText?: string;
-  onChange?: (date: Date | null) => void;
-}
-
-export function Datepicker(props: DatePickerProps) {
-  const [inputDate, setInputDate] = useState<Date | null>(props.selected || null);
-
-  function handleDateChange(date: Date | null) {
-    setInputDate(date);
-    if (props.onChange) {
-      props.onChange(date);
-    }
-  }
-
-  registerLocale("pt-BR", ptBR);
-
-  const CustomDatepickerInput = forwardRef<HTMLDivElement, CustomInputProps>(
-    ({ value, onClick }, ref) => (
-      <div
-        onClick={onClick}
-        ref={ref}
-        tabIndex={1}
-        className="rounded bg-white border border-gray-400 px-3 h-[38px] inline-flex items-center justify-between gap-4 w-full cursor-text focus:border-black focus:outline-none focus:shadow-sm"
-      >
-        {!value ? (
-          <span className="text-gray-400 select-none">{props.placeholderText}</span>
-        ) : (
-          <span className="select-text">{value}</span>
-        )}
-        <Calendar size={20} className="cursor-pointer" />
-      </div>
-    )
-  );
-
-  useEffect(() => {
-    if (!props.selected) return;
-    setInputDate(props.selected);
-  }, [props.selected]);
+export function Datepicker(props: DatepickerProps) {
+  const datepickerTheme = createTheme({
+    datepicker: {
+      root: {
+        input: {
+          field: {
+            input: {
+              base: "!bg-white",
+            },
+          },
+        },
+      },
+      popup: {
+        root: {
+          inner: "border p-3",
+        },
+        header: {
+          selectors: {
+            button: {
+              prev: "px-2.5",
+              next: "px-2.5",
+            },
+          },
+        },
+      },
+    },
+  });
 
   return (
-    <DatePicker
-      {...props}
-      selected={inputDate}
-      onChange={handleDateChange}
-      locale="pt-BR"
-      customInput={<CustomDatepickerInput />}
-      clearButtonClassName="datepicker-clear-button"
-      popperPlacement="bottom-start"
-      showPopperArrow={false}
-      isClearable={true}
-      tabIndex={1}
-    />
+    <ThemeProvider theme={datepickerTheme}>
+      <FlowbiteDatepicker
+        {...props}
+        language="pt-BR"
+        labelTodayButton="Hoje"
+        labelClearButton="Limpar"
+      />
+    </ThemeProvider>
   );
 }

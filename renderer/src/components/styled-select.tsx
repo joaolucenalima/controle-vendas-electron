@@ -62,6 +62,9 @@ export function StyledSelect<Option, IsMulti extends boolean = false>(
         color: "#000",
       },
     }),
+    indicatorSeparator: () => ({
+      display: "none"
+    }),
     clearIndicator: (base) => ({
       ...base,
       color: "#9CA3AF",

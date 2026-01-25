@@ -1,6 +1,6 @@
+import { Button } from "@components/button";
+import { PageTopbar } from "@components/page-topbar";
 import { Plus } from "lucide-react";
-import { Button } from "../components/button";
-import { PageTopbar } from "../components/page-topbar";
 
 export function Expenses() {
   return (
