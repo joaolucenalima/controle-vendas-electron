@@ -1,11 +1,12 @@
 import {
-	Button,
-	Table as FlowbiteTable,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeadCell,
-	TableRow,
+  Button,
+  createTheme,
+  Table as FlowbiteTable,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeadCell,
+  TableRow,
 } from "flowbite-react";
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -45,6 +46,14 @@ export default function Table<T extends Record<string, any>>({
     return [currentPage - 2, currentPage - 1, currentPage, currentPage + 1, currentPage + 2];
   };
 
+  const tableTheme = createTheme({
+    table: {
+      head: {
+        cell: { base: "bg-white" },
+      },
+    },
+  }).table;
+
   useEffect(() => {
     if (onChange) {
       onChange({
@@ -57,8 +66,8 @@ export default function Table<T extends Record<string, any>>({
 
   return (
     <div className="w-full max-h-full grid grid-cols-3 grid-rows-[auto_1fr] gap-y-4">
-      <div className="col-span-3">
-        <FlowbiteTable hoverable>
+      <div className="col-span-3 border border-gray-300 rounded-lg overflow-x-auto bg-white">
+        <FlowbiteTable hoverable theme={tableTheme}>
           <colgroup>
             {columns.map((column) => (
               <col
@@ -100,8 +109,8 @@ export default function Table<T extends Record<string, any>>({
             ))}
           </TableBody>
         </FlowbiteTable>
-				
-        {data.length == 0 && <p className="text-center mt-6 mb-4">Nenhum dado encontrado</p>}
+
+        {data.length == 0 && <p className="text-center my-6">Nenhum dado encontrado</p>}
       </div>
 
       <StyledSelect

@@ -106,11 +106,7 @@ export function SaleForm({ id }: { id?: number }) {
         <label htmlFor="sale-date" className="block mb-1">
           Data da venda *
         </label>
-        <Datepicker
-          name="date"
-          id="sale-date"
-          placeholder="Selecione a data"
-        />
+        <Datepicker name="date" id="sale-date" placeholder="Selecione a data" />
       </div>
 
       <div>
@@ -152,9 +148,9 @@ export function SaleForm({ id }: { id?: number }) {
           {selectedProducts.map((item) => (
             <div key={item.id} className="flex items-center gap-3">
               <p>{item.name}</p>
-              <span className="flex-1 font-semibold text-sm text-gray-500">
+              <p className="flex-1 font-semibold text-primary-700">
                 R$ {item.priceInCents / 100}
-              </span>
+              </p>
 
               <button
                 className="text-gray-800 hover:text-black transition-colors p-1 rounded "
@@ -169,7 +165,7 @@ export function SaleForm({ id }: { id?: number }) {
 
               <input
                 type="number"
-                className="border border-gray-400 rounded px-2 w-12 text-center focus:outline-none focus:border-gray-600 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-inner-spin-button]:m-0"
+                className="border border-gray-300 rounded-lg px-2.5 p-1 w-12 text-center text-gray-900 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-inner-spin-button]:m-0"
                 defaultValue={item.quantity}
                 min={1}
                 onChange={(e) => handleChangeProductQuantity(item.id, e)}
@@ -178,7 +174,7 @@ export function SaleForm({ id }: { id?: number }) {
           ))}
 
           <p className="pt-2 border-t border-gray-400 text-right font-semibold">
-            Total: <span className="text-green-500">{totalFormatted}</span>
+            Total: <span className="text-primary-700 ml-1">{totalFormatted}</span>
           </p>
         </div>
       )}
